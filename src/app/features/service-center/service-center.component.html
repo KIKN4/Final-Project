@@ -1,0 +1,106 @@
+<div class="container">
+  <ul>
+    <div>
+      <li><a routerLink="/home">Home</a></li>
+      <li><i class="fa-solid fa-chevron-right"></i></li>
+      <li><a routerLink="/services">Service Center</a></li>
+    </div>
+  </ul>
+</div>
+
+<div class="container">
+  <div class="title">
+    <h1 id="serviceCenter">Service Center</h1>
+    <h1>Welcome to the iSpace service center</h1>
+    <p>
+      We provide quality service and a guarantee for all repairs. You can trust
+      us with your devices!
+    </p>
+    <h2>Choose your service</h2>
+  </div>
+</div>
+
+<div class="service-categorys">
+  @for (service of services; track $index) {
+  <div class="service">
+    <div class="service-image">
+      <img [src]="service.img" alt="serviceIMG1" />
+    </div>
+    <div class="service-title">
+      <span>{{ service.title }}</span>
+    </div>
+    <div class="service-description">
+      <p>
+        {{ service.description }}
+      </p>
+    </div>
+  </div>
+  }
+</div>
+
+<div class="containerRepair">
+  <h2 id="RepairStages">Repair Stages</h2>
+  <div class="repairs">
+    <div class="repair">
+      <img
+        src="https://cdn0.it4profit.com/s3size/rt:fill/w:200/h:200/g:no/el:1/f:webp/plain/s3://cms/image/d5/71/d5715c3dc8b0a805f06659b86a10d536/comp.webp"
+        alt="repair1"
+        class="repair-image"
+      />
+      <div class="repair-text">
+        <p class="repair-text-title">Diagnostics</p>
+        <p class="repair-text-description">
+          Our service engineers inspect the device and carry out a complete
+          diagnosis.
+        </p>
+      </div>
+    </div>
+    <div class="repair">
+      <img
+        src="https://cdn0.it4profit.com/s3size/rt:fill/w:200/h:200/g:no/el:1/f:webp/plain/s3://cms/image/61/14/6114b4addb53b07ff26e3b5b54422a7a/time.webp"
+        alt="repair1"
+        class="repair-image"
+      />
+      <div class="repair-text">
+        <p class="repair-text-title">Coordination</p>
+        <p class="repair-text-description">
+          We agree with you on the terms and cost of repairs.
+        </p>
+      </div>
+    </div>
+    <div class="repair">
+      <img
+        src="https://cdn0.it4profit.com/s3size/rt:fill/w:200/h:200/g:no/el:1/f:webp/plain/s3://cms/image/0b/ce/0bce49daa21d5f40f42cc2aeb8d73a6a/remont.webp"
+        alt="repair1"
+        class="repair-image"
+      />
+      <div class="repair-text">
+        <p class="repair-text-title">Repair</p>
+        <p class="repair-text-description">
+          <span
+            style="font-size: 16px; letter-spacing: normal; color: rgb(0, 0, 0)"
+            >We fix the problem and let you know when it's ready.</span
+          >
+        </p>
+      </div>
+    </div>
+    <div class="repair">
+      <img
+        src="https://cdn0.it4profit.com/s3size/rt:fill/w:200/h:200/g:no/el:1/f:webp/plain/s3://cms/image/74/8d/748d5b84ec093b27cdf7866ddfb999f7/settings.webp"
+        alt="repair1"
+        class="repair-image"
+      />
+      <div class="repair-text">
+        <p class="repair-text-title">Handover</p>
+        <p class="repair-text-description">
+          <span
+            style="font-size: 16px; letter-spacing: normal; color: rgb(0, 0, 0)"
+            >You pick up the repaired device with a warranty.</span
+          >
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-contact-us></app-contact-us>

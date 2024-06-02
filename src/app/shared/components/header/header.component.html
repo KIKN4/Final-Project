@@ -3,44 +3,42 @@
     <div class="headerbar" [style.right]="right">
       <div class="account">
         <ul>
-          <a href="#">
-            <li>
+          <li>
+            <a (click)="closeBar()" routerLink="/home">
               <i class="fa-solid fa-house-chimney"></i>
-            </li>
-          </a>
+            </a>
+          </li>
           <div class="logo">
-            <img src="assets/images/apple-logo.png" alt="logo" />
+            <a (click)="closeBar()" routerLink="/home">
+              <img src="assets/images/apple-logo.png" alt="logo" />
+            </a>
           </div>
 
-          <a href="#">
-            <li>
+          <li>
+            <a (click)="closeBar()" routerLink="">
               <i class="fa-solid fa-user" id="user-mb"></i>
-            </li>
-          </a>
+            </a>
+          </li>
         </ul>
       </div>
       <div class="nav">
         <ul>
-          <a href="#">
-            <li>Home</li>
-          </a>
-          <a href="#">
-            <li>About</li>
-          </a>
-          <a href="#">
-            <li>Products</li>
-          </a>
-          <a href="#">
-            <li>Cart</li>
-          </a>
+          <li (click)="closeBar()"><a routerLink="/home">Home</a></li>
+          <li (click)="closeBar()"><a routerLink="">About</a></li>
+          <li (click)="closeBar()"><a routerLink="/services">Services</a></li>
+          <li (click)="closeBar()"><a routerLink="">Delivery</a></li>
+          <li (click)="closeBar()"><a routerLink="/products">Products</a></li>
+          <li (click)="closeBar()"><a routerLink="">Cart</a></li>
         </ul>
       </div>
     </div>
     <div class="logo">
-      <a href="#"><img src="assets/images/apple-logo.png" alt="logo" /></a>
+      <a routerLink="/home"
+        ><img src="assets/images/apple-logo.png" alt="logo"
+      /></a>
     </div>
     <div id="adress">
-      <h5>iSpace</h5>
+      <a routerLink="/home"><h5>iSpace</h5></a>
     </div>
     <div class="bar">
       <i class="fa solid fa-bars" (click)="burgerBar()"></i>
@@ -53,32 +51,26 @@
     </div>
     <div class="nav">
       <ul>
-        <a href="#">
-          <li>Home</li>
-        </a>
-        <a href="#">
-          <li>About</li>
-        </a>
-        <a href="#">
-          <li>Products</li>
-        </a>
-        <a href="#">
-          <li>Cart</li>
-        </a>
+        <li><a routerLink="/home">Home</a></li>
+        <li><a routerLink="">About</a></li>
+        <li><a routerLink="/services">Services</a></li>
+        <li><a routerLink="">Delivery</a></li>
+        <li><a routerLink="/products">Products</a></li>
+        <li><a routerLink="">Cart</a></li>
       </ul>
     </div>
     <div class="account">
       <ul>
-        <a href="#">
-          <li>
+        <li>
+          <a routerLink="">
             <i class="fa-solid fa-house"></i>
-          </li>
-        </a>
-        <a href="#">
-          <li>
+          </a>
+        </li>
+        <li>
+          <a routerLink="">
             <i class="fa-solid fa-user" id="user-lap"></i>
-          </li>
-        </a>
+          </a>
+        </li>
       </ul>
     </div>
   </div>

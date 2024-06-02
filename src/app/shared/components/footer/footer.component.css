@@ -105,6 +105,10 @@ footer {
 }
 
 @media only screen and (max-width: 530px) {
+  .container {
+    margin: 0;
+  }
+
   .footer-top img {
     width: 150px;
   }

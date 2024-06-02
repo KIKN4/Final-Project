@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+
 * {
   margin: 0;
   padding: 0;
@@ -52,16 +54,16 @@
 }
 
 .nav ul li {
-  font-size: 20px;
+  font-size: 14px;
   line-height: 2rem;
-  font-family: "Courier New", Courier, monospace;
-  padding: 0 15px;
+  font-family: "Montserrat";
+  padding: 0 10px;
   color: #fff;
 }
 
 .account ul li {
   padding: 0 15px;
-  font-size: 28px;
+  font-size: 20px;
 }
 
 .bar i:hover {

@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { WelcomeComponent } from '../../shared/components/welcome/welcome.component';
 import { SliderComponent } from '../../shared/components/slider/slider.component';
 import { CategoryService } from '../../shared/services/productCategory.service';
@@ -8,7 +8,6 @@ import { ApiProduct } from '../../shared/types/apiProduct';
 import { PhoneComponent } from '../../shared/components/phone/phone.component';
 import { ServicesComponent } from '../../shared/components/offer/services.component';
 import { ContactUsComponent } from '../../shared/components/contact-us/contact-us.component';
-import { FooterComponent } from '../../shared/components/footer/footer.component';
 import { TypeofCategory } from '../../shared/types/categoryType';
 
 @Component({
@@ -22,7 +21,6 @@ import { TypeofCategory } from '../../shared/types/categoryType';
     PhoneComponent,
     ServicesComponent,
     ContactUsComponent,
-    FooterComponent,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',

@@ -8,7 +8,6 @@ export class TruncateStringPipe implements PipeTransform {
   transform(value: string, spaces: number = 3): string {
     if (!value) return value;
 
-    // Remove all commas from the string
     value = value.replace(/,/g, '');
 
     const words = value.split(' ');
