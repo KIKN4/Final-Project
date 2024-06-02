@@ -1,0 +1,20 @@
+<div class="dropdown-item">
+  <p class="title-section">{{ title }}</p>
+  <span
+    [style.display]="displayWrap === 'block' ? 'none' : 'block'"
+    class="icon-wrapper"
+    (click)="toggleDisplay()"
+  >
+    <i class="fa-solid fa-chevron-down"></i>
+  </span>
+  <span
+    [style.display]="displayWrap"
+    class="icon-wrapper"
+    (click)="toggleDisplay()"
+  >
+    <i class="fa-solid fa-chevron-up"></i>
+  </span>
+</div>
+<ul [style.display]="displayUl">
+  <ng-content></ng-content>
+</ul>

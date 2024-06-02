@@ -1,0 +1,27 @@
+.dropdown-item {
+  color: #ffffff;
+  font-size: 12px;
+  line-height: 22px;
+  font-family: monospace;
+  margin-top: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.title-section {
+  margin: 0;
+  font-size: 16px;
+  line-height: 22px;
+  letter-spacing: normal;
+}
+
+.icon-wrapper {
+  font-size: 22px;
+  height: 14px;
+}
+
+ul {
+  padding: 0;
+}

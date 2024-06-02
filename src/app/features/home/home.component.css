@@ -1,0 +1,40 @@
+/* app-welcome */
+
+.welcome-container {
+  margin: 150px 50px;
+  text-align: center;
+}
+
+.welcoming-text {
+  font-size: 1.3rem;
+  font-weight: 700;
+  font-family: "Courier New", Courier, monospace;
+}
+
+img {
+  max-width: 1200px;
+  width: 100%;
+}
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+h2 {
+  font-size: 2rem;
+  margin: 50px;
+  padding: 5px;
+  text-align: center;
+  font-family: "Courier New", Courier, monospace;
+}
+
+app-product-category {
+  max-height: 240px;
+}
+
+app-services {
+  max-height: 150px;
+}

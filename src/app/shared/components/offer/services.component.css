@@ -1,0 +1,45 @@
+.offer-container {
+  margin-top: 50px;
+  margin-right: auto;
+  margin-left: auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.card-offer {
+  cursor: pointer;
+  margin: 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  max-width: 200px;
+  min-height: 150px;
+  padding: 25px;
+  background-color: rgb(251, 251, 251);
+  border-radius: 40px;
+}
+
+.card-offer:hover {
+  box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.1);
+}
+
+img {
+  width: 40px;
+  margin: 0 auto;
+  height: 40px;
+}
+
+span {
+  margin-top: 10px;
+  display: inline-block;
+  width: 100%;
+  height: 20px;
+  color: #0a84ff;
+  font-weight: 700;
+}
+
+p {
+  font-weight: 100;
+  font-size: small;
+}

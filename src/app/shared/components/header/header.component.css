@@ -1,0 +1,146 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  list-style: none;
+  text-decoration: none;
+  color: #fff;
+}
+
+.headerbar {
+  display: none;
+}
+
+.bar {
+  display: none;
+}
+
+.logo img {
+  width: 40px;
+}
+
+#adress h5 {
+  font-size: 1.9rem;
+  text-align: center;
+  font-family: "Courier New", Courier, monospace;
+  margin: 0 10px;
+  min-width: 150px;
+}
+
+.header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 80px;
+  z-index: 4;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  background-color: #1d1d1f;
+  border-bottom: 10px;
+  box-shadow: 0px 5px 20px 1px rgba(198, 198, 198, 0.968);
+}
+
+.header ul {
+  display: flex;
+  align-items: center;
+}
+
+.header ul li:hover {
+  color: rgb(81, 79, 79);
+}
+
+.nav ul li {
+  font-size: 20px;
+  line-height: 2rem;
+  font-family: "Courier New", Courier, monospace;
+  padding: 0 15px;
+  color: #fff;
+}
+
+.account ul li {
+  padding: 0 15px;
+  font-size: 28px;
+}
+
+.bar i:hover {
+  color: rgb(245, 237, 237);
+}
+
+@media only screen and (max-width: 780px) {
+  .header .nav,
+  .header .account {
+    display: none;
+  }
+
+  .search {
+    width: 60vw;
+  }
+
+  .bar {
+    display: block;
+    cursor: pointer;
+  }
+
+  .headerbar {
+    z-index: 3;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    right: -100%;
+    transition: all 0.5s;
+    background-color: #1d1d1f;
+  }
+
+  .headerbar .account,
+  .headerbar .nav {
+    display: block;
+    font-size: 18pxx;
+  }
+
+  .fa-bars {
+    font-size: 25px;
+  }
+
+  .bar .fa-xmark {
+    z-index: 3;
+    display: none;
+    top: 20px;
+    right: 5w;
+    position: absolute;
+    font-size: 25px;
+  }
+
+  .headerbar .nav ul {
+    flex-direction: column;
+    margin-top: 50px;
+    text-align: center;
+    gap: 30px;
+  }
+
+  .headerbar .nav li {
+    width: 96vw;
+    margin: 10px 0;
+    padding: 15px 30px;
+
+    border-bottom: 2px solid rgba(108, 107, 107, 0.5);
+    font-size: 22px;
+    margin-top: 5px;
+  }
+
+  .headerbar .account {
+    line-height: 40px;
+    margin-top: 60px;
+    background-color: rgb(93, 93, 93);
+    padding: 15px;
+  }
+
+  .headerbar .account ul {
+    justify-content: space-between;
+  }
+}

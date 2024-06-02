@@ -1,0 +1,27 @@
+<app-welcome>
+  <div class="welcome-container">
+    <div class="welcoming-text">
+      <h3>Welcome to the I Space Store</h3>
+      <p>
+        Download the app to acces everything I Space.
+        <span>Get Your Great</span>
+      </p>
+    </div>
+    <div class="welcome-image">
+      <img src="assets/images/products.webp" alt="" />
+    </div>
+  </div>
+</app-welcome>
+<app-slider></app-slider>
+<app-welcome>
+  <h2>You can buy two types of products</h2>
+</app-welcome>
+<div class="container">
+  @for(product of productsByCategory; track product.name){
+  <app-product-category [productCategory]="product"></app-product-category>
+  }
+</div>
+
+<app-services></app-services>
+<app-contact-us></app-contact-us>
+<app-footer></app-footer>

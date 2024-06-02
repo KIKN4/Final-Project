@@ -1,0 +1,85 @@
+<header [style.overflow]="overflow">
+  <div class="header">
+    <div class="headerbar" [style.right]="right">
+      <div class="account">
+        <ul>
+          <a href="#">
+            <li>
+              <i class="fa-solid fa-house-chimney"></i>
+            </li>
+          </a>
+          <div class="logo">
+            <img src="assets/images/apple-logo.png" alt="logo" />
+          </div>
+
+          <a href="#">
+            <li>
+              <i class="fa-solid fa-user" id="user-mb"></i>
+            </li>
+          </a>
+        </ul>
+      </div>
+      <div class="nav">
+        <ul>
+          <a href="#">
+            <li>Home</li>
+          </a>
+          <a href="#">
+            <li>About</li>
+          </a>
+          <a href="#">
+            <li>Products</li>
+          </a>
+          <a href="#">
+            <li>Cart</li>
+          </a>
+        </ul>
+      </div>
+    </div>
+    <div class="logo">
+      <a href="#"><img src="assets/images/apple-logo.png" alt="logo" /></a>
+    </div>
+    <div id="adress">
+      <h5>iSpace</h5>
+    </div>
+    <div class="bar">
+      <i class="fa solid fa-bars" (click)="burgerBar()"></i>
+      <i
+        class="fa solid fa-xmark"
+        id="hdcross"
+        (click)="closeBar()"
+        [style.display]="display"
+      ></i>
+    </div>
+    <div class="nav">
+      <ul>
+        <a href="#">
+          <li>Home</li>
+        </a>
+        <a href="#">
+          <li>About</li>
+        </a>
+        <a href="#">
+          <li>Products</li>
+        </a>
+        <a href="#">
+          <li>Cart</li>
+        </a>
+      </ul>
+    </div>
+    <div class="account">
+      <ul>
+        <a href="#">
+          <li>
+            <i class="fa-solid fa-house"></i>
+          </li>
+        </a>
+        <a href="#">
+          <li>
+            <i class="fa-solid fa-user" id="user-lap"></i>
+          </li>
+        </a>
+      </ul>
+    </div>
+  </div>
+</header>

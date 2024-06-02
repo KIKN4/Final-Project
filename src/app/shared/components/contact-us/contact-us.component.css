@@ -1,0 +1,88 @@
+.container {
+  padding: 50px 0;
+  margin-top: 100px;
+  background-color: #fafafa;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: start;
+}
+
+h2 {
+  margin-bottom: 50px;
+  font-size: 25px;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.about-us {
+  display: flex;
+  gap: 100px;
+}
+
+.row {
+  padding: 30px;
+  border-left: 0.1px solid #d6d6d6;
+}
+
+.row div {
+  margin: 35px 0;
+}
+
+.row div h4 {
+  margin: 10px 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.row div p {
+  margin: 10px 0;
+  color: #7f8389;
+}
+
+.row div span {
+  margin: 10px 0;
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: -0.14px;
+  color: #007aff;
+}
+
+.contact {
+  margin-top: 30px;
+}
+
+.contact .fa-message {
+  color: #007aff;
+  margin-right: 20px;
+  font-size: 30px;
+}
+
+.contact button {
+  border: none;
+  outline: none;
+  width: 230px;
+  height: 50px;
+  border-radius: 30px;
+  font-size: 1.3rem;
+  color: #fff;
+  background-color: #007aff;
+}
+
+@media only screen and (max-width: 795px) {
+  .about-us {
+    flex-direction: column;
+    justify-content: center;
+    gap: 0px;
+  }
+
+  .row {
+    padding: 0;
+    border-left: 0;
+    border-top: 0.1px solid #d6d6d6;
+  }
+
+  .row div {
+    margin: 20px 0;
+  }
+}
