@@ -66,6 +66,11 @@ footer {
   color: #ffffff;
 }
 
+.menu-item .menu-item-link:hover {
+  color: #0075de;
+  box-shadow: #0075de;
+}
+
 /* for mobile */
 
 .footer-mobile-container {

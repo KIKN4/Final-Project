@@ -1,0 +1,67 @@
+<div class="location">
+  <ul>
+    <div>
+      <li><a routerLink="/home">Home</a></li>
+      <li><i class="fa-solid fa-chevron-right"></i></li>
+
+      <li [style]="displaySI">
+        <a routerLink="/signin" routerLinkActive="isActive">Sign In</a>
+      </li>
+      @if (displaySU) {
+      <li><a routerLink="/signin" routerLinkActive="isActive">Sign Up</a></li>
+      }
+    </div>
+  </ul>
+</div>
+
+<div class="main-container">
+  <div [classList]="classList" [id]="container">
+    <div class="form-container sign-up">
+      <form>
+        <h1>Create Account</h1>
+        <input type="text" placeholder="FirstName" />
+        <input type="password" placeholder="LastName" />
+        <input type="email" placeholder="Email" />
+        <input type="password" placeholder="Password" />
+        <input type="password" placeholder="Cofnirm Password" />
+        <a class="BUTTON">Sign Up</a>
+      </form>
+    </div>
+    <div class="form-container sign-in">
+      <form>
+        <h1>Sign In</h1>
+        <input type="email" placeholder="Email" />
+        <input type="password" placeholder="Password" />
+        <a href="#">Forget Your Password?</a>
+        <a class="BUTTON">Sign In</a>
+      </form>
+    </div>
+    <div class="toggle-container">
+      <div class="toggle">
+        <div class="toggle-panel toggle-left">
+          <img
+            style="width: 280px"
+            src="https://portbakumall.az/resized/fit1600x900/center/pages/88/ispace-1.png"
+            alt=""
+          />
+          <p>Enter your personal details to use all of site features</p>
+          <a class="BUTTON hidden" [id]="loginBtn" (click)="removeActive()">
+            Sign In
+          </a>
+        </div>
+        <div class="toggle-panel toggle-right">
+          <!-- <img
+            style="width: 170px"
+            src="https://portbakumall.az/resized/fit1600x900/center/pages/88/ispace-1.png"
+            alt=""
+          /> -->
+          <h1>Register</h1>
+          <p>Register with your personal details to use all of site features</p>
+          <a class="BUTTON hidden" [id]="register" (click)="addActive()">
+            Sign Up
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
