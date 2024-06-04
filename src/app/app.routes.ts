@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './features/home/home.component';
+import { ProductDetailComponent } from './features/product-detail/product-detail.component';
 
 export const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -24,6 +25,7 @@ export const routes: Routes = [
         (m) => m.SignInComponent
       ),
   },
+  { path: 'product', component: ProductDetailComponent },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: '**', redirectTo: 'home', pathMatch: 'full' },
 ];

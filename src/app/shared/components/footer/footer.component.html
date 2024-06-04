@@ -84,7 +84,7 @@
             <li class="menu-item info">Phones</li>
             @for (item of phones; track item._id) {
             <li class="menu-item">
-              <a href="#" class="menu-item-link">{{
+              <a routerLink="/product" class="menu-item-link">{{
                 item.title | truncateString : 3
               }}</a>
             </li>
@@ -158,7 +158,7 @@
       <app-dropdown-item title="Phones">
         @for (phone of phones; track phone._id) {
         <li class="text-body-3">
-          <a class="mobile-menu-item" href="#"
+          <a class="mobile-menu-item"
             >{{ capitalizeFirstLetter(phone.title) | truncateString : 3 }}
           </a>
         </li>

@@ -8,7 +8,12 @@ import { LaptopService } from '../../services/laptop.service';
 import { BrandsService } from '../../services/brands.service';
 import { DropdownItemComponent } from '../dropdown-item/dropdown-item.component';
 import { TruncateStringPipe } from '../../pipes/truncate-string.pipe';
-import { NavigationEnd, Router, RouterLink } from '@angular/router';
+import {
+  ActivatedRoute,
+  NavigationEnd,
+  Router,
+  RouterLink,
+} from '@angular/router';
 
 @Component({
   selector: 'app-footer',
@@ -33,6 +38,7 @@ export class FooterComponent implements OnInit {
   private categoryService = inject(CategoryService);
   private brandsService = inject(BrandsService);
   private router = inject(Router);
+  private activatedRoute = inject(ActivatedRoute);
 
   ngOnInit() {
     this.phoneService.getPhones().subscribe((response) => {
@@ -52,6 +58,15 @@ export class FooterComponent implements OnInit {
       if (event instanceof NavigationEnd) {
         window.scrollTo(0, 0);
       }
+      this.activatedRoute.queryParams.subscribe(() => {
+        window.scrollTo(0, 0);
+      });
+      this.activatedRoute.params.subscribe(() => {
+        window.scrollTo(0, 0);
+      });
+      this.activatedRoute.data.subscribe(() => {
+        window.scrollTo(0, 0);
+      });
     });
   }
 

@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-sign-in',
@@ -18,13 +18,23 @@ export class SignInComponent {
   loginBtn = 'login';
   classList = 'container';
 
+  private router = inject(Router);
+
   addActive() {
+    this.router.navigate(['signin'], {
+      queryParams: { register: 'signUp' },
+    });
+
     this.displaySI = 'display: none;';
     this.classList = 'container active';
     this.displaySU = true;
   }
 
   removeActive() {
+    this.router.navigate(['signin'], {
+      queryParams: {},
+    });
+
     this.displaySI = 'display: block;';
     this.displaySU = false;
     this.classList = 'container';
