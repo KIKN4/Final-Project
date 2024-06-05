@@ -1,0 +1,133 @@
+<div class="location">
+  <ul>
+    <div>
+      <li><a routerLink="/home">Home</a></li>
+      <li><i class="fa-solid fa-chevron-right"></i></li>
+
+      <li [style]="displaySI">
+        <a routerLink="/signin" routerLinkActive="isActive">Sign In</a>
+      </li>
+      @if (displaySU) {
+      <li><a routerLink="/signin" routerLinkActive="isActive">Sign Up</a></li>
+      }
+    </div>
+  </ul>
+</div>
+
+<div class="main-container">
+  <div [classList]="classList" [id]="container">
+    <!-- sign up -->
+    <div class="form-container sign-up">
+      <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+        <h1>Create Account</h1>
+        <input
+          type="text"
+          placeholder="FirstName"
+          required
+          formControlName="firstName"
+        />
+        @if(controls.firstName.dirty){
+        @if(controls.firstName.errors?.["maxlength"]){
+        <div class="text-danger">
+          name is too long maximum length is
+          {{controls.firstName.errors?.['maxlength']['requiredLength']}}
+        </div>
+        } @if(controls.firstName.errors?.["required"]){
+        <div class="text-danger">Name is Required!</div>
+        } }
+        <input
+          type="password"
+          placeholder="LastName"
+          formControlName="lastName"
+        />
+        @if(controls.lastName.dirty){
+        @if(controls.lastName.errors?.["maxlength"]){
+        <div class="text-danger">
+          Last name is too long maximum length is
+          {{controls.lastName.errors?.['maxlength']['requiredLength']}}
+        </div>
+        } @if(controls.lastName.errors?.["required"]){
+        <div class="text-danger">Last name is Required!</div>
+        } }
+        <input type="email" placeholder="Email" formControlName="email" />
+        <input
+          type="password"
+          placeholder="Password"
+          formControlName="password"
+        />
+        <input
+          type="password"
+          placeholder="Confirm Password"
+          formControlName="confirmPassword"
+        />
+        @if (controls.confirmPassword.dirty &&
+        controls.confirmPassword.errors?.['confirmPass']) {
+        <div class="text-danger">
+          {{controls.confirmPassword.errors?.['confirmPass']}}
+        </div>
+        }
+        <button class="BUTTON" [disabled]="signupForm.invalid">Sign Up</button>
+      </form>
+    </div>
+    <!-- end of sign up -->
+    <!-- sign in -->
+    <div class="form-container sign-in">
+      <form>
+        <h1>Sign In</h1>
+        <input
+          type="email"
+          placeholder="Email"
+          name="email"
+          [(ngModel)]="email"
+          required
+          #emailCtr="ngModel"
+        />
+        @if ( emailCtr.dirty && !email.includes('@')) {
+        <div class="text-danger">Email is required!</div>
+        }
+        <input
+          type="password"
+          placeholder="Password"
+          name="password"
+          [(ngModel)]="password"
+          required
+          #passwordCtrl="ngModel"
+        />
+        @if (passwordCtrl.invalid && passwordCtrl.dirty) {
+        <div class="text-danger">Password is required!</div>
+        }
+        <a href="#">Forget Your Password?</a>
+        <button
+          class="BUTTON"
+          (click)="onSignIn(email, password)"
+          [disabled]="emailCtr.invalid || passwordCtrl.invalid"
+        >
+          Sign In
+        </button>
+      </form>
+    </div>
+    <!-- end of sign in -->
+    <div class="toggle-container">
+      <div class="toggle">
+        <div class="toggle-panel toggle-left">
+          <img
+            style="width: 280px"
+            src="https://portbakumall.az/resized/fit1600x900/center/pages/88/ispace-1.png"
+            alt=""
+          />
+          <p>Enter your personal details to use all of site features</p>
+          <a class="BUTTON hidden" [id]="loginBtn" (click)="removeActive()">
+            Sign In
+          </a>
+        </div>
+        <div class="toggle-panel toggle-right">
+          <h1>Register</h1>
+          <p>Register with your personal details to use all of site features</p>
+          <a class="BUTTON hidden" [id]="register" (click)="addActive()">
+            Sign Up
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

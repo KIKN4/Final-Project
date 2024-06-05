@@ -21,7 +21,7 @@ export const routes: Routes = [
   {
     path: 'signin',
     loadComponent: () =>
-      import('./features/sign-in/sign-in.component').then(
+      import('./features/auth/sign-in/sign-in.component').then(
         (m) => m.SignInComponent
       ),
   },

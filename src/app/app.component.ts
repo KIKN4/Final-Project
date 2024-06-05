@@ -1,5 +1,10 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, OnInit, inject } from '@angular/core';
+import {
+  ActivatedRoute,
+  NavigationEnd,
+  Router,
+  RouterOutlet,
+} from '@angular/router';
 import { HeaderComponent } from './shared/components/header/header.component';
 import { FooterComponent } from './shared/components/footer/footer.component';
 
@@ -10,6 +15,24 @@ import { FooterComponent } from './shared/components/footer/footer.component';
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
-export class AppComponent {
-  title = 'FinalProject';
+export class AppComponent implements OnInit {
+  private router = inject(Router);
+  private activatedRoute = inject(ActivatedRoute);
+
+  ngOnInit(): void {
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        window.scrollTo(0, 0);
+      }
+      this.activatedRoute.queryParams.subscribe((queryParams) => {
+        window.scrollTo(0, 0);
+      });
+      this.activatedRoute.params.subscribe((params) => {
+        window.scrollTo(0, 0);
+      });
+      this.activatedRoute.data.subscribe((data) => {
+        window.scrollTo(0, 0);
+      });
+    });
+  }
 }
