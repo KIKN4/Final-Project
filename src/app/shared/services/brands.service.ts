@@ -1,13 +1,21 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
+import { ENVIRONMENT } from '../environments/environment';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class BrandsService {
-  baseUrl = 'https://api.everrest.educata.dev/shop/products/brands';
+  private httpClient = inject(HttpClient);
+  private env = inject(ENVIRONMENT);
 
-  constructor(private http: HttpClient) {}
+  baseUrl = `${this.env.apiURL}/shop/products/brands`;
+  brands$ = new BehaviorSubject<string[]>([]);
 
   getBrands() {
-    return this.http.get<any>(`${this.baseUrl}`);
+    return this.httpClient
+      .get<string[]>(`${this.baseUrl}`)
+      .subscribe((response) => {
+        this.brands$.next(response);
+      });
   }
 }

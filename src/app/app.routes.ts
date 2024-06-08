@@ -25,7 +25,13 @@ export const routes: Routes = [
         (m) => m.SignInComponent
       ),
   },
-  { path: 'product', component: ProductDetailComponent },
+  {
+    path: 'product/:id',
+    loadComponent: () =>
+      import('./features/product-detail/product-detail.component').then(
+        (m) => m.ProductDetailComponent
+      ),
+  },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: '**', redirectTo: 'home', pathMatch: 'full' },
 ];

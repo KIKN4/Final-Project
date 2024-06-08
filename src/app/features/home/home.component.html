@@ -17,7 +17,7 @@
   <h2>You can buy two types of products</h2>
 </app-welcome>
 <div class="container">
-  @for(product of productsByCategory; track product.name){
+  @for(product of productsByCategory$ | async; track product.name){
   <app-product-category [productCategory]="product"></app-product-category>
   }
 </div>

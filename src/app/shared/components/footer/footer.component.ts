@@ -1,10 +1,7 @@
-import { CommonModule } from '@angular/common';
+import { AsyncPipe, CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
-import { PhoneService } from '../../services/Phone.service';
-import { ApiProduct } from '../../types/apiProduct';
+import { PhoAndLapService } from '../../services/category.service';
 import { CategoryService } from '../../services/productCategory.service';
-import { TypeofCategory } from '../../types/categoryType';
-import { LaptopService } from '../../services/laptop.service';
 import { BrandsService } from '../../services/brands.service';
 import { DropdownItemComponent } from '../dropdown-item/dropdown-item.component';
 import { TruncateStringPipe } from '../../pipes/truncate-string.pipe';
@@ -18,34 +15,27 @@ import { RouterLink } from '@angular/router';
     DropdownItemComponent,
     TruncateStringPipe,
     RouterLink,
+    AsyncPipe,
   ],
   templateUrl: './footer.component.html',
   styleUrl: './footer.component.css',
 })
 export class FooterComponent implements OnInit {
-  categories: TypeofCategory[] = [];
-  brands: string[] = [];
-  phones: ApiProduct[] = [];
-  laptops: ApiProduct[] = [];
-
   private categoryService = inject(CategoryService);
   private brandsService = inject(BrandsService);
-  private phoneService = inject(PhoneService);
-  private laptopService = inject(LaptopService);
+  private phoneService = inject(PhoAndLapService);
+  private laptopService = inject(PhoAndLapService);
+
+  categories$ = this.categoryService.categories$;
+  brands$ = this.brandsService.brands$;
+  phones$ = this.phoneService.phones$;
+  laptops$ = this.laptopService.laptops$;
 
   ngOnInit() {
-    this.phoneService.getPhones().subscribe((response) => {
-      this.phones = response.products;
-    });
-    this.categoryService.getCategorys().subscribe((response) => {
-      this.categories = response;
-    });
-    this.laptopService.getLaptops().subscribe((response) => {
-      this.laptops = response.products;
-    });
-    this.brandsService.getBrands().subscribe((response) => {
-      this.brands = response;
-    });
+    this.categoryService.getCategorys();
+    this.phoneService.getPhones();
+    this.laptopService.getLaptops();
+    this.brandsService.getBrands();
   }
 
   capitalizeFirstLetter(value: string): string {

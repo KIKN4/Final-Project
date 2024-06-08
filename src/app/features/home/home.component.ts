@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { WelcomeComponent } from '../../shared/components/welcome/welcome.component';
 import { SliderComponent } from '../../shared/components/slider/slider.component';
 import { CategoryService } from '../../shared/services/productCategory.service';
@@ -9,6 +9,7 @@ import { PhoneComponent } from '../../shared/components/phone/phone.component';
 import { ServicesComponent } from '../../shared/components/offer/services.component';
 import { ContactUsComponent } from '../../shared/components/contact-us/contact-us.component';
 import { TypeofCategory } from '../../shared/types/categoryType';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-home',
@@ -21,19 +22,18 @@ import { TypeofCategory } from '../../shared/types/categoryType';
     PhoneComponent,
     ServicesComponent,
     ContactUsComponent,
+    AsyncPipe,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
 export class HomeComponent implements OnInit {
-  productsByCategory: TypeofCategory[] = [];
+  private readonly productsService = inject(CategoryService);
+
+  productsByCategory$ = this.productsService.categories$;
   phonesCategory: ApiProduct[] = [];
 
-  constructor(private productsService: CategoryService) {}
-
   ngOnInit() {
-    this.productsService.getCategorys().subscribe((response) => {
-      this.productsByCategory = response;
-    });
+    this.productsService.getCategorys();
   }
 }

@@ -11,6 +11,7 @@ export class TruncateStringPipe implements PipeTransform {
     value = value.replace(/,/g, '');
 
     const words = value.split(' ');
+
     let spaceCount = 0;
     let truncated = '';
 

@@ -35,11 +35,7 @@
         } @if(controls.firstName.errors?.["required"]){
         <div class="text-danger">Name is Required!</div>
         } }
-        <input
-          type="password"
-          placeholder="LastName"
-          formControlName="lastName"
-        />
+        <input type="text" placeholder="LastName" formControlName="lastName" />
         @if(controls.lastName.dirty){
         @if(controls.lastName.errors?.["maxlength"]){
         <div class="text-danger">
@@ -50,6 +46,10 @@
         <div class="text-danger">Last name is Required!</div>
         } }
         <input type="email" placeholder="Email" formControlName="email" />
+        @if(controls.email.dirty && controls.email.errors){
+        <div class="text-danger">Email is not valid!</div>
+
+        }
         <input
           type="password"
           placeholder="Password"

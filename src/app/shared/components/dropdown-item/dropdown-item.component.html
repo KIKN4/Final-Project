@@ -15,6 +15,6 @@
     <i class="fa-solid fa-chevron-up"></i>
   </span>
 </div>
-<ul [style.display]="displayUl">
+<ul [style.display]="displayUl" (click)="toggleDisplay()">
   <ng-content></ng-content>
 </ul>

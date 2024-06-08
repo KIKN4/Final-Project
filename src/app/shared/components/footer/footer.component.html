@@ -1,179 +1,179 @@
-<footer>
-  <div class="container">
-    <div class="footer-top">
-      <div class="footer-top-logo">
-        <a href="">
-          <img
-            src="https://cdn0.it4profit.com/s3/cms/image/a7/ba/a7baab0fd849345d8f5762686c6a8e19/logo_3.webp"
-            alt=""
-          />
-        </a>
-      </div>
-      <div>
-        <i class="fa-brands fa-facebook"></i>
-        <i class="fa-brands fa-instagram"></i>
-        <i class="fa-brands fa-linkedin"></i>
-      </div>
+<div class="container">
+  <div class="footer-top">
+    <div class="footer-top-logo">
+      <a href="">
+        <img
+          src="https://cdn0.it4profit.com/s3/cms/image/a7/ba/a7baab0fd849345d8f5762686c6a8e19/logo_3.webp"
+          alt=""
+        />
+      </a>
     </div>
-    <hr class="footer-line" />
-    <div class="footer-container">
-      <div class="footer-menu-container">
-        <div class="dflex">
-          <ul class="text-body">
-            <li class="menu-item info">Information</li>
-            <li class="menu-item">
-              <a class="menu-item-link" href="#">Delivery </a>
-            </li>
-            <li class="menu-item">
-              <a class="menu-item-link" href="#">Installment</a>
-            </li>
-            <li class="menu-item">
-              <a class="menu-item-link" href="#">About us</a>
-            </li>
-            <li class="menu-item">
-              <a class="menu-item-link" href="#">Terms and Conditions of Use</a>
-            </li>
-            <li class="menu-item">
-              <a class="menu-item-link" href="#">Confidentialy</a>
-            </li>
-          </ul>
-        </div>
-        <div class="dflex">
-          <ul class="text-body">
-            <li class="menu-item info">Services</li>
-            <li class="menu-item">
-              <a class="menu-item-link" routerLink="/services">Services </a>
-            </li>
-            <li class="menu-item">
-              <a class="menu-item-link" href="#">Trade-in</a>
-            </li>
-            <li class="menu-item">
-              <a class="menu-item-link" href="#">Customer Card</a>
-            </li>
-          </ul>
-        </div>
-        <div class="dflex">
-          <ul class="text-body">
-            <li class="menu-item info">Products</li>
-            @for (item of categories; track item.id) {
-            <li class="menu-item">
-              <a href="#" class="menu-item-link">{{
-                capitalizeFirstLetter(item.name)
-              }}</a>
-            </li>
-            }
-          </ul>
-        </div>
-      </div>
-      <hr _ngcontent-ng-c2637773198="" class="footer-line" />
-      <div class="footer-menu-container">
-        <div class="dflex">
-          <ul class="text-body">
-            <li class="menu-item info">Brands</li>
-            @for (item of brands; track $index) {
-            <li class="menu-item">
-              <a href="#" class="menu-item-link">{{
-                capitalizeFirstLetter(item)
-              }}</a>
-            </li>
-            }
-          </ul>
-        </div>
-        <div class="dflex">
-          <ul class="text-body">
-            <li class="menu-item info">Phones</li>
-            @for (item of phones; track item._id) {
-            <li class="menu-item">
-              <a routerLink="/product" class="menu-item-link">{{
-                item.title | truncateString : 3
-              }}</a>
-            </li>
-            }
-          </ul>
-        </div>
-        <div class="dflex">
-          <ul class="text-body">
-            <li class="menu-item info">Laptops</li>
-            @for (item of laptops; track item._id) {
-            <li class="menu-item">
-              <a href="#" class="menu-item-link">{{
-                item.title | truncateString : 3
-              }}</a>
-            </li>
-            }
-          </ul>
-        </div>
-      </div>
-    </div>
-    <div class="footer-mobile-container">
-      <app-dropdown-item title="Information">
-        <li class="text-body-3">
-          <a class="mobile-menu-item" href="#">Delivery</a>
-        </li>
-        <li class="text-body-3">
-          <a class="mobile-menu-item" href="#">Installment</a>
-        </li>
-        <li class="text-body-3">
-          <a class="mobile-menu-item" href="#">About us</a>
-        </li>
-        <li class="text-body-3">
-          <a class="mobile-menu-item" href="#">Terms and Conditions of Use</a>
-        </li>
-        <li class="text-body-3">
-          <a class="mobile-menu-item" href="#">Confidentiality</a>
-        </li>
-      </app-dropdown-item>
-      <app-dropdown-item title="Services">
-        <li class="text-body-3">
-          <a class="mobile-menu-item" href="#">Consultation</a>
-        </li>
-        <li class="text-body-3">
-          <a class="mobile-menu-item" href="#">Support</a>
-        </li>
-        <li class="text-body-3">
-          <a class="mobile-menu-item" href="#">Maintenance</a>
-        </li>
-        <li class="text-body-3">
-          <a class="mobile-menu-item" routerLink="/services">Custom Services</a>
-        </li>
-      </app-dropdown-item>
-      <app-dropdown-item title="Products">
-        @for (item of categories; track item.id) {
-        <li class="text-body-3">
-          <a class="mobile-menu-item" href="#"
-            >{{ capitalizeFirstLetter(item.name) }}
-          </a>
-        </li>
-        }
-      </app-dropdown-item>
-      <app-dropdown-item title="Brands">
-        @for (brand of brands; track $index) {
-        <li class="text-body-3">
-          <a class="mobile-menu-item" href="#"
-            >{{ capitalizeFirstLetter(brand) }}
-          </a>
-        </li>
-        }
-      </app-dropdown-item>
-      <app-dropdown-item title="Phones">
-        @for (phone of phones; track phone._id) {
-        <li class="text-body-3">
-          <a class="mobile-menu-item"
-            >{{ capitalizeFirstLetter(phone.title) | truncateString : 3 }}
-          </a>
-        </li>
-        }
-      </app-dropdown-item>
-
-      <app-dropdown-item title="Laptops">
-        @for (laptop of laptops; track laptop._id) {
-        <li class="text-body-3">
-          <a class="mobile-menu-item" href="#"
-            >{{ capitalizeFirstLetter(laptop.title) | truncateString : 3 }}
-          </a>
-        </li>
-        }
-      </app-dropdown-item>
+    <div>
+      <i class="fa-brands fa-facebook"></i>
+      <i class="fa-brands fa-instagram"></i>
+      <i class="fa-brands fa-linkedin"></i>
     </div>
   </div>
-</footer>
+  <hr class="footer-line" />
+  <div class="footer-container">
+    <div class="footer-menu-container">
+      <div class="dflex">
+        <ul class="text-body">
+          <li class="menu-item info">Information</li>
+          <li class="menu-item">
+            <a class="menu-item-link" href="#">Delivery </a>
+          </li>
+          <li class="menu-item">
+            <a class="menu-item-link" href="#">Installment</a>
+          </li>
+          <li class="menu-item">
+            <a class="menu-item-link" href="#">About us</a>
+          </li>
+          <li class="menu-item">
+            <a class="menu-item-link" href="#">Terms and Conditions of Use</a>
+          </li>
+          <li class="menu-item">
+            <a class="menu-item-link" href="#">Confidentialy</a>
+          </li>
+        </ul>
+      </div>
+      <div class="dflex">
+        <ul class="text-body">
+          <li class="menu-item info">Services</li>
+          <li class="menu-item">
+            <a class="menu-item-link" routerLink="/services">Services </a>
+          </li>
+          <li class="menu-item">
+            <a class="menu-item-link" href="#">Trade-in</a>
+          </li>
+          <li class="menu-item">
+            <a class="menu-item-link" href="#">Customer Card</a>
+          </li>
+        </ul>
+      </div>
+      <div class="dflex">
+        <ul class="text-body">
+          <li class="menu-item info">Products</li>
+          @for (item of categories$ | async; track item.id) {
+          <li class="menu-item">
+            <a href="#" class="menu-item-link">{{
+              capitalizeFirstLetter(item.name)
+            }}</a>
+          </li>
+          }
+        </ul>
+      </div>
+    </div>
+    <hr _ngcontent-ng-c2637773198="" class="footer-line" />
+    <div class="footer-menu-container">
+      <div class="dflex">
+        <ul class="text-body">
+          <li class="menu-item info">Brands</li>
+          @for (brand of brands$ | async; track $index) {
+          <li class="menu-item">
+            <a href="#" class="menu-item-link">{{
+              capitalizeFirstLetter(brand)
+            }}</a>
+          </li>
+          }
+        </ul>
+      </div>
+      <div class="dflex">
+        <ul class="text-body">
+          <li class="menu-item info">Phones</li>
+          @for (phone of phones$ | async; track phone._id) {
+          <li class="menu-item">
+            <a
+              [routerLink]="['/', 'product', phone._id]"
+              class="menu-item-link"
+              >{{ phone.title | truncateString : 3 }}</a
+            >
+          </li>
+          }
+        </ul>
+      </div>
+      <div class="dflex">
+        <ul class="text-body">
+          <li class="menu-item info">Laptops</li>
+          @for (laptop of laptops$ | async; track laptop._id) {
+          <li class="menu-item">
+            <a href="#" class="menu-item-link">{{
+              laptop.title | truncateString : 3
+            }}</a>
+          </li>
+          }
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer-mobile-container">
+    <app-dropdown-item title="Information">
+      <li class="text-body-3">
+        <a class="mobile-menu-item" href="#">Delivery</a>
+      </li>
+      <li class="text-body-3">
+        <a class="mobile-menu-item" href="#">Installment</a>
+      </li>
+      <li class="text-body-3">
+        <a class="mobile-menu-item" href="#">About us</a>
+      </li>
+      <li class="text-body-3">
+        <a class="mobile-menu-item" href="#">Terms and Conditions of Use</a>
+      </li>
+      <li class="text-body-3">
+        <a class="mobile-menu-item" href="#">Confidentiality</a>
+      </li>
+    </app-dropdown-item>
+    <app-dropdown-item title="Services">
+      <li class="text-body-3">
+        <a class="mobile-menu-item" href="#">Consultation</a>
+      </li>
+      <li class="text-body-3">
+        <a class="mobile-menu-item" href="#">Support</a>
+      </li>
+      <li class="text-body-3">
+        <a class="mobile-menu-item" href="#">Maintenance</a>
+      </li>
+      <li class="text-body-3">
+        <a class="mobile-menu-item" routerLink="/services">Custom Services</a>
+      </li>
+    </app-dropdown-item>
+    <app-dropdown-item title="Products">
+      @for (item of categories$ | async; track item.id) {
+      <li class="text-body-3">
+        <a class="mobile-menu-item" href="#"
+          >{{ capitalizeFirstLetter(item.name) }}
+        </a>
+      </li>
+      }
+    </app-dropdown-item>
+    <app-dropdown-item title="Brands">
+      @for (brand of brands$ | async; track $index) {
+      <li class="text-body-3">
+        <a class="mobile-menu-item" href="#"
+          >{{ capitalizeFirstLetter(brand) }}
+        </a>
+      </li>
+      }
+    </app-dropdown-item>
+    <app-dropdown-item title="Phones">
+      @for (phone of phones$ | async; track phone._id) {
+      <li class="text-body-3">
+        <a class="mobile-menu-item" [routerLink]="['/', 'product', phone._id]"
+          >{{ capitalizeFirstLetter(phone.title) | truncateString : 3 }}
+        </a>
+      </li>
+      }
+    </app-dropdown-item>
+
+    <app-dropdown-item title="Laptops">
+      @for (laptop of laptops$ | async; track laptop._id) {
+      <li class="text-body-3">
+        <a class="mobile-menu-item" href="#"
+          >{{ capitalizeFirstLetter(laptop.title) | truncateString : 3 }}
+        </a>
+      </li>
+      }
+    </app-dropdown-item>
+  </div>
+</div>

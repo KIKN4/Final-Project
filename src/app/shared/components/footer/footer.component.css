@@ -1,10 +1,12 @@
-footer {
-  background-color: #1d1d1f;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 .container {
+  background-color: #1d1d1f;
   padding: 30px;
-  max-width: 1300px;
   margin: 0 auto;
   color: #fff;
 }
@@ -58,6 +60,7 @@ footer {
 
 .menu-item {
   cursor: pointer;
+  font-size: 12px;
   margin-bottom: 20px;
 }
 
@@ -95,11 +98,6 @@ footer {
 }
 
 @media only screen and (max-width: 930px) {
-  .container {
-    max-width: 752px;
-    margin: 0 30px;
-  }
-
   .footer-container {
     display: none;
   }
@@ -110,12 +108,8 @@ footer {
 }
 
 @media only screen and (max-width: 530px) {
-  .container {
-    margin: 0;
-  }
-
   .footer-top img {
-    width: 150px;
+    width: 120px;
   }
 
   .footer-top div .fa-brands {
