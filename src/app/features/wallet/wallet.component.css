@@ -1,0 +1,133 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.container {
+  max-width: 992px;
+  width: 100%;
+  margin: 130px auto;
+  padding: 0 20px;
+}
+
+ul {
+  margin: 0;
+  margin-bottom: 50px;
+}
+
+ul div {
+  display: flex;
+  gap: 10px;
+}
+
+ul div {
+  display: flex;
+  gap: 10px;
+}
+
+ul div li {
+  cursor: pointer;
+  list-style: none;
+  font-family: "Montserrat";
+  font-weight: 400;
+  font-size: 15px;
+  letter-spacing: normal;
+  text-decoration: none;
+}
+
+ul li a {
+  all: unset;
+  text-decoration: none;
+}
+
+.title-of-head {
+  color: #000000;
+  margin-bottom: 70px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.title h1 {
+  color: #0a0a0a;
+  font-size: 30px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bolder;
+  margin-bottom: 30px;
+}
+
+.title p {
+  color: #4b4d51;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 22px;
+  line-height: 1.6;
+}
+
+.loyalty-container {
+  max-width: 960px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.title {
+  max-width: 440px;
+}
+
+.img img {
+  max-width: 500px;
+  width: 100%;
+  max-height: 300px;
+  border-radius: 20px;
+  object-fit: cover;
+}
+
+h2 {
+  color: #000000;
+  font-family: sans-serif;
+  font-size: 24px;
+  margin: 50px 0;
+}
+
+.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+}
+
+.card {
+  text-align: center;
+  background-color: rgb(251, 251, 251);
+  border-radius: 30px;
+  min-height: 100%;
+  word-break: break-all;
+  padding: 36px 15px;
+  max-width: 240px;
+  width: 100%;
+}
+
+.card img {
+  max-height: 80px;
+  height: 100%;
+  margin-bottom: 8px;
+}
+
+.card p strong {
+  margin-bottom: 16px;
+  color: #000000;
+  font-size: 1.3rem;
+}
+
+.card p:last-child {
+  line-height: 1.8;
+  max-width: 150px;
+  width: 100%;
+  margin: 50px auto;
+  color: #000000;
+  font-size: 14px;
+  font-weight: 100;
+  font-family: Arial, Helvetica, sans-serif;
+}

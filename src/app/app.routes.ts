@@ -1,6 +1,5 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './features/home/home.component';
-import { ProductDetailComponent } from './features/product-detail/product-detail.component';
 
 export const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -30,6 +29,33 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./features/product-detail/product-detail.component').then(
         (m) => m.ProductDetailComponent
+      ),
+  },
+  {
+    path: 'delivery',
+    loadComponent: () =>
+      import('./features/delivery/delivery.component').then(
+        (m) => m.DeliveryComponent
+      ),
+  },
+
+  {
+    path: 'about-us',
+    loadComponent: () =>
+      import('./features/about/about.component').then((m) => m.AboutComponent),
+  },
+  {
+    path: 'confidentially',
+    loadComponent: () =>
+      import('./features/confidentially/confidentially.component').then(
+        (m) => m.ConfidentiallyComponent
+      ),
+  },
+  {
+    path: 'wallet',
+    loadComponent: () =>
+      import('./features/wallet/wallet.component').then(
+        (m) => m.WalletComponent
       ),
   },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
