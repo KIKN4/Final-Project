@@ -59,6 +59,7 @@ h2 {
 }
 
 .contact button {
+  cursor: pointer;
   border: none;
   outline: none;
   width: 230px;

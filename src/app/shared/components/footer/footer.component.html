@@ -49,12 +49,14 @@
       </div>
       <div class="dflex">
         <ul class="text-body">
-          <li class="menu-item info">Products</li>
+          <li class="menu-item info">Categories</li>
           @for (item of categories$ | async; track item.id) {
           <li class="menu-item">
-            <a href="#" class="menu-item-link">{{
-              capitalizeFirstLetter(item.name)
-            }}</a>
+            <a
+              [routerLink]="['/', 'category', item.id]"
+              class="menu-item-link"
+              >{{ capitalizeFirstLetter(item.name) }}</a
+            >
           </li>
           }
         </ul>
@@ -93,9 +95,11 @@
           <li class="menu-item info">Laptops</li>
           @for (laptop of laptops$ | async; track laptop._id) {
           <li class="menu-item">
-            <a href="#" class="menu-item-link">{{
-              laptop.title | truncateString : 3
-            }}</a>
+            <a
+              [routerLink]="['/', 'product', laptop._id]"
+              class="menu-item-link"
+              >{{ laptop.title | truncateString : 3 }}</a
+            >
           </li>
           }
         </ul>
@@ -117,17 +121,17 @@
       </li>
     </app-dropdown-item>
     <app-dropdown-item title="Services">
-      <li class="menu-item">
-        <a class="menu-item-link" href="#">Trade-in</a>
+      <li class="text-body-3">
+        <a class="mobile-menu-item" href="#">Trade-in</a>
       </li>
-      <li class="menu-item">
-        <a class="menu-item-link" routerLink="wallet">Customer Card</a>
+      <li class="text-body-3">
+        <a class="mobile-menu-item" routerLink="wallet">Customer Card</a>
       </li>
       <li class="text-body-3">
         <a class="mobile-menu-item" routerLink="/services">Custom Services</a>
       </li>
     </app-dropdown-item>
-    <app-dropdown-item title="Products">
+    <app-dropdown-item title="Categories">
       @for (item of categories$ | async; track item.id) {
       <li class="text-body-3">
         <a class="mobile-menu-item" href="#"
@@ -158,7 +162,7 @@
     <app-dropdown-item title="Laptops">
       @for (laptop of laptops$ | async; track laptop._id) {
       <li class="text-body-3">
-        <a class="mobile-menu-item" href="#"
+        <a class="mobile-menu-item" [routerLink]="['/', 'product', laptop._id]"
           >{{ capitalizeFirstLetter(laptop.title) | truncateString : 3 }}
         </a>
       </li>

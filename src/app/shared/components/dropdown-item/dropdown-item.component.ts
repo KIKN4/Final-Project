@@ -8,11 +8,17 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class DropdownItemComponent {
   @Input() title!: string;
-  displayUl = 'none';
-  displayWrap = 'none';
+  isRotated = false;
+  isDropdownVisible = false;
 
-  toggleDisplay() {
-    this.displayUl = this.displayUl === 'none' ? 'block' : 'none';
-    this.displayWrap = this.displayWrap === 'none' ? 'block' : 'none';
+  get arrowClass() {
+    return this.isRotated
+      ? 'fa-solid fa-chevron-down rotate'
+      : 'fa-solid fa-chevron-down';
+  }
+
+  toggleRotation() {
+    this.isRotated = !this.isRotated;
+    this.isDropdownVisible = !this.isDropdownVisible;
   }
 }

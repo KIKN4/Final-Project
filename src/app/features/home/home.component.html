@@ -18,7 +18,13 @@
 </app-welcome>
 <div class="container">
   @for(product of productsByCategory$ | async; track product.name){
-  <app-product-category [productCategory]="product"></app-product-category>
+
+  <app-product-category
+    [routerLink]="['/', 'category', product.id]"
+    (checkId)="testFn($event)"
+    [productCategory]="product"
+  ></app-product-category>
+
   }
 </div>
 <app-services></app-services>

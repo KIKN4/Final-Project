@@ -65,6 +65,7 @@
 }
 
 .menu-item .menu-item-link {
+  cursor: pointer;
   text-decoration: none;
   color: #ffffff;
 }

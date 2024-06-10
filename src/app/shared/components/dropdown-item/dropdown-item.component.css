@@ -25,3 +25,35 @@
 ul {
   padding: 0;
 }
+
+.arrow-container {
+  display: inline-block;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.fa-chevron-down {
+  font-size: 16px;
+  margin-top: 2px;
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+.rotate {
+  transform: rotate(180deg);
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease, opacity 0.3s ease;
+  opacity: 0;
+}
+
+ul.visible {
+  max-height: 200px; /* Adjust as needed */
+  opacity: 1;
+}

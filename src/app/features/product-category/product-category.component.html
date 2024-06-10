@@ -1,0 +1,57 @@
+<div class="container">
+  <ul>
+    <div>
+      <li><a routerLink="/home">Home</a></li>
+      <li><i class="fa-solid fa-chevron-right"></i></li>
+      <li>
+        @if (checkCategory) {
+
+        <a>Laptops Category </a>
+        } @else {
+        <a>Phones Category </a>
+
+        }
+      </li>
+    </div>
+  </ul>
+
+  <div class="banner">
+    @if (checkCategory) {
+    <img src="assets/prodCategories/laptopCategory.webp" alt="laptops" />
+    } @else {
+    <img src="assets/prodCategories/phonesCategory.avif" alt="phones" />
+
+    }
+  </div>
+</div>
+<div class="filter-container">
+  <div class="filter">
+    <app-price-range></app-price-range>
+  </div>
+  <div class="products">
+    @for (item of products; track item._id) {
+    <div class="card">
+      <div class="card-img">
+        <img [src]="item.thumbnail" alt="product-img" />
+      </div>
+      <div class="card-details">
+        <h2 class="card-title">{{ item.title | truncateString : 3 }}</h2>
+        <p class="card-code">sn: {{ item._id }}</p>
+        <p class="card-brand">{{ item.brand }}</p>
+      </div>
+      <div class="card-price">
+        <p class="price">
+          <span class="current">{{ item.price.current }}</span>
+          <span class="currency">{{ item.price.currency }}</span>
+        </p>
+        <button class="button">
+          <span class="cart-icon"
+            >Add to cart <i class="fa-solid fa-right-long"></i
+          ></span>
+        </button>
+      </div>
+    </div>
+    }
+  </div>
+</div>
+<app-contact-us></app-contact-us>

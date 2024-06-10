@@ -1,10 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import {
-  ActivatedRoute,
-  NavigationEnd,
-  Router,
-  RouterOutlet,
-} from '@angular/router';
+import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './shared/components/header/header.component';
 import { FooterComponent } from './shared/components/footer/footer.component';
 
@@ -17,22 +12,22 @@ import { FooterComponent } from './shared/components/footer/footer.component';
 })
 export class AppComponent implements OnInit {
   private router = inject(Router);
-  private activatedRoute = inject(ActivatedRoute);
 
   ngOnInit(): void {
+    let currentRoutePath = this.getRoutePath();
+
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        window.scrollTo(0, 0);
+        const newRoutePath = this.getRoutePath();
+        if (currentRoutePath !== newRoutePath) {
+          window.scrollTo(0, 0);
+          currentRoutePath = newRoutePath;
+        }
       }
-      this.activatedRoute.queryParams.subscribe((queryParams) => {
-        window.scrollTo(0, 0);
-      });
-      this.activatedRoute.params.subscribe((params) => {
-        window.scrollTo(0, 0);
-      });
-      this.activatedRoute.data.subscribe((data) => {
-        window.scrollTo(0, 0);
-      });
     });
+  }
+
+  private getRoutePath(): string {
+    return this.router.url.split('?')[0].split('#')[0];
   }
 }

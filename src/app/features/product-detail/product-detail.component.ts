@@ -4,11 +4,18 @@ import { ProductsService } from '../../shared/services/products.service';
 import { ProductDetails } from '../../shared/types/apiProduct';
 import { CommonModule } from '@angular/common';
 import { TruncateStringPipe } from '../../shared/pipes/truncate-string.pipe';
+import { ContactUsComponent } from '../../shared/components/contact-us/contact-us.component';
 
 @Component({
   selector: 'app-product-detail',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive, CommonModule, TruncateStringPipe],
+  imports: [
+    RouterLink,
+    RouterLinkActive,
+    CommonModule,
+    TruncateStringPipe,
+    ContactUsComponent,
+  ],
   templateUrl: './product-detail.component.html',
   styleUrl: './product-detail.component.css',
 })

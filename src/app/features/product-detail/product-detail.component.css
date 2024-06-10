@@ -44,7 +44,6 @@ ul li a {
 .product-container {
   display: flex;
   justify-content: space-evenly;
-  gap: 30px;
   flex-wrap: wrap;
   margin: 150px 0;
 }
@@ -55,6 +54,7 @@ ul li a {
   max-width: 400px;
   max-height: 800px;
   padding: 0 20px;
+  margin: 15px 0;
 }
 
 .product-image img {
