@@ -1,18 +1,12 @@
 <app-welcome>
   <div class="welcome-container">
-    <div class="welcoming-text">
-      <h3>Welcome to the I Space Store</h3>
-      <p>
-        Download the app to acces everything I Space.
-        <span>Get Your Great</span>
-      </p>
-    </div>
     <div class="welcome-image">
       <img src="assets/images/products.webp" alt="" />
     </div>
   </div>
 </app-welcome>
 <app-slider></app-slider>
+
 <app-welcome>
   <h2>You can buy two types of products</h2>
 </app-welcome>
@@ -21,7 +15,6 @@
 
   <app-product-category
     [routerLink]="['/', 'category', product.id]"
-    (checkId)="testFn($event)"
     [productCategory]="product"
   ></app-product-category>
 

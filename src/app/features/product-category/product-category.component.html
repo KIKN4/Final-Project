@@ -3,41 +3,195 @@
     <div>
       <li><a routerLink="/home">Home</a></li>
       <li><i class="fa-solid fa-chevron-right"></i></li>
+      @if (checkCategory) {
       <li>
-        @if (checkCategory) {
-
-        <a>Laptops Category </a>
-        } @else {
-        <a>Phones Category </a>
-
-        }
+        <a routerLink="/category/1" routerLinkActive="active"
+          >Laptops Category</a
+        >
       </li>
+      }@else {
+      <li>
+        <a routerLink="/category/2" routerLinkActive="active"
+          >Phones Category</a
+        >
+      </li>
+      }
     </div>
   </ul>
-
-  <div class="banner">
-    @if (checkCategory) {
-    <img src="assets/prodCategories/laptopCategory.webp" alt="laptops" />
-    } @else {
-    <img src="assets/prodCategories/phonesCategory.avif" alt="phones" />
-
-    }
+</div>
+@if (checkCategory) {
+<div class="categories">
+  <div class="img">
+    <a [class.selected]="checkCategory" class="activeImg">
+      <img src="assets/prodCategories/macbookImage.jpeg" alt="laptopCategory" />
+    </a>
   </div>
 </div>
+} @else {
+<div class="categories">
+  <div class="img">
+    <a [class.selected]="!checkCategory" class="activeImg">
+      <img src="assets/prodCategories/phoneCategory.png" alt="phoneCategory" />
+    </a>
+  </div>
+</div>
+}
 <div class="filter-container">
   <div class="filter">
-    <app-price-range></app-price-range>
+    <form [formGroup]="filterForm">
+      <!-- Categories -->
+      <app-dropdown-filter [title]="'Category'">
+        <div class="selection">
+          <li
+            routerLink="/category/1"
+            [class.selected]="checkCategory"
+            (click)="selectCaregory('1')"
+          >
+            Laptops
+          </li>
+          <li
+            routerLink="/category/2"
+            [class.selected]="!checkCategory"
+            (click)="selectCaregory('2')"
+          >
+            Phones
+          </li>
+        </div>
+      </app-dropdown-filter>
+      <!-- end of Categories -->
+      <!-- sort By control -->
+      <app-dropdown-filter [title]="'Sort By'">
+        <div class="selection">
+          <li
+            [class.selected]="filterForm.value.sort_by === null"
+            (click)="selectSortBy('')"
+          >
+            Default
+          </li>
+          @for (sort of sortByArr ; track sort) {
+
+          <li
+            (click)="selectSortBy(sort)"
+            [class.selected]="filterForm.value.sort_by === sort"
+          >
+            {{ capitalizeFirstLetter(sort) }}
+          </li>
+          }
+        </div>
+      </app-dropdown-filter>
+      <!--  end of sort control -->
+
+      <!-- sort dir control -->
+
+      <app-dropdown-filter [title]="'Sort Direction'">
+        <div class="selection">
+          <li
+            [class.selected]="filterForm.value.sort_direction === null"
+            (click)="selectSortDir('')"
+          >
+            Default
+          </li>
+          @for (sort of sortByDir ; track sort) {
+
+          <li
+            (click)="selectSortDir(sort)"
+            [class.selected]="filterForm.value.sort_direction === sort"
+          >
+            {{ sort }}
+          </li>
+          }
+        </div>
+      </app-dropdown-filter>
+      <!-- end of sort dir control -->
+      <!-- brand control -->
+
+      <app-dropdown-filter [title]="'Brands'">
+        <div class="selection">
+          <li
+            [class.selected]="filterForm.value.brand === null"
+            (click)="selectBrand('')"
+          >
+            All
+          </li>
+          @for (brand of brands$ | async; track brand) {
+          <li
+            (click)="selectBrand(brand)"
+            [class.selected]="filterForm.value.brand === brand"
+          >
+            {{ capitalizeFirstLetter(brand) }}
+          </li>
+          }
+        </div>
+      </app-dropdown-filter>
+      <!-- end of brand control -->
+
+      <input
+        placeholder="Search Product"
+        class="form-control mb-2"
+        type="text"
+        id="keywords"
+        formControlName="keywords"
+      />
+
+      <!-- price control -->
+      <div class="wrapper">
+        <div class="price-input">
+          <div class="field">
+            <input
+              formControlName="minPrice"
+              type="number"
+              class="input-min"
+              value="0"
+            />
+          </div>
+          <div class="field">
+            <input
+              formControlName="maxPrice"
+              type="number"
+              class="input-max"
+              value="10000"
+            />
+          </div>
+        </div>
+        <div class="slider">
+          <div class="progress"></div>
+        </div>
+        <div class="range-input">
+          <input
+            formControlName="minPrice"
+            type="range"
+            class="range-min"
+            min="0"
+            max="10000"
+            value="0"
+          />
+          <input
+            formControlName="maxPrice"
+            type="range"
+            class="range-max"
+            min="0"
+            max="10000"
+            value="10000"
+          />
+        </div>
+      </div>
+      <!-- end of price control -->
+    </form>
   </div>
-  <div class="products">
+  <div class="cards-container">
     @for (item of products; track item._id) {
     <div class="card">
-      <div class="card-img">
-        <img [src]="item.thumbnail" alt="product-img" />
-      </div>
+      <a [routerLink]="['/', 'product', item._id]">
+        <div class="card-img">
+          <img [src]="item.thumbnail" alt="product-img" />
+        </div>
+      </a>
       <div class="card-details">
-        <h2 class="card-title">{{ item.title | truncateString : 3 }}</h2>
-        <p class="card-code">sn: {{ item._id }}</p>
-        <p class="card-brand">{{ item.brand }}</p>
+        <a [routerLink]="['/', 'product', item._id]">
+          <h2 class="card-title">{{ item.title | truncateString : 3 }}</h2>
+        </a>
+        <p class="card-brand">{{ capitalizeFirstLetter(item.brand) }}</p>
+        <p class="card-date">{{ item.issueDate | date }}</p>
       </div>
       <div class="card-price">
         <p class="price">
@@ -45,9 +199,11 @@
           <span class="currency">{{ item.price.currency }}</span>
         </p>
         <button class="button">
-          <span class="cart-icon"
-            >Add to cart <i class="fa-solid fa-right-long"></i
-          ></span>
+          <a routerLink="/home">
+            <span class="cart-icon"
+              >Add to cart <i class="fa-solid fa-right-long"></i
+            ></span>
+          </a>
         </button>
       </div>
     </div>

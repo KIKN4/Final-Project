@@ -1,12 +1,13 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-dropdown-item',
+  selector: 'app-dropdown-filter',
   standalone: true,
-  templateUrl: './dropdown-item.component.html',
-  styleUrls: ['./dropdown-item.component.css'],
+  imports: [],
+  templateUrl: './dropdown-filter.component.html',
+  styleUrl: './dropdown-filter.component.css',
 })
-export class DropdownItemComponent {
+export class DropdownFilterComponent {
   @Input() title!: string;
   isRotated = false;
   isDropdownVisible = false;

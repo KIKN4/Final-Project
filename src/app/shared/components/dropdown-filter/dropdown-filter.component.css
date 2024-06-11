@@ -1,13 +1,11 @@
 .dropdown-item {
-  color: #ffffff;
-  font-size: 12px;
+  font-size: 15px;
   line-height: 22px;
   font-family: monospace;
-  margin-top: 50px;
+  margin-top: 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
 }
 
 .title-section {
@@ -44,16 +42,18 @@ ul {
 }
 
 ul {
+  display: none;
   list-style: none;
   padding: 0;
   margin: 0;
-  max-height: 0;
   overflow: hidden;
-  transition: max-height 0.8s ease, opacity 0.1s ease;
+  transition: display 0.8s ease, opacity 0.1s ease;
   opacity: 0.9;
+  animation: fade 2s linear;
 }
 
 ul.visible {
-  max-height: 500px;
+  display: block;
+  height: 100%;
   opacity: 1;
 }

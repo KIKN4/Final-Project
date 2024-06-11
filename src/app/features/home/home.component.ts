@@ -37,8 +37,4 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.productsService.getCategorys();
   }
-
-  testFn(id: string) {
-    this.id = id;
-  }
 }

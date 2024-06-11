@@ -65,6 +65,13 @@ export const routes: Routes = [
         (m) => m.ProductsByCategoryComponent
       ),
   },
+  {
+    path: 'search',
+    loadComponent: () =>
+      import('./features/product-category/product-category.component').then(
+        (m) => m.ProductsByCategoryComponent
+      ),
+  },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
-  { path: '**', redirectTo: 'delivery', pathMatch: 'full' },
+  { path: '**', redirectTo: 'home', pathMatch: 'full' },
 ];

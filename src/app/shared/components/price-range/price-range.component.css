@@ -4,10 +4,6 @@
   box-sizing: border-box;
 }
 
-.wrapper {
-  /* max-width: 100%; */
-}
-
 .price-input {
   width: 100%;
   display: flex;

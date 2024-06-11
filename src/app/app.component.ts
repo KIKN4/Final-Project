@@ -1,5 +1,10 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
+import {
+  ActivatedRoute,
+  NavigationEnd,
+  Router,
+  RouterOutlet,
+} from '@angular/router';
 import { HeaderComponent } from './shared/components/header/header.component';
 import { FooterComponent } from './shared/components/footer/footer.component';
 
@@ -11,23 +16,25 @@ import { FooterComponent } from './shared/components/footer/footer.component';
   styleUrl: './app.component.css',
 })
 export class AppComponent implements OnInit {
+  title = 'iSpace';
   private router = inject(Router);
+  private activatedRoute = inject(ActivatedRoute);
 
-  ngOnInit(): void {
-    let currentRoutePath = this.getRoutePath();
-
+  ngOnInit() {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        const newRoutePath = this.getRoutePath();
-        if (currentRoutePath !== newRoutePath) {
-          window.scrollTo(0, 0);
-          currentRoutePath = newRoutePath;
-        }
+        window.scrollTo(0, 0);
       }
-    });
-  }
 
-  private getRoutePath(): string {
-    return this.router.url.split('?')[0].split('#')[0];
+      this.activatedRoute.queryParams.subscribe(() => {
+        window.scrollTo(0, 0);
+      });
+      this.activatedRoute.params.subscribe(() => {
+        window.scrollTo(0, 0);
+      });
+      this.activatedRoute.data.subscribe(() => {
+        window.scrollTo(0, 0);
+      });
+    });
   }
 }

@@ -1,0 +1,10 @@
+<div class="dropdown-item">
+  <p class="title-section">{{ title }}</p>
+
+  <div class="arrow-container" (click)="toggleRotation()">
+    <i [class]="arrowClass"></i>
+  </div>
+</div>
+<ul [class.visible]="isDropdownVisible" (click)="toggleRotation()">
+  <ng-content></ng-content>
+</ul>
