@@ -29,14 +29,12 @@ export class ProductDetailComponent implements OnInit {
   activatedRoute = inject(ActivatedRoute);
   productsService = inject(ProductsService);
 
-  product!: ProductDetails;
+  product$ = this.productsService.productById$;
 
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe((params) => {
       const id = params.get('id');
-      this.productsService.getProductById(id).subscribe((response) => {
-        this.product = response;
-      });
+      this.productsService.getProductById(id);
     });
   }
 

@@ -49,6 +49,10 @@ export class ProductsByCategoryComponent implements OnInit, AfterViewInit {
 
   checkCategory!: boolean;
   allCategory = false;
+  allProducts!: string;
+
+  sortByArr = ['price', 'rating', 'issue_date'];
+  sortByDir = ['asc', 'desc'];
 
   filterForm = this.fb.group({
     category_id: '',
@@ -60,9 +64,9 @@ export class ProductsByCategoryComponent implements OnInit, AfterViewInit {
     maxPrice: '',
   });
 
-  // for selected
-
-  allProducts!: string;
+  get controls() {
+    return this.filterForm.controls;
+  }
 
   selectedFn(id: string) {
     if (id === '1') {
@@ -72,13 +76,6 @@ export class ProductsByCategoryComponent implements OnInit, AfterViewInit {
     } else {
       this.allProducts = '';
     }
-  }
-
-  sortByArr = ['price', 'rating', 'issue_date'];
-  sortByDir = ['asc', 'desc'];
-
-  get controls() {
-    return this.filterForm.controls;
   }
 
   selectCaregory(category_id: string) {
@@ -106,8 +103,6 @@ export class ProductsByCategoryComponent implements OnInit, AfterViewInit {
     this.filterForm.valueChanges
       .pipe(debounceTime(300), distinctUntilChanged())
       .subscribe((value) => {
-        console.log(value.category_id);
-
         this.router.navigate([], {
           queryParams: {
             keywords: this.filterForm.value.keywords || null,
@@ -152,7 +147,6 @@ export class ProductsByCategoryComponent implements OnInit, AfterViewInit {
       this.activatedRoute.paramMap.subscribe((params) => {
         // for http request with category and querys
         let id = params.get('id');
-        console.log(id);
         if (id) {
           id === '1'
             ? (this.checkCategory = true)

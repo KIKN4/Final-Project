@@ -1,10 +1,14 @@
+@if(product$ | async; as prod){
+
 <div class="container">
   <ul>
     <div>
       <li><a routerLink="/home" routerLinkActive="active">Home</a></li>
       <li><i class="fa-solid fa-chevron-right"></i></li>
       <li>
-        <a routerLink="/product"> {{ product.title | truncateString }}</a>
+        <a routerLink="/product">
+          {{ prod.title | truncateString }}
+        </a>
       </li>
     </div>
   </ul>
@@ -20,7 +24,7 @@
       mousewheel="true"
       css-mode="true"
     >
-      @for (img of product.images; track $index) {
+      @for (img of prod.images; track $index) {
       <swiper-slide>
         <img [src]="img" alt="swiperImg" />
       </swiper-slide>
@@ -30,35 +34,33 @@
   <div class="product-detail">
     <div class="product-title">
       <h2 class="title">
-        {{ product.title }}
+        {{ prod.title }}
       </h2>
       <div class="brand">
-        <span class="brand-title">{{
-          capitalizeFirstLetter(product.brand)
-        }}</span>
-        <span class="code">{{ product._id }}</span>
+        <span class="brand-title">{{ capitalizeFirstLetter(prod.brand) }}</span>
+        <span class="code">{{ prod._id }}</span>
       </div>
     </div>
     <p class="description-title">Description</p>
     <p class="description-value">
-      {{ product.description }}
+      {{ prod.description }}
     </p>
     <p class="stock">Issue Date</p>
-    <p class="stock-value">{{ product.issueDate | date }}</p>
+    <p class="stock-value">{{ prod.issueDate | date }}</p>
     <p class="stock">Stock</p>
-    <p class="stock-value">{{ product.stock }}</p>
+    <p class="stock-value">{{ prod.stock }}</p>
   </div>
   <div>
     <div class="product-price">
       <div class="price-detail">
         <div class="price-now">
-          <span class="price-current">{{ product.price.current }}</span>
-          <span class="price-currency">{{ product.price.currency }}</span>
+          <span class="price-current">{{ prod.price.current }}</span>
+          <span class="price-currency">{{ prod.price.currency }}</span>
         </div>
         <span class="price-before"
-          >{{ product.price.beforeDiscount }} {{ product.price.currency }}</span
+          >{{ prod.price.beforeDiscount }} {{ prod.price.currency }}</span
         >
-        <span class="discount">{{ product.price.discountPercentage }}%</span>
+        <span class="discount">{{ prod.price.discountPercentage }}%</span>
       </div>
       <button class="AddToCart">Add to cart</button>
     </div>
@@ -92,4 +94,22 @@
   </div>
 </div>
 
+}@else {
+<div class="container">
+  <ul>
+    <div>
+      <li><a routerLink="/home" routerLinkActive="active">Home</a></li>
+      <li><i class="fa-solid fa-chevron-right"></i></li>
+      <li>
+        <a routerLink="/product"> Product Not Found </a>
+      </li>
+    </div>
+  </ul>
+  <img
+    class="not-found"
+    src="https://www.wolfgangdigital.com/uploads/blog/How_to_manage_out_of_date_stock_for_eCommerce.jpg"
+    alt=""
+  />
+</div>
+}
 <app-contact-us></app-contact-us>

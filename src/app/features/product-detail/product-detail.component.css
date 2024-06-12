@@ -37,6 +37,13 @@ ul li a {
   text-decoration: none;
 }
 
+.not-found {
+  margin-top: 50px;
+  padding: 20px;
+  border-radius: 50px;
+  width: 100%;
+}
+
 .active {
   color: #03325c !important;
 }
