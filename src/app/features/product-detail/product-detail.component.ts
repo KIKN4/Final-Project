@@ -1,4 +1,9 @@
-import { Component, OnInit, inject } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  inject,
+  CUSTOM_ELEMENTS_SCHEMA,
+} from '@angular/core';
 import { ActivatedRoute, RouterLink, RouterLinkActive } from '@angular/router';
 import { ProductsService } from '../../shared/services/products.service';
 import { ProductDetails } from '../../shared/types/apiProduct';
@@ -18,12 +23,13 @@ import { ContactUsComponent } from '../../shared/components/contact-us/contact-u
   ],
   templateUrl: './product-detail.component.html',
   styleUrl: './product-detail.component.css',
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class ProductDetailComponent implements OnInit {
   activatedRoute = inject(ActivatedRoute);
   productsService = inject(ProductsService);
 
-  product: ProductDetails | null = null;
+  product!: ProductDetails;
 
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe((params) => {
