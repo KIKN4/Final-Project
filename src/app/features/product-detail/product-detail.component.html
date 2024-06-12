@@ -16,6 +16,7 @@
 
 <div class="product-container">
   <div class="product-image">
+    @if(prod.images.length){
     <swiper-container
       class="mySwiper"
       navigation="true"
@@ -30,6 +31,9 @@
       </swiper-slide>
       }
     </swiper-container>
+    } @else {
+    <img [src]="prod.thumbnail" alt="swiperImg" />
+    }
   </div>
   <div class="product-detail">
     <div class="product-title">
@@ -105,11 +109,11 @@
       </li>
     </div>
   </ul>
-  <img
-    class="not-found"
-    src="https://www.wolfgangdigital.com/uploads/blog/How_to_manage_out_of_date_stock_for_eCommerce.jpg"
-    alt=""
-  />
 </div>
+<img
+  class="not-found"
+  src="https://www.wolfgangdigital.com/uploads/blog/How_to_manage_out_of_date_stock_for_eCommerce.jpg"
+  alt=""
+/>
 }
 <app-contact-us></app-contact-us>

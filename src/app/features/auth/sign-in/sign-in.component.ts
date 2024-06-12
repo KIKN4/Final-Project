@@ -10,7 +10,12 @@ import {
   ValidatorFn,
   Validators,
 } from '@angular/forms';
-import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import {
+  ActivatedRoute,
+  Router,
+  RouterLink,
+  RouterLinkActive,
+} from '@angular/router';
 
 @Component({
   selector: 'app-sign-in',
@@ -34,23 +39,17 @@ export class SignInComponent implements OnInit {
   loginBtn = 'login';
   classList = 'container';
 
+  isSignUpSucces = false;
   private router = inject(Router);
+  activatedRoute = inject(ActivatedRoute);
 
   addActive() {
-    this.router.navigate(['signin'], {
-      queryParams: { register: 'signUp' },
-    });
-
     this.displaySI = 'display: none;';
     this.classList = 'container active';
     this.displaySU = true;
   }
 
   removeActive() {
-    this.router.navigate(['signin'], {
-      queryParams: {},
-    });
-
     this.displaySI = 'display: block;';
     this.displaySU = false;
     this.classList = 'container';
@@ -76,11 +75,7 @@ export class SignInComponent implements OnInit {
   signupForm = this.fb.group({
     firstName: [
       '',
-      [
-        Validators.required,
-        Validators.maxLength(this.maxNameLength),
-        this.badNameValidator('bidzina'),
-      ],
+      [Validators.required, Validators.maxLength(this.maxNameLength)],
     ],
     lastName: [
       '',
@@ -96,33 +91,9 @@ export class SignInComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.controls.confirmPassword.setValidators(
-      this.confirmPassValidator(this.controls.password)
-    );
-    this.controls.password.valueChanges.subscribe(() => {
-      this.controls.confirmPassword.updateValueAndValidity();
+    this.activatedRoute.queryParamMap.subscribe((query) => {
+      this.isSignUpSucces = Boolean(query.get('signUpSucces'));
     });
+    console.log(this.isSignUpSucces);
   }
-
-  onSubmit() {
-    console.log(this.signupForm.value);
-  }
-
-  badNameValidator(pattern: string): ValidatorFn {
-    return (control: AbstractControl<string>): ValidationErrors | null => {
-      return control.value.includes(pattern)
-        ? { badName: `${pattern} is prohibited!` }
-        : null;
-    };
-  }
-
-  confirmPassValidator(compareTo: FormControl<string | null>): ValidatorFn {
-    return (control: AbstractControl<string>): ValidationErrors | null => {
-      return control.value !== compareTo.value
-        ? { confirmPass: `Passwords do not match!` }
-        : null;
-    };
-  }
-
-  // end of sign up
 }

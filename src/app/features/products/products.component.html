@@ -12,7 +12,7 @@
 
 <div class="categories">
   <div class="activeImg">
-    <img src="assets/prodCategories/allproductImg.png" alt="laptopCategory" />
+    <img src="assets/prodCategories/allproduct.png" alt="laptopCategory" />
   </div>
 </div>
 
@@ -22,6 +22,12 @@
       <!-- Categories -->
       <app-dropdown-filter [title]="'Category'">
         <div class="selection">
+          <li
+            [class.selected]="filterForm.value.category_id === null"
+            (click)="selectCaregory('')"
+          >
+            All
+          </li>
           <li
             [class.selected]="filterForm.value.category_id === '1'"
             (click)="selectCaregory('1')"

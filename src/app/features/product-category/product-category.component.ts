@@ -102,7 +102,7 @@ export class ProductsByCategoryComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.filterForm.valueChanges
       .pipe(debounceTime(300), distinctUntilChanged())
-      .subscribe((value) => {
+      .subscribe(() => {
         this.router.navigate([], {
           queryParams: {
             keywords: this.filterForm.value.keywords || null,

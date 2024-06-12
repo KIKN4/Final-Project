@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, OnInit, inject } from '@angular/core';
 import {
   ActivatedRoute,
+  NavigationEnd,
   Router,
   RouterLink,
   RouterLinkActive,
@@ -93,6 +94,42 @@ export class ProductsComponent implements OnInit, AfterViewInit {
     this.filterForm.valueChanges
       .pipe(debounceTime(300), distinctUntilChanged())
       .subscribe((value) => {
+        if (
+          value.brand ||
+          value.category_id ||
+          value.keywords ||
+          value.sort_by ||
+          value.sort_direction ||
+          value.minPrice !== '1' ||
+          value.maxPrice !== '10000'
+        ) {
+          this.router.events.subscribe((event) => {
+            if (event instanceof NavigationEnd) {
+              window.scrollTo(0, 0);
+            }
+
+            this.activatedRoute.queryParams.subscribe(() => {
+              window.scrollTo(400, 400);
+            });
+            this.activatedRoute.params.subscribe(() => {
+              window.scrollTo(400, 400);
+            });
+          });
+        } else {
+          this.router.events.subscribe((event) => {
+            if (event instanceof NavigationEnd) {
+              window.scrollTo(0, 0);
+            }
+
+            this.activatedRoute.queryParams.subscribe(() => {
+              window.scrollTo(0, 0);
+            });
+            this.activatedRoute.params.subscribe(() => {
+              window.scrollTo(0, 0);
+            });
+          });
+        }
+
         this.router.navigate([], {
           queryParams: {
             category_id: this.filterForm.value.category_id || null,

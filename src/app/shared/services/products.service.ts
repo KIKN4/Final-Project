@@ -9,6 +9,12 @@ import {
 import { ProductQuery } from '../types/productQuery';
 import { BehaviorSubject } from 'rxjs';
 
+export interface ProductState {
+  loading: boolean;
+  data: ProductDetails[];
+  error?: string;
+}
+
 @Injectable({ providedIn: 'root' })
 export class ProductsService {
   private httpClient = inject(HttpClient);
