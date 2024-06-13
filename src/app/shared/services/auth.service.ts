@@ -6,6 +6,7 @@ import { BehaviorSubject, EMPTY, catchError } from 'rxjs';
 import { Router, UrlTree } from '@angular/router';
 import { ApiError } from '../types/api.error';
 import { User } from '../types/user';
+import { jwtDecode } from 'jwt-decode';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -15,7 +16,11 @@ export class AuthService {
   private readonly httpClient = inject(HttpClient);
 
   isloading$ = new BehaviorSubject<boolean>(false);
-  errors$ = new BehaviorSubject<AuthErrors>({ signUp: '', signIn: '' });
+  errors$ = new BehaviorSubject<AuthErrors>({
+    signUp: '',
+    signIn: '',
+    noError: '',
+  });
 
   user$ = new BehaviorSubject<User | null>(null);
 
@@ -46,9 +51,7 @@ export class AuthService {
     const token = this.accessToken;
     if (token) {
       const user = this.parseJwt(token);
-      console.log(user);
       this.user$.next(user);
-      console.log(this.isTokenExpired(token));
     }
   }
 
@@ -79,7 +82,11 @@ export class AuthService {
       .pipe(
         catchError((errorResponse: HttpErrorResponse) => {
           const error = errorResponse.error as ApiError;
-          this.errors$.next({ ...this.errors$.value, signIn: error.error });
+          this.errors$.next({
+            ...this.errors$.value,
+            signIn: error.error,
+            noError: error.error,
+          });
           this.isloading$.next(false);
           return EMPTY;
         })
@@ -103,8 +110,7 @@ export class AuthService {
 
   parseJwt(token: string): User | null {
     try {
-      const decoded = atob(token.split('.')[1]);
-      return JSON.parse(decoded);
+      return jwtDecode(token);
     } catch {
       return null;
     }

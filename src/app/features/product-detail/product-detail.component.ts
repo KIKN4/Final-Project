@@ -9,6 +9,7 @@ import { ProductsService } from '../../shared/services/products.service';
 import { CommonModule } from '@angular/common';
 import { TruncateStringPipe } from '../../shared/pipes/truncate-string.pipe';
 import { ContactUsComponent } from '../../shared/components/contact-us/contact-us.component';
+import { CartService } from '../../shared/services/cart.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -25,9 +26,9 @@ import { ContactUsComponent } from '../../shared/components/contact-us/contact-u
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class ProductDetailComponent implements OnInit {
-  activatedRoute = inject(ActivatedRoute);
-  productsService = inject(ProductsService);
-
+  private readonly activatedRoute = inject(ActivatedRoute);
+  private readonly productsService = inject(ProductsService);
+  private readonly cartService = inject(CartService);
   product$ = this.productsService.productById$;
 
   ngOnInit(): void {
@@ -40,5 +41,9 @@ export class ProductDetailComponent implements OnInit {
   capitalizeFirstLetter(value: string): string {
     if (!value) return value;
     return value.charAt(0).toUpperCase() + value.slice(1);
+  }
+
+  onAddtoCart(id: string) {
+    this.cartService.addToCart(id, 1);
   }
 }

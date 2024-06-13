@@ -94,42 +94,6 @@ export class ProductsComponent implements OnInit, AfterViewInit {
     this.filterForm.valueChanges
       .pipe(debounceTime(300), distinctUntilChanged())
       .subscribe((value) => {
-        if (
-          value.brand ||
-          value.category_id ||
-          value.keywords ||
-          value.sort_by ||
-          value.sort_direction ||
-          value.minPrice !== '1' ||
-          value.maxPrice !== '10000'
-        ) {
-          this.router.events.subscribe((event) => {
-            if (event instanceof NavigationEnd) {
-              window.scrollTo(0, 0);
-            }
-
-            this.activatedRoute.queryParams.subscribe(() => {
-              window.scrollTo(400, 400);
-            });
-            this.activatedRoute.params.subscribe(() => {
-              window.scrollTo(400, 400);
-            });
-          });
-        } else {
-          this.router.events.subscribe((event) => {
-            if (event instanceof NavigationEnd) {
-              window.scrollTo(0, 0);
-            }
-
-            this.activatedRoute.queryParams.subscribe(() => {
-              window.scrollTo(0, 0);
-            });
-            this.activatedRoute.params.subscribe(() => {
-              window.scrollTo(0, 0);
-            });
-          });
-        }
-
         this.router.navigate([], {
           queryParams: {
             category_id: this.filterForm.value.category_id || null,
@@ -150,8 +114,8 @@ export class ProductsComponent implements OnInit, AfterViewInit {
         sort_by: params['sort_by'] || null,
         sort_direction: params['sort_direction'] || null,
         brand: params['brand'] || null,
-        minPrice: params['minPrice'] || 1,
-        maxPrice: params['maxPrice'] || 10000,
+        minPrice: params['minPrice'] || '1',
+        maxPrice: params['maxPrice'] || '10000',
       });
     });
 
@@ -164,8 +128,8 @@ export class ProductsComponent implements OnInit, AfterViewInit {
         sort_by: query.get('sort_by') as SortProductBy,
         sort_direction: query.get('sort_direction') as SortDirection,
         price_min: Number(query.get('minPrice')),
-        brand: query.get('brand'),
         price_max: Number(query.get('maxPrice')),
+        brand: query.get('brand'),
       };
 
       const querys = Object.fromEntries(

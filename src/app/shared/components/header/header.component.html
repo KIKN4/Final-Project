@@ -11,15 +11,23 @@
 
           <li>
             @if (user$ | async; as user) {
-            <a (click)="closeBar()" routerLink="/signout">
+            <a
+              (click)="closeBar()"
+              routerLink="/signout"
+              routerLinkActive="active"
+            >
               <i class="fa-solid fa-user-secret"></i>
               <span class="username">{{
                 capitalizeFirstLetter(user.firstName)
               }}</span>
             </a>
             } @else {
-            <a (click)="closeBar()" routerLink="/signin">
-              <i class="fa-solid fa-user-xmark"></i>
+            <a
+              (click)="closeBar()"
+              routerLink="/signin"
+              routerLinkActive="active"
+            >
+              <i routerLinkActive="active" class="fa-solid fa-user-xmark"></i>
             </a>
             }
           </li>
@@ -75,11 +83,7 @@
         </li>
         <li>
           @if (user$ |async; as user) {
-          <a
-            routerLinkActive="active"
-            (click)="closeBar()"
-            routerLink="/signout"
-          >
+          <a (click)="closeBar()" routerLink="/signout">
             <i class="fa-solid fa-user-secret"></i>
             <span class="username">{{
               capitalizeFirstLetter(user.firstName)
@@ -87,7 +91,7 @@
           </a>
           } @else {
           <a (click)="closeBar()" routerLink="/signin">
-            <i class="fa-solid fa-user-xmark"></i>
+            <i routerLinkActive="active" class="fa-solid fa-user-xmark"></i>
           </a>
           }
         </li>

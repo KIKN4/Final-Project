@@ -256,6 +256,11 @@ button[disabled] {
 /* errorMessage */
 
 .alert {
+  background: linear-gradient(
+    to right,
+    rgba(255, 79, 79, 0.9),
+    rgba(0, 0, 0, 0.65)
+  );
   padding: 5px 30px;
   margin-top: 25px;
   border-radius: 5px;
@@ -270,9 +275,10 @@ button[disabled] {
   color: #88b04b;
   font-family: "Montserrat";
   font-weight: 900;
-  font-size: 17px;
+  font-size: 15px;
   margin: 10px;
   text-align: center;
+  text-shadow: #99ff00 0px 1px 3px;
 }
 
 #p {
@@ -285,26 +291,25 @@ button[disabled] {
 #i {
   position: absolute;
   color: #9abc66;
-  font-size: 50px;
-  top: 20px;
-  left: 27px;
+  text-shadow: #99ff00 0px 1px 3px;
+  font-size: 44px;
+  top: 17px;
+  left: 25px;
 }
 
 .card {
   max-width: 300px;
   width: 100%;
   background: white;
-  padding: 10px;
   border-radius: 4px;
   display: inline-block;
-  margin: 0 auto 50px auto;
 }
 
 #success {
   position: relative;
   border-radius: 200px;
-  height: 100px;
-  width: 100px;
+  height: 88px;
+  width: 88px;
   background: #f8faf5;
   margin: 0 auto;
 }

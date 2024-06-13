@@ -26,15 +26,9 @@ export class ProductsService {
   getProductById(id: string | null) {
     return this.httpClient
       .get<ProductDetails>(`${this.baseUrl}/id/${id}`)
-      .subscribe(
-        (response) => {
-          this.productById$.next(response);
-        },
-        (error) => {
-          console.log('პროდუქტი ვერ მოიძებნა', error);
-          this.productById$.next(null);
-        }
-      );
+      .subscribe((response) => {
+        this.productById$.next(response);
+      });
   }
 
   getCategoryById(id: string | null, query: ProductQuery) {

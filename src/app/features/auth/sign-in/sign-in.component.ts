@@ -1,7 +1,12 @@
 import { AsyncPipe, JsonPipe } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute, RouterLink, RouterLinkActive } from '@angular/router';
+import {
+  ActivatedRoute,
+  Router,
+  RouterLink,
+  RouterLinkActive,
+} from '@angular/router';
 import { AuthService } from '../../../shared/services/auth.service';
 import { map } from 'rxjs';
 import { AuthErrors } from '../../../shared/types/auth';
@@ -24,6 +29,7 @@ import { SignOutComponent } from '../sign-out/sign-out.component';
 })
 export class SignInComponent implements OnInit {
   private readonly activatedRoute = inject(ActivatedRoute);
+  private readonly router = inject(Router);
   readonly authService = inject(AuthService);
   readonly user$ = this.authService.user$;
 

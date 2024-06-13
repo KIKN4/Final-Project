@@ -72,7 +72,7 @@
         >
           Sign In
         </button>
-        @if (errorMessage$ | async ;as errorMessage) {
+        @if (errorMessage$ | async ; as errorMessage) {
         <div role="danger" class="alert">
           {{ errorMessage }}
         </div>
@@ -82,15 +82,6 @@
     <!-- end of sign in -->
     <div class="toggle-container">
       <div class="toggle">
-        <div class="toggle-panel toggle-left">
-          <img
-            style="width: 280px"
-            src="https://portbakumall.az/resized/fit1600x900/center/pages/88/ispace-1.png"
-            alt=""
-          />
-          <p>Enter your personal details to use all of site features</p>
-          <a class="BUTTON hidden"> Sign In </a>
-        </div>
         <div class="toggle-panel toggle-right">
           <h1>Register</h1>
           <p>Register with your personal details to use all of site features</p>

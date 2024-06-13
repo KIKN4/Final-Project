@@ -66,7 +66,14 @@
         >
         <span class="discount">{{ prod.price.discountPercentage }}%</span>
       </div>
-      <button class="AddToCart">Add to cart</button>
+
+      <button
+        class="AddToCart"
+        [disabled]="prod.stock <= 0"
+        (click)="onAddtoCart(prod._id)"
+      >
+        Add to cart
+      </button>
     </div>
     <div class="additional-info">
       <p class="info-title">Additional information</p>

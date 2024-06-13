@@ -21,6 +21,7 @@ export class AppComponent implements OnInit {
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
   private readonly authService = inject(AuthService);
+
   ngOnInit() {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
@@ -34,6 +35,9 @@ export class AppComponent implements OnInit {
         window.scrollTo(0, 0);
       });
       this.activatedRoute.data.subscribe(() => {
+        window.scrollTo(0, 0);
+      });
+      this.activatedRoute.paramMap.subscribe(() => {
         window.scrollTo(0, 0);
       });
     });

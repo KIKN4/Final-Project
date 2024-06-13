@@ -257,3 +257,9 @@ svg {
   letter-spacing: normal;
   font-size: 14px;
 }
+
+button:disabled,
+button[disabled] {
+  cursor: not-allowed !important;
+  box-shadow: none !important;
+}
