@@ -16,3 +16,13 @@ export interface SingUpRequest {
 export interface SignUpForm extends SingUpRequest {
   confirmPassword: string;
 }
+
+export interface SignInResponse {
+  access_token: string;
+  refresh_token: string;
+}
+
+export interface AuthErrors {
+  signUp: string;
+  signIn: string;
+}

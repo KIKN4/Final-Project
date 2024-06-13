@@ -1,22 +1,10 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './features/home/home.component';
+import { canActivateAuthenticated } from './shared/guards/can-activate.guard';
 
 export const routes: Routes = [
   { path: 'home', component: HomeComponent },
-  {
-    path: 'products',
-    loadComponent: () =>
-      import('./features/products/products.component').then(
-        (m) => m.ProductsComponent
-      ),
-  },
-  {
-    path: 'services',
-    loadComponent: () =>
-      import('./features/service-center/service-center.component').then(
-        (m) => m.ServiceCenterComponent
-      ),
-  },
+
   {
     path: 'signin',
     loadComponent: () =>
@@ -32,6 +20,26 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'signout',
+    loadComponent: () =>
+      import('./features/auth/sign-out/sign-out.component').then(
+        (m) => m.SignOutComponent
+      ),
+  },
+  {
+    path: 'products',
+    loadComponent: () =>
+      import('./features/products/products.component').then(
+        (m) => m.ProductsComponent
+      ),
+  },
+  {
+    path: 'cart',
+    canActivate: [canActivateAuthenticated],
+    loadComponent: () =>
+      import('./features/cart/cart.component').then((m) => m.CartComponent),
+  },
+  {
     path: 'product/:id',
     loadComponent: () =>
       import('./features/product-detail/product-detail.component').then(
@@ -45,7 +53,13 @@ export const routes: Routes = [
         (m) => m.DeliveryComponent
       ),
   },
-
+  {
+    path: 'services',
+    loadComponent: () =>
+      import('./features/service-center/service-center.component').then(
+        (m) => m.ServiceCenterComponent
+      ),
+  },
   {
     path: 'about-us',
     loadComponent: () =>

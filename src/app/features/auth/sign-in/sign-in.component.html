@@ -1,76 +1,40 @@
+@if (user$| async ) {
+<app-sign-out [user]="user$ | async"></app-sign-out>
+}@else {
 <div class="location">
   <ul>
     <div>
       <li><a routerLink="/home">Home</a></li>
       <li><i class="fa-solid fa-chevron-right"></i></li>
-
-      <li [style]="displaySI">
+      <li>
         <a routerLink="/signin" routerLinkActive="isActive">Sign In</a>
       </li>
-      @if (displaySU) {
-      <li><a routerLink="/signin" routerLinkActive="isActive">Sign Up</a></li>
-      }
     </div>
   </ul>
 </div>
 
 <div class="main-container">
-  <div [classList]="classList" [id]="container">
-    <!-- sign up -->
-    <div class="form-container sign-up">
-      <form [formGroup]="signupForm">
-        <h1>Create Account</h1>
-        <input
-          type="text"
-          placeholder="FirstName"
-          required
-          formControlName="firstName"
-        />
-        @if(controls.firstName.dirty){
-        @if(controls.firstName.errors?.["maxlength"]){
-        <div class="text-danger">
-          name is too long maximum length is
-          {{controls.firstName.errors?.['maxlength']['requiredLength']}}
-        </div>
-        } @if(controls.firstName.errors?.["required"]){
-        <div class="text-danger">Name is Required!</div>
-        } }
-        <input type="text" placeholder="LastName" formControlName="lastName" />
-        @if(controls.lastName.dirty){
-        @if(controls.lastName.errors?.["maxlength"]){
-        <div class="text-danger">
-          Last name is too long maximum length is
-          {{controls.lastName.errors?.['maxlength']['requiredLength']}}
-        </div>
-        } @if(controls.lastName.errors?.["required"]){
-        <div class="text-danger">Last name is Required!</div>
-        } }
-        <input type="email" placeholder="Email" formControlName="email" />
-        @if(controls.email.dirty && controls.email.errors){
-        <div class="text-danger">Email is not valid!</div>
-
-        }
-        <input
-          type="password"
-          placeholder="Password"
-          formControlName="password"
-        />
-        <input
-          type="password"
-          placeholder="Confirm Password"
-          formControlName="confirmPassword"
-        />
-
-        @if (controls.confirmPassword.dirty &&
-        controls.confirmPassword.errors?.['confirmPass']) {
-        <div class="text-danger">
-          {{controls.confirmPassword.errors?.['confirmPass']}}
-        </div>
-        }
-        <button class="BUTTON" [disabled]="signupForm.invalid">Sign Up</button>
-      </form>
+  @if(isSignUpSucces){
+  <div class="card">
+    <div id="success">
+      <i id="i" class="checkmark">✓</i>
     </div>
-    <!-- end of sign up -->
+    <h1 id="h1">Account Created succesfully. You can now sign in!</h1>
+  </div>
+
+  } @if (isLoading$|async) {
+  <div class="lds-roller">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+  }
+  <div class="container">
     <!-- sign in -->
     <div class="form-container sign-in">
       <form>
@@ -100,11 +64,19 @@
         <a href="#">Forget Your Password?</a>
         <button
           class="BUTTON"
-          (click)="onSignIn(email, password)"
-          [disabled]="emailCtr.invalid || passwordCtrl.invalid"
+          [disabled]="
+            (emailCtr.dirty && !email.includes('@')) ||
+            (passwordCtrl.invalid && passwordCtrl.dirty)
+          "
+          (click)="onSignIn()"
         >
           Sign In
         </button>
+        @if (errorMessage$ | async ;as errorMessage) {
+        <div role="danger" class="alert">
+          {{ errorMessage }}
+        </div>
+        }
       </form>
     </div>
     <!-- end of sign in -->
@@ -117,18 +89,15 @@
             alt=""
           />
           <p>Enter your personal details to use all of site features</p>
-          <a class="BUTTON hidden" [id]="loginBtn" (click)="removeActive()">
-            Sign In
-          </a>
+          <a class="BUTTON hidden"> Sign In </a>
         </div>
         <div class="toggle-panel toggle-right">
           <h1>Register</h1>
           <p>Register with your personal details to use all of site features</p>
-          <a class="BUTTON hidden" [id]="register" (click)="addActive()">
-            Sign Up
-          </a>
+          <a class="BUTTON hidden" routerLink="/signup"> Sign Up </a>
         </div>
       </div>
     </div>
   </div>
 </div>
+}

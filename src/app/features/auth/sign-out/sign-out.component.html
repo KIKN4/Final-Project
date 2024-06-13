@@ -1,0 +1,14 @@
+@if (user$ | async ; as user) {
+<div class="card-container">
+  <div class="user-details-card">
+    <div class="user-info">
+      <img [src]="user.avatar" alt="User Avatar" class="user-avatar" />
+      <h2>{{ user.firstName }} {{ user.lastName }}</h2>
+      <p>Email: {{ user.email }}</p>
+      <p>Phone: {{ user.phone }}</p>
+      <p>Address: {{ user.address }}</p>
+      <button class="signout-button" (click)="signOut()">Sign Out</button>
+    </div>
+  </div>
+</div>
+}

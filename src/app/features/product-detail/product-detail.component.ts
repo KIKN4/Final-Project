@@ -6,7 +6,6 @@ import {
 } from '@angular/core';
 import { ActivatedRoute, RouterLink, RouterLinkActive } from '@angular/router';
 import { ProductsService } from '../../shared/services/products.service';
-import { ProductDetails } from '../../shared/types/apiProduct';
 import { CommonModule } from '@angular/common';
 import { TruncateStringPipe } from '../../shared/pipes/truncate-string.pipe';
 import { ContactUsComponent } from '../../shared/components/contact-us/contact-us.component';

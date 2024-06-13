@@ -1,21 +1,11 @@
-import { JsonPipe } from '@angular/common';
+import { AsyncPipe, JsonPipe } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
-import {
-  AbstractControl,
-  FormBuilder,
-  FormControl,
-  FormsModule,
-  ReactiveFormsModule,
-  ValidationErrors,
-  ValidatorFn,
-  Validators,
-} from '@angular/forms';
-import {
-  ActivatedRoute,
-  Router,
-  RouterLink,
-  RouterLinkActive,
-} from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, RouterLink, RouterLinkActive } from '@angular/router';
+import { AuthService } from '../../../shared/services/auth.service';
+import { map } from 'rxjs';
+import { AuthErrors } from '../../../shared/types/auth';
+import { SignOutComponent } from '../sign-out/sign-out.component';
 
 @Component({
   selector: 'app-sign-in',
@@ -26,74 +16,32 @@ import {
     FormsModule,
     ReactiveFormsModule,
     JsonPipe,
+    AsyncPipe,
+    SignOutComponent,
   ],
   templateUrl: './sign-in.component.html',
   styleUrl: './sign-in.component.css',
 })
 export class SignInComponent implements OnInit {
-  displaySI = 'display: block;';
-  displaySU = false;
-  signIn = '';
-  container = 'container';
-  register = 'register';
-  loginBtn = 'login';
-  classList = 'container';
+  private readonly activatedRoute = inject(ActivatedRoute);
+  readonly authService = inject(AuthService);
+  readonly user$ = this.authService.user$;
 
+  errorMessage$ = this.authService.errors$.pipe(
+    map((error: AuthErrors): string => error.signIn)
+  );
+  isLoading$ = this.authService.isloading$;
   isSignUpSucces = false;
-  private router = inject(Router);
-  activatedRoute = inject(ActivatedRoute);
-
-  addActive() {
-    this.displaySI = 'display: none;';
-    this.classList = 'container active';
-    this.displaySU = true;
-  }
-
-  removeActive() {
-    this.displaySI = 'display: block;';
-    this.displaySU = false;
-    this.classList = 'container';
-  }
-
-  // FormControl
-
-  // sign in
-
   email = '';
   password = '';
 
-  onSignIn(email: string, password: string) {
-    console.log(email, password);
-  }
-
-  // end of sign in
-
-  // sign up
-  private readonly maxNameLength = 16;
-  private readonly fb = inject(FormBuilder);
-
-  signupForm = this.fb.group({
-    firstName: [
-      '',
-      [Validators.required, Validators.maxLength(this.maxNameLength)],
-    ],
-    lastName: [
-      '',
-      [Validators.required, Validators.maxLength(this.maxNameLength)],
-    ],
-    email: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required]],
-    confirmPassword: ['', [Validators.required]],
-  });
-
-  get controls() {
-    return this.signupForm.controls;
+  onSignIn() {
+    this.authService.signIn(this.email, this.password);
   }
 
   ngOnInit(): void {
-    this.activatedRoute.queryParamMap.subscribe((query) => {
-      this.isSignUpSucces = Boolean(query.get('signUpSucces'));
+    this.activatedRoute.queryParamMap.subscribe((queryParamMap) => {
+      this.isSignUpSucces = Boolean(queryParamMap.get('signUpSucces'));
     });
-    console.log(this.isSignUpSucces);
   }
 }

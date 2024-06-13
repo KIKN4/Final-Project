@@ -1,8 +1,7 @@
-.main-container * {
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Montserrat", sans-serif;
 }
 
 .location {
@@ -39,9 +38,9 @@ ul li a {
 .main-container {
   display: flex;
   align-items: center;
-  justify-content: center;
   flex-direction: column;
-  margin: 50px 0;
+  margin-top: 100px;
+  height: 100vh;
 }
 
 .container {
@@ -254,6 +253,154 @@ button[disabled] {
   width: 100%;
 }
 
+/* errorMessage */
+
+.alert {
+  padding: 5px 30px;
+  margin-top: 25px;
+  border-radius: 5px;
+  background-color: #f44336;
+  box-shadow: 5px 1px 15px rgba(0, 0, 0, 0.65);
+  color: white;
+}
+
+/* succesSignUp */
+
+#h1 {
+  color: #88b04b;
+  font-family: "Montserrat";
+  font-weight: 900;
+  font-size: 17px;
+  margin: 10px;
+  text-align: center;
+}
+
+#p {
+  color: #404f5e;
+  font-family: "Nunito Sans", "Helvetica Neue", sans-serif;
+  font-size: 20px;
+  margin: 0;
+}
+
+#i {
+  position: absolute;
+  color: #9abc66;
+  font-size: 50px;
+  top: 20px;
+  left: 27px;
+}
+
+.card {
+  max-width: 300px;
+  width: 100%;
+  background: white;
+  padding: 10px;
+  border-radius: 4px;
+  display: inline-block;
+  margin: 0 auto 50px auto;
+}
+
+#success {
+  position: relative;
+  border-radius: 200px;
+  height: 100px;
+  width: 100px;
+  background: #f8faf5;
+  margin: 0 auto;
+}
+
+/* spinner */
+
+.lds-roller,
+.lds-roller div,
+.lds-roller div:after {
+  box-sizing: border-box;
+}
+.lds-roller {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+.lds-roller div {
+  animation: lds-roller 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  transform-origin: 40px 40px;
+}
+.lds-roller div:after {
+  content: " ";
+  display: block;
+  position: absolute;
+  width: 7.2px;
+  height: 7.2px;
+  border-radius: 50%;
+  background: currentColor;
+  margin: -3.6px 0 0 -3.6px;
+}
+.lds-roller div:nth-child(1) {
+  animation-delay: -0.036s;
+}
+.lds-roller div:nth-child(1):after {
+  top: 62.62742px;
+  left: 62.62742px;
+}
+.lds-roller div:nth-child(2) {
+  animation-delay: -0.072s;
+}
+.lds-roller div:nth-child(2):after {
+  top: 67.71281px;
+  left: 56px;
+}
+.lds-roller div:nth-child(3) {
+  animation-delay: -0.108s;
+}
+.lds-roller div:nth-child(3):after {
+  top: 70.90963px;
+  left: 48.28221px;
+}
+.lds-roller div:nth-child(4) {
+  animation-delay: -0.144s;
+}
+.lds-roller div:nth-child(4):after {
+  top: 72px;
+  left: 40px;
+}
+.lds-roller div:nth-child(5) {
+  animation-delay: -0.18s;
+}
+.lds-roller div:nth-child(5):after {
+  top: 70.90963px;
+  left: 31.71779px;
+}
+.lds-roller div:nth-child(6) {
+  animation-delay: -0.216s;
+}
+.lds-roller div:nth-child(6):after {
+  top: 67.71281px;
+  left: 24px;
+}
+.lds-roller div:nth-child(7) {
+  animation-delay: -0.252s;
+}
+.lds-roller div:nth-child(7):after {
+  top: 62.62742px;
+  left: 17.37258px;
+}
+.lds-roller div:nth-child(8) {
+  animation-delay: -0.288s;
+}
+.lds-roller div:nth-child(8):after {
+  top: 56px;
+  left: 12.28719px;
+}
+@keyframes lds-roller {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 /* Responsive design */
 @media (max-width: 768px) {
   .main-container {
@@ -262,10 +409,11 @@ button[disabled] {
   .container {
     margin: 0 auto;
     min-height: auto;
+    max-width: 400px;
   }
 
   .container form {
-    padding: 20px;
+    padding: 0 10px;
   }
 
   .toggle-container,
@@ -286,7 +434,6 @@ button[disabled] {
     width: 100%;
     position: static;
     transform: none;
-    padding: 20px;
   }
 
   .sign-in,

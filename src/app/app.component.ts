@@ -7,6 +7,7 @@ import {
 } from '@angular/router';
 import { HeaderComponent } from './shared/components/header/header.component';
 import { FooterComponent } from './shared/components/footer/footer.component';
+import { AuthService } from './shared/services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -19,7 +20,7 @@ export class AppComponent implements OnInit {
   title = 'iSpace';
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
-
+  private readonly authService = inject(AuthService);
   ngOnInit() {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
@@ -36,5 +37,9 @@ export class AppComponent implements OnInit {
         window.scrollTo(0, 0);
       });
     });
+  }
+
+  constructor() {
+    this.authService.init();
   }
 }

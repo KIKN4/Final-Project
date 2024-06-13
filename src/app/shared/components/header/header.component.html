@@ -8,20 +8,20 @@
               <i class="fa-solid fa-house-chimney"></i>
             </a>
           </li>
-          <div class="logo">
-            <a (click)="closeBar()" routerLink="/home">
-              <img src="assets/images/apple-logo.png" alt="logo" />
-            </a>
-          </div>
 
           <li>
-            <a (click)="closeBar()" routerLink="/signin">
-              <i
-                class="fa-solid fa-user"
-                id="user-mb"
-                routerLinkActive="active"
-              ></i>
+            @if (user$ | async; as user) {
+            <a (click)="closeBar()" routerLink="/signout">
+              <i class="fa-solid fa-user-secret"></i>
+              <span class="username">{{
+                capitalizeFirstLetter(user.firstName)
+              }}</span>
             </a>
+            } @else {
+            <a (click)="closeBar()" routerLink="/signin">
+              <i class="fa-solid fa-user-xmark"></i>
+            </a>
+            }
           </li>
         </ul>
       </div>
@@ -32,7 +32,7 @@
           <li (click)="closeBar()"><a routerLink="/services">Services</a></li>
           <li (click)="closeBar()"><a routerLink="/delivery">Delivery</a></li>
           <li (click)="closeBar()"><a routerLink="/products">Products</a></li>
-          <li (click)="closeBar()"><a routerLink="/home">Cart</a></li>
+          <li (click)="closeBar()"><a routerLink="/cart">Cart</a></li>
         </ul>
       </div>
     </div>
@@ -63,7 +63,7 @@
         <li>
           <a routerLink="/products" routerLinkActive="active">Products</a>
         </li>
-        <li><a routerLink="#" routerLinkActive="active">Cart</a></li>
+        <li><a routerLink="/cart" routerLinkActive="active">Cart</a></li>
       </ul>
     </div>
     <div class="account">
@@ -74,13 +74,22 @@
           </a>
         </li>
         <li>
-          <a routerLink="/signin">
-            <i
-              class="fa-solid fa-user"
-              id="user-lap"
-              routerLinkActive="active"
-            ></i>
+          @if (user$ |async; as user) {
+          <a
+            routerLinkActive="active"
+            (click)="closeBar()"
+            routerLink="/signout"
+          >
+            <i class="fa-solid fa-user-secret"></i>
+            <span class="username">{{
+              capitalizeFirstLetter(user.firstName)
+            }}</span>
           </a>
+          } @else {
+          <a (click)="closeBar()" routerLink="/signin">
+            <i class="fa-solid fa-user-xmark"></i>
+          </a>
+          }
         </li>
       </ul>
     </div>

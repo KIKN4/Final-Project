@@ -1,8 +1,6 @@
 import { AsyncPipe, NgOptimizedImage } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import { ProductsService } from '../../services/products.service';
-import { BehaviorSubject } from 'rxjs';
-import { ApiProduct } from '../../types/apiProduct';
 import { FormsModule } from '@angular/forms';
 
 @Component({
