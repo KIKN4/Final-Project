@@ -1,4 +1,8 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpHeaders,
+} from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import {
   BehaviorSubject,
@@ -56,12 +60,11 @@ export class CartService {
     this.httpClient
       .get<Cart>(this.baseUrl, { headers: this.authHeaders })
       .pipe(
-        catchError((error) => {
-          console.error('Error fetching cart:', error);
-          if (error.status === 409) {
+        catchError((error: HttpErrorResponse) => {
+          if (error.error.error === 'User needs to verify email') {
             this.errors$.next({ error: 'You Must Be Verified on Email' });
           } else {
-            this.errors$.next({ error: 'Unexpected error occurred' });
+            this.errors$.next(error.error.error);
           }
           this.isLoading$.next(false);
           return EMPTY;
@@ -96,24 +99,15 @@ export class CartService {
             this.cart$.next([]);
           }
         },
-        (error) => {
-          console.error('Error fetching cart:', error);
-          if (error.status === 409) {
+        (error: HttpErrorResponse) => {
+          if (error.error.error === 'User needs to verify email') {
             this.errors$.next({ error: 'You Must Be Verified on Email' });
           } else {
-            this.errors$.next({ error: 'Unexpected error occurred' });
+            this.errors$.next(error.error.error);
           }
           this.isLoading$.next(false);
         }
       );
-  }
-
-  updateVerificationStatus(isVerified: boolean) {
-    if (isVerified) {
-      this.errors$.next({});
-    } else {
-      this.errors$.next({ error: 'You Must Be Verified on Email' });
-    }
   }
 
   addToCart(id: string, quantity: number) {
