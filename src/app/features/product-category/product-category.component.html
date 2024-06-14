@@ -35,7 +35,13 @@
     </a>
   </div>
 </div>
-}
+} @if (isCartAdded$| async) { @if (addedProduct$ | async ; as product) { @if
+(product.stock<=0) {
+<div class="bad-notification">{{ product.title }} is out of stock</div>
+}@else{
+<div class="notification">You Added {{ product.title }} Successfully</div>
+} } }
+
 <div class="filter-container">
   <div class="filter">
     <form [formGroup]="filterForm">
@@ -198,8 +204,8 @@
           <span class="current">{{ item.price.current }}</span>
           <span class="currency">{{ item.price.currency }}</span>
         </p>
-        <button class="button">
-          <a routerLink="/home">
+        <button class="button" (click)="onAddtoCart(item._id)">
+          <a>
             <span class="cart-icon"
               >Add to cart <i class="fa-solid fa-right-long"></i
             ></span>

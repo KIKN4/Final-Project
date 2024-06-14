@@ -50,6 +50,12 @@
   object-fit: cover;
 }
 
+button:disabled,
+button[disabled] {
+  cursor: not-allowed !important;
+  box-shadow: none !important;
+}
+
 @media (max-width: 600px) {
   .categories {
     gap: 10px;
@@ -446,6 +452,48 @@ input[type="range"]::-moz-range-thumb {
   font-style: italic;
   font-size: 1.03rem;
   font-family: "Montserrat";
+}
+
+/* added cart notification */
+
+.notification {
+  background-color: #4caf50;
+  color: white;
+  padding: 15px;
+  border-radius: 5px;
+  animation: fadeInOut 3s forwards;
+  max-width: 50%;
+  width: 100%;
+  margin: auto;
+  text-align: center;
+}
+
+.bad-notification {
+  background-color: #ff4039;
+  color: white;
+  padding: 15px;
+  border-radius: 5px;
+  animation: fadeInOut 3s forwards;
+  max-width: 50%;
+  width: 100%;
+  margin: auto;
+  text-align: center;
+}
+/*  */
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  10% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  90% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* responsive */

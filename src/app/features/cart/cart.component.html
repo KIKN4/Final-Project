@@ -9,24 +9,14 @@
     </div>
   </ul>
 </div>
-
-@if (isLoading$|async) {
-<div class="spinner-container">
-  <div class="lds-roller">
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-  </div>
-</div>
-} @if(cart$ | async ; as cart) {
+@if(cart$ | async ; as cart) {
 <div class="cart-container">
   <div class="cart">
-    @if(cart.length > 0) { @for (product of cart; track product._id) {
+    @if (isLoading$|async) {
+    <div class="spinner-container">
+      <app-spinner></app-spinner>
+    </div>
+    }@else { @if(cart.length > 0) { @for (product of cart; track product._id) {
     <div class="cart-item">
       <div class="product-title">
         <img [src]="product.thumbnail" [alt]="product.title" />
@@ -54,8 +44,10 @@
       <p>Your Cart is currently empty</p>
       <button id="return" routerLink="/products">Return to Shop</button>
     </div>
-    }
+
+    } }
   </div>
+  @if (cart.length) {
   <div class="cart-checkout">
     <div class="items-quantity">
       <span>Cart</span>
@@ -75,7 +67,12 @@
       <button>Checkout</button>
     </div>
   </div>
+  } @else { }
 </div>
-}
+} @else { @if (isLoading$|async) {
+<div class="spinner-container">
+  <app-spinner></app-spinner>
+</div>
+} }
 
 <app-contact-us></app-contact-us>

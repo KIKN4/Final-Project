@@ -91,7 +91,7 @@ ul li a {
 .filter-container {
   max-width: 1100px;
   width: 100%;
-  margin: 0 auto;
+  margin: 50px auto 300px auto;
   display: flex;
   flex-wrap: wrap;
 }
@@ -224,7 +224,39 @@ ul li a {
   font-size: 16px;
   font-weight: 400;
   color: #2397ff;
+  transition: color 0.1s ease;
 }
+
+.button:hover {
+  color: #045ab0;
+}
+
+/* added cart notification */
+
+.notification {
+  background-color: #4caf50;
+  color: white;
+  padding: 15px;
+  border-radius: 5px;
+  animation: fadeInOut 3s forwards;
+  max-width: 50%;
+  width: 100%;
+  margin: auto;
+  text-align: center;
+}
+
+.bad-notification {
+  background-color: #ff4039;
+  color: white;
+  padding: 15px;
+  border-radius: 5px;
+  animation: fadeInOut 3s forwards;
+  max-width: 50%;
+  width: 100%;
+  margin: auto;
+  text-align: center;
+}
+/*  */
 
 /* filter price */
 

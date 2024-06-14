@@ -7,6 +7,7 @@ import { BehaviorSubject, filter, map, tap } from 'rxjs';
 import { ProductDetails } from '../../shared/types/apiProduct';
 import { TruncateStringPipe } from '../../shared/pipes/truncate-string.pipe';
 import { ContactUsComponent } from '../../shared/components/contact-us/contact-us.component';
+import { SpinnerComponent } from '../../shared/components/spinner/spinner.component';
 
 @Component({
   selector: 'app-cart',
@@ -19,6 +20,7 @@ import { ContactUsComponent } from '../../shared/components/contact-us/contact-u
     TruncateStringPipe,
     CommonModule,
     ContactUsComponent,
+    SpinnerComponent,
   ],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.css',
@@ -34,9 +36,6 @@ export class CartComponent {
 
   ngOnInit(): void {
     this.cartService.getCart();
-
-    this.cartService.getCart();
-    console.log(this.cart$);
     this.cart$
       .pipe(
         filter(
@@ -60,7 +59,6 @@ export class CartComponent {
   onDeleteProduct(id: string) {
     this.cartService.deleteProduct(id).subscribe(
       (response) => {
-        console.log('products removed', response);
         this.cartService.getCart();
       },
       (error) => {

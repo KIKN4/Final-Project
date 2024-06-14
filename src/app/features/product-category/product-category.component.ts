@@ -15,6 +15,7 @@ import { TruncateStringPipe } from '../../shared/pipes/truncate-string.pipe';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
 import { BrandsService } from '../../shared/services/brands.service';
 import { DropdownFilterComponent } from '../../shared/components/dropdown-filter/dropdown-filter.component';
+import { CartService } from '../../shared/services/cart.service';
 
 @Component({
   selector: 'app-product-category',
@@ -38,6 +39,7 @@ export class ProductsByCategoryComponent implements OnInit, AfterViewInit {
   private readonly router = inject(Router);
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly productsService = inject(ProductsService);
+  private readonly cartService = inject(CartService);
   private readonly fb = inject(FormBuilder);
   private brandsService = inject(BrandsService);
   private priceGap = 1000;
@@ -47,6 +49,9 @@ export class ProductsByCategoryComponent implements OnInit, AfterViewInit {
   products: ApiProduct[] | null = null;
   brands$ = this.brandsService.brands$;
 
+  isCartAdded$ = this.cartService.isCartAdded$;
+  isLoading$ = this.cartService.isLoading$;
+  addedProduct$ = this.cartService.addedProduct$;
   checkCategory!: boolean;
   allCategory = false;
   allProducts!: string;
@@ -227,5 +232,25 @@ export class ProductsByCategoryComponent implements OnInit, AfterViewInit {
     });
 
     updateSlider();
+  }
+
+  onAddtoCart(id: string) {
+    this.cartService.addToCart(id, 1);
+    if (this.isCartAdded$) {
+      this.activatedRoute.queryParams.subscribe(() => {
+        window.scrollTo(0, 0);
+      });
+      this.activatedRoute.params.subscribe(() => {
+        window.scrollTo(0, 0);
+      });
+      this.activatedRoute.data.subscribe(() => {
+        window.scrollTo(0, 0);
+      });
+      this.activatedRoute.paramMap.subscribe(() => {
+        window.scrollTo(0, 0);
+      });
+      this.isCartAdded$.next(false);
+    } else {
+    }
   }
 }

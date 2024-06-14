@@ -16,6 +16,13 @@
   </div>
 </div>
 
+@if (isCartAdded$| async) { @if (addedProduct$ | async ; as product) { @if
+(product.stock<=0) {
+<div class="bad-notification">{{ product.title }} is out of stock</div>
+}@else{
+<div class="notification">You Added {{ product.title }} Successfully</div>
+} } }
+
 <div class="filter-container">
   <div class="filter">
     <form [formGroup]="filterForm">
@@ -64,9 +71,7 @@
         </div>
       </app-dropdown-filter>
       <!--  end of sort control -->
-
       <!-- sort dir control -->
-
       <app-dropdown-filter [title]="'Sort Direction'">
         <div class="selection">
           <li
@@ -182,8 +187,8 @@
           <span class="current">{{ item.price.current }}</span>
           <span class="currency">{{ item.price.currency }}</span>
         </p>
-        <button class="button">
-          <a routerLink="/home">
+        <button (click)="onAddtoCart(item._id)" class="button">
+          <a>
             <span class="cart-icon"
               >Add to cart <i class="fa-solid fa-right-long"></i
             ></span>

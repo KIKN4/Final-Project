@@ -16,6 +16,11 @@ import { ProductDetails } from '../types/apiProduct';
 import { Cart } from '../types/cart';
 import { AuthService } from './auth.service';
 
+export interface AddedProduct {
+  title: string;
+  stock: number;
+}
+
 @Injectable({ providedIn: 'root' })
 export class CartService {
   private readonly httpClient = inject(HttpClient);
@@ -26,6 +31,8 @@ export class CartService {
   cart$ = new BehaviorSubject<any | null>(null);
 
   isLoading$ = new BehaviorSubject<boolean>(false);
+  isCartAdded$ = new BehaviorSubject<boolean>(false);
+  addedProduct$ = new BehaviorSubject<AddedProduct | null>(null);
 
   get authHeaders() {
     return new HttpHeaders({
@@ -84,29 +91,38 @@ export class CartService {
 
   addToCart(id: string, quantity: number) {
     this.isLoading$.next(true);
-    if (this.cart$.value) {
-      this.httpClient
-        .patch<Cart>(
-          `${this.baseUrl}/product`,
-          { id, quantity },
-          { headers: this.authHeaders }
-        )
-        .subscribe((cart) => {
-          this.getCart();
-          this.isLoading$.next(false); // Stop loading indicator
-        });
-    } else {
-      this.httpClient
-        .post<Cart>(
-          `${this.baseUrl}/product`,
-          { id, quantity },
-          { headers: this.authHeaders }
-        )
-        .subscribe((cart) => {
-          this.getCart();
-          this.isLoading$.next(false);
-        });
-    }
+
+    this.httpClient
+      .get<ProductDetails>(`${this.productsUrl}/id/${id}`, {
+        headers: this.authHeaders,
+      })
+      .pipe(
+        switchMap((productDetails) => {
+          this.isCartAdded$.next(true);
+          this.addedProduct$.next({
+            title: productDetails.title,
+            stock: productDetails.stock,
+          });
+          if (this.cart$.value) {
+            return this.httpClient.patch<Cart>(
+              `${this.baseUrl}/product`,
+              { id, quantity },
+              { headers: this.authHeaders }
+            );
+          } else {
+            return this.httpClient.post<Cart>(
+              `${this.baseUrl}/product`,
+              { id, quantity },
+              { headers: this.authHeaders }
+            );
+          }
+        })
+      )
+      .subscribe((cart) => {
+        this.getCart();
+        this.isLoading$.next(false);
+        this.isCartAdded$.next(true);
+      });
   }
 
   deleteProduct(id: string): Observable<any> {

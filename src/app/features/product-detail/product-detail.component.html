@@ -1,22 +1,19 @@
-@if(product$ | async; as prod){
-
 <div class="container">
   <ul>
     <div>
       <li><a routerLink="/home" routerLinkActive="active">Home</a></li>
       <li><i class="fa-solid fa-chevron-right"></i></li>
       <li>
-        <a routerLink="/product">
-          {{ prod.title | truncateString }}
-        </a>
+        <a routerLink="/product" routerLinkActive="active"> Product Details </a>
       </li>
     </div>
   </ul>
 </div>
 
+@if(product$ | async; as prod){
 <div class="product-container">
   <div class="product-image">
-    @if(!prod.images.length){
+    @if(prod.images.length){
     <swiper-container
       class="mySwiper"
       navigation="true"
@@ -104,23 +101,14 @@
     </div>
   </div>
 </div>
+} @else {
 
-}@else {
-<div class="container">
-  <ul>
-    <div>
-      <li><a routerLink="/home" routerLinkActive="active">Home</a></li>
-      <li><i class="fa-solid fa-chevron-right"></i></li>
-      <li>
-        <a routerLink="/product"> Product Not Found </a>
-      </li>
-    </div>
-  </ul>
+<div class="product-container">
+  <img
+    class="not-found"
+    src="https://www.wolfgangdigital.com/uploads/blog/How_to_manage_out_of_date_stock_for_eCommerce.jpg"
+    alt=""
+  />
 </div>
-<img
-  class="not-found"
-  src="https://www.wolfgangdigital.com/uploads/blog/How_to_manage_out_of_date_stock_for_eCommerce.jpg"
-  alt=""
-/>
 }
 <app-contact-us></app-contact-us>

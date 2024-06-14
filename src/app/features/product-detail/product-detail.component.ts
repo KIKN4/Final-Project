@@ -10,6 +10,7 @@ import { CommonModule } from '@angular/common';
 import { TruncateStringPipe } from '../../shared/pipes/truncate-string.pipe';
 import { ContactUsComponent } from '../../shared/components/contact-us/contact-us.component';
 import { CartService } from '../../shared/services/cart.service';
+import { SpinnerComponent } from '../../shared/components/spinner/spinner.component';
 
 @Component({
   selector: 'app-product-detail',
@@ -20,6 +21,7 @@ import { CartService } from '../../shared/services/cart.service';
     CommonModule,
     TruncateStringPipe,
     ContactUsComponent,
+    SpinnerComponent,
   ],
   templateUrl: './product-detail.component.html',
   styleUrl: './product-detail.component.css',
@@ -30,7 +32,7 @@ export class ProductDetailComponent implements OnInit {
   private readonly productsService = inject(ProductsService);
   private readonly cartService = inject(CartService);
   product$ = this.productsService.productById$;
-
+  isLoading$ = this.cartService.isLoading$;
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe((params) => {
       const id = params.get('id');

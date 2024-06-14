@@ -1,4 +1,12 @@
-import { AfterViewInit, Component, OnInit, inject } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  OnInit,
+  TemplateRef,
+  ViewChild,
+  ViewContainerRef,
+  inject,
+} from '@angular/core';
 import {
   ActivatedRoute,
   NavigationEnd,
@@ -16,6 +24,7 @@ import { ContactUsComponent } from '../../shared/components/contact-us/contact-u
 import { TruncateStringPipe } from '../../shared/pipes/truncate-string.pipe';
 import { DropdownFilterComponent } from '../../shared/components/dropdown-filter/dropdown-filter.component';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
+import { CartService } from '../../shared/services/cart.service';
 
 @Component({
   selector: 'app-products',
@@ -41,6 +50,7 @@ export class ProductsComponent implements OnInit, AfterViewInit {
   private readonly fb = inject(FormBuilder);
   private readonly productsService = inject(ProductsService);
   private readonly brandsService = inject(BrandsService);
+  private readonly cartService = inject(CartService);
   private priceGap = 1000;
   private minPriceValue!: number;
   private maxPriceValue!: number;
@@ -48,6 +58,9 @@ export class ProductsComponent implements OnInit, AfterViewInit {
   allProduct$ = this.productsService.products$;
   brands$ = this.brandsService.brands$;
 
+  isCartAdded$ = this.cartService.isCartAdded$;
+  isLoading$ = this.cartService.isLoading$;
+  addedProduct$ = this.cartService.addedProduct$;
   checkCategory!: boolean;
   allCategory = false;
   allProducts!: string;
@@ -93,7 +106,7 @@ export class ProductsComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.filterForm.valueChanges
       .pipe(debounceTime(300), distinctUntilChanged())
-      .subscribe((value) => {
+      .subscribe(() => {
         this.router.navigate([], {
           queryParams: {
             category_id: this.filterForm.value.category_id || null,
@@ -203,5 +216,25 @@ export class ProductsComponent implements OnInit, AfterViewInit {
     });
 
     updateSlider();
+  }
+
+  onAddtoCart(id: string) {
+    this.cartService.addToCart(id, 1);
+    if (this.isCartAdded$) {
+      this.activatedRoute.queryParams.subscribe(() => {
+        window.scrollTo(0, 0);
+      });
+      this.activatedRoute.params.subscribe(() => {
+        window.scrollTo(0, 0);
+      });
+      this.activatedRoute.data.subscribe(() => {
+        window.scrollTo(0, 0);
+      });
+      this.activatedRoute.paramMap.subscribe(() => {
+        window.scrollTo(0, 0);
+      });
+      this.isCartAdded$.next(false);
+    } else {
+    }
   }
 }
