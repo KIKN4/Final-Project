@@ -8,6 +8,7 @@ import {
 import { HeaderComponent } from './shared/components/header/header.component';
 import { FooterComponent } from './shared/components/footer/footer.component';
 import { AuthService } from './shared/services/auth.service';
+import { CartService } from './shared/services/cart.service';
 
 @Component({
   selector: 'app-root',
@@ -21,6 +22,7 @@ export class AppComponent implements OnInit {
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
   private readonly authService = inject(AuthService);
+  private readonly cartService = inject(CartService);
 
   ngOnInit() {
     this.router.events.subscribe((event) => {
@@ -41,9 +43,12 @@ export class AppComponent implements OnInit {
         window.scrollTo(0, 0);
       });
     });
-  }
 
-  constructor() {
     this.authService.init();
+    this.authService.user$.subscribe((user) => {
+      if (user) {
+        this.cartService.getCart();
+      }
+    });
   }
 }

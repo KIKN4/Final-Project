@@ -13,6 +13,10 @@ export interface ApiProduct {
   images: string[];
 }
 
+export interface ProductDetails extends ApiProduct {
+  ratings: Rating[];
+}
+
 export interface Price {
   current: number;
   currency: string;
@@ -24,10 +28,6 @@ export interface Category {
   id: number;
   name: string;
   image: string;
-}
-
-export interface ProductDetails extends ApiProduct {
-  ratings: Rating[];
 }
 
 export interface Rating {

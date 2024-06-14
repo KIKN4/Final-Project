@@ -1,17 +1,31 @@
-import { Injectable, inject } from '@angular/core';
-import { ENVIRONMENT } from '../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { AuthService } from './auth.service';
+import { inject, Injectable } from '@angular/core';
+import {
+  BehaviorSubject,
+  catchError,
+  EMPTY,
+  forkJoin,
+  map,
+  Observable,
+  of,
+  switchMap,
+} from 'rxjs';
+
+import { ENVIRONMENT } from '../environments/environment';
+import { ProductDetails } from '../types/apiProduct';
 import { Cart } from '../types/cart';
-import { BehaviorSubject, EMPTY, catchError } from 'rxjs';
+import { AuthService } from './auth.service';
 
 @Injectable({ providedIn: 'root' })
 export class CartService {
-  private readonly hhtpClient = inject(HttpClient);
+  private readonly httpClient = inject(HttpClient);
   private readonly authService = inject(AuthService);
   private readonly env = inject(ENVIRONMENT);
   private readonly baseUrl = `${this.env.apiURL}/shop/cart`;
-  cart$ = new BehaviorSubject<Cart | null>(null);
+  private readonly productsUrl = `${this.env.apiURL}/shop/products`;
+  cart$ = new BehaviorSubject<any | null>(null);
+
+  isLoading$ = new BehaviorSubject<boolean>(false);
 
   get authHeaders() {
     return new HttpHeaders({
@@ -20,34 +34,96 @@ export class CartService {
     });
   }
 
+  private getHeaders(): HttpHeaders {
+    return new HttpHeaders({
+      accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${this.authService.accessToken}`, // Include the token in the Authorization header
+    });
+  }
+
   getCart() {
-    this.hhtpClient
+    this.isLoading$.next(true);
+    this.httpClient
       .get<Cart>(this.baseUrl, { headers: this.authHeaders })
-      .pipe(catchError(() => EMPTY))
-      .subscribe((cart) => this.cart$.next(cart));
+      .pipe(
+        catchError(() => {
+          this.isLoading$.next(false);
+          return EMPTY;
+        }),
+        switchMap((cart) => {
+          const itemRequests = cart.products.map((cartProduct) =>
+            this.httpClient
+              .get<ProductDetails>(
+                `${this.productsUrl}/id/${cartProduct.productId}`
+              )
+              .pipe(
+                map((individualProduct) => ({
+                  ...individualProduct,
+                  quantity: cartProduct.quantity,
+                  pricePerQuantity: cartProduct.pricePerQuantity,
+                  beforeDiscountPrice: cartProduct.beforeDiscountPrice,
+                }))
+              )
+          );
+          if (cart._id && cart.products.length === 0) {
+            return of(EMPTY);
+          }
+          return forkJoin(itemRequests);
+        })
+      )
+      .subscribe((cart) => {
+        this.isLoading$.next(false);
+        if (cart) {
+          this.cart$.next(cart);
+        } else {
+          this.cart$.next([]);
+        }
+      });
   }
 
   addToCart(id: string, quantity: number) {
+    this.isLoading$.next(true);
     if (this.cart$.value) {
-      this.hhtpClient
+      this.httpClient
         .patch<Cart>(
           `${this.baseUrl}/product`,
           { id, quantity },
           { headers: this.authHeaders }
         )
         .subscribe((cart) => {
-          this.cart$.next(cart);
+          this.getCart();
+          this.isLoading$.next(false); // Stop loading indicator
         });
     } else {
-      this.hhtpClient
+      this.httpClient
         .post<Cart>(
           `${this.baseUrl}/product`,
           { id, quantity },
           { headers: this.authHeaders }
         )
         .subscribe((cart) => {
-          this.cart$.next(cart);
+          this.getCart();
+          this.isLoading$.next(false);
         });
     }
+  }
+
+  deleteProduct(id: string): Observable<any> {
+    this.isLoading$.next(true);
+    const url = `${this.baseUrl}/product`;
+    const headers = this.getHeaders();
+    const body = { id: id };
+
+    return this.httpClient.delete(url, { headers, body: { id } }).pipe(
+      catchError((error) => {
+        this.isLoading$.next(false);
+        return EMPTY;
+      }),
+      map((response) => {
+        this.isLoading$.next(false);
+        return response;
+      })
+    );
   }
 }

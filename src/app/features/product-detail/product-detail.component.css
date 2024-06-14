@@ -38,10 +38,13 @@ ul li a {
 }
 
 .not-found {
+  display: flex;
   margin-top: 50px;
   padding: 20px;
   border-radius: 50px;
+  max-width: 1200px;
   width: 100%;
+  margin: auto;
 }
 
 .active {

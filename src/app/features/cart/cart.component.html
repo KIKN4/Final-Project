@@ -9,67 +9,66 @@
     </div>
   </ul>
 </div>
-@if(cart$ | async ; as cart){
 
-<ul>
-  @for (product of cart.products; track product.productId) {
-  <li>{{ product.productId }}</li>
-
-  }
-</ul>
+@if (isLoading$|async) {
+<div class="spinner-container">
+  <div class="lds-roller">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+</div>
+} @if(cart$ | async ; as cart) {
 <div class="cart-container">
   <div class="cart">
+    @if(cart.length > 0) { @for (product of cart; track product._id) {
     <div class="cart-item">
       <div class="product-title">
-        <img
-          src="https://png.pngtree.com/png-vector/20221004/ourmid/pngtree-macbook-pro-mockup-png-image_6278049.png"
-          alt="macbook-pro"
-        />
+        <img [src]="product.thumbnail" [alt]="product.title" />
         <div class="product-title-detail">
-          <h3>Macbook Pro</h3>
-          <p>Product code : MTV03h</p>
+          <h3>{{ product.title | truncateString : 3 }}</h3>
+          <p>{{ product.issueDate | date }}</p>
         </div>
       </div>
       <div class="product-details">
         <div class="price-quantity">
-          <p>Quantity: 3</p>
-          <p>4500 GEL</p>
+          <p>
+            <span class="price-current">
+              {{ product.price.current }}
+            </span>
+            <span class="price-currency">{{ product.price.currency }} </span>
+          </p>
         </div>
-        <button class="delete-button"><i class="fa-solid fa-trash"></i></button>
+        <button class="delete-button" (click)="onDeleteProduct(product._id)">
+          <i class="fa-solid fa-trash"></i>
+        </button>
       </div>
     </div>
-    <div class="cart-item">
-      <div class="product-title">
-        <img
-          src="https://png.pngtree.com/png-vector/20221004/ourmid/pngtree-macbook-pro-mockup-png-image_6278049.png"
-          alt="macbook-pro"
-        />
-        <div class="product-title-detail">
-          <h3>Macbook Pro</h3>
-          <p>Product code : MTV03h</p>
-        </div>
-      </div>
-      <div class="product-details">
-        <div class="price-quantity">
-          <p>Quantity: 3</p>
-          <p>4500 GEL</p>
-        </div>
-        <button class="delete-button"><i class="fa-solid fa-trash"></i></button>
-      </div>
+    }}@else {
+    <div class="cartEmpty">
+      <p>Your Cart is currently empty</p>
+      <button id="return" routerLink="/products">Return to Shop</button>
     </div>
+    }
   </div>
-
   <div class="cart-checkout">
     <div class="items-quantity">
       <span>Cart</span>
-      <div>2 items</div>
+      <div>{{ cart$.value.length }} items</div>
     </div>
-    <div class="products-quantity">Products (3)</div>
+    <div class="products-quantity">Products {{ cart$.value.length }}</div>
     <div class="total-cost">
       <span class="cost-title">Total Cost</span>
-      <span class="cost"
-        ><span class="current">11 747</span>
-        <span class="currency">Gel</span></span
+      <span class="cost">
+        @if( totalCost$ | async ; as total){
+        <span class="current">{{ total }}</span>
+        }
+        <span class="currency">GEL</span></span
       >
     </div>
     <div class="checkout-button">
@@ -77,14 +76,6 @@
     </div>
   </div>
 </div>
-}@else {
-<div class="cart-empty">
-  <img src="assets/images/cartEmpty.png" alt="cartEmpty" />
-  <!-- HTML !-->
-  <div class="button">
-    <a routerLink="/products">
-      <button class="button-29" role="button">Shop Now</button></a
-    >
-  </div>
-</div>
 }
+
+<app-contact-us></app-contact-us>
