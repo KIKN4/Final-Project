@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { ActivatedRoute, RouterLink, RouterLinkActive } from '@angular/router';
 import { CartService } from '../../shared/services/cart.service';
 import { ProductsService } from '../../shared/services/products.service';
 import { AsyncPipe, CommonModule } from '@angular/common';
@@ -26,6 +26,7 @@ import { SpinnerComponent } from '../../shared/components/spinner/spinner.compon
   styleUrl: './cart.component.css',
 })
 export class CartComponent {
+  private readonly activatedRoute = inject(ActivatedRoute);
   private readonly productsService = inject(ProductsService);
   private readonly cartService = inject(CartService);
   readonly isLoading$ = this.cartService.isLoading$;
@@ -65,6 +66,18 @@ export class CartComponent {
         console.error('error', console.error());
       }
     );
+    this.activatedRoute.queryParams.subscribe(() => {
+      window.scrollTo(0, 0);
+    });
+    this.activatedRoute.params.subscribe(() => {
+      window.scrollTo(0, 0);
+    });
+    this.activatedRoute.data.subscribe(() => {
+      window.scrollTo(0, 0);
+    });
+    this.activatedRoute.paramMap.subscribe(() => {
+      window.scrollTo(0, 0);
+    });
   }
 
   capitalizeFirstLetter(value: string): string {

@@ -409,7 +409,8 @@ button[disabled] {
 /* Responsive design */
 @media (max-width: 768px) {
   .main-container {
-    margin: 50px;
+    height: 80vh;
+    margin: 100px 35px 0 30px;
   }
   .container {
     margin: 0 auto;
