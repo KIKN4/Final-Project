@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, OnInit, inject } from '@angular/core';
 import {
   ActivatedRoute,
+  NavigationEnd,
   Router,
   RouterLink,
   RouterLinkActive,
@@ -12,7 +13,7 @@ import { ApiProduct } from '../../shared/types/apiProduct';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { TruncateStringPipe } from '../../shared/pipes/truncate-string.pipe';
-import { debounceTime, distinctUntilChanged } from 'rxjs';
+import { debounceTime, distinctUntilChanged, filter } from 'rxjs';
 import { BrandsService } from '../../shared/services/brands.service';
 import { DropdownFilterComponent } from '../../shared/components/dropdown-filter/dropdown-filter.component';
 import { CartService } from '../../shared/services/cart.service';
@@ -105,6 +106,16 @@ export class ProductsByCategoryComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    this.router.events
+      .pipe(
+        filter(
+          (event): event is NavigationEnd => event instanceof NavigationEnd
+        )
+      )
+      .subscribe(() => {
+        this.isCartAdded$.next(false);
+      });
+
     this.filterForm.valueChanges
       .pipe(debounceTime(300), distinctUntilChanged())
       .subscribe(() => {

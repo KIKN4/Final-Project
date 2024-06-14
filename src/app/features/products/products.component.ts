@@ -23,7 +23,7 @@ import { AsyncPipe, CommonModule } from '@angular/common';
 import { ContactUsComponent } from '../../shared/components/contact-us/contact-us.component';
 import { TruncateStringPipe } from '../../shared/pipes/truncate-string.pipe';
 import { DropdownFilterComponent } from '../../shared/components/dropdown-filter/dropdown-filter.component';
-import { debounceTime, distinctUntilChanged } from 'rxjs';
+import { debounceTime, distinctUntilChanged, filter } from 'rxjs';
 import { CartService } from '../../shared/services/cart.service';
 
 @Component({
@@ -59,8 +59,8 @@ export class ProductsComponent implements OnInit, AfterViewInit {
   brands$ = this.brandsService.brands$;
 
   isCartAdded$ = this.cartService.isCartAdded$;
-  isLoading$ = this.cartService.isLoading$;
   addedProduct$ = this.cartService.addedProduct$;
+  isLoading$ = this.cartService.isLoading$;
   checkCategory!: boolean;
   allCategory = false;
   allProducts!: string;
@@ -104,6 +104,16 @@ export class ProductsComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    this.router.events
+      .pipe(
+        filter(
+          (event): event is NavigationEnd => event instanceof NavigationEnd
+        )
+      )
+      .subscribe(() => {
+        this.isCartAdded$.next(false);
+      });
+
     this.filterForm.valueChanges
       .pipe(debounceTime(300), distinctUntilChanged())
       .subscribe(() => {

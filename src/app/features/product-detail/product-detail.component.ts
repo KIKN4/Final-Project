@@ -4,13 +4,20 @@ import {
   inject,
   CUSTOM_ELEMENTS_SCHEMA,
 } from '@angular/core';
-import { ActivatedRoute, RouterLink, RouterLinkActive } from '@angular/router';
+import {
+  ActivatedRoute,
+  NavigationEnd,
+  Router,
+  RouterLink,
+  RouterLinkActive,
+} from '@angular/router';
 import { ProductsService } from '../../shared/services/products.service';
 import { CommonModule } from '@angular/common';
 import { TruncateStringPipe } from '../../shared/pipes/truncate-string.pipe';
 import { ContactUsComponent } from '../../shared/components/contact-us/contact-us.component';
 import { CartService } from '../../shared/services/cart.service';
 import { SpinnerComponent } from '../../shared/components/spinner/spinner.component';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-product-detail',
@@ -29,11 +36,26 @@ import { SpinnerComponent } from '../../shared/components/spinner/spinner.compon
 })
 export class ProductDetailComponent implements OnInit {
   private readonly activatedRoute = inject(ActivatedRoute);
+  private readonly router = inject(Router);
   private readonly productsService = inject(ProductsService);
   private readonly cartService = inject(CartService);
+
   product$ = this.productsService.productById$;
   isLoading$ = this.cartService.isLoading$;
+  isCartAdded$ = this.cartService.isCartAdded$;
+  addedProduct$ = this.cartService.addedProduct$;
+
   ngOnInit(): void {
+    this.router.events
+      .pipe(
+        filter(
+          (event): event is NavigationEnd => event instanceof NavigationEnd
+        )
+      )
+      .subscribe(() => {
+        this.isCartAdded$.next(false);
+      });
+
     this.activatedRoute.paramMap.subscribe((params) => {
       const id = params.get('id');
       this.productsService.getProductById(id);
@@ -47,5 +69,21 @@ export class ProductDetailComponent implements OnInit {
 
   onAddtoCart(id: string) {
     this.cartService.addToCart(id, 1);
+    if (this.isCartAdded$) {
+      this.activatedRoute.queryParams.subscribe(() => {
+        window.scrollTo(0, 0);
+      });
+      this.activatedRoute.params.subscribe(() => {
+        window.scrollTo(0, 0);
+      });
+      this.activatedRoute.data.subscribe(() => {
+        window.scrollTo(0, 0);
+      });
+      this.activatedRoute.paramMap.subscribe(() => {
+        window.scrollTo(0, 0);
+      });
+      this.isCartAdded$.next(false);
+    } else {
+    }
   }
 }

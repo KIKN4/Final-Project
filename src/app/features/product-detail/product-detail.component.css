@@ -55,7 +55,7 @@ ul li a {
   display: flex;
   justify-content: space-evenly;
   flex-wrap: wrap;
-  margin: 150px 0;
+  margin: 50px 0 150px 0;
 }
 
 .product-image,
@@ -266,3 +266,30 @@ button[disabled] {
   cursor: not-allowed !important;
   box-shadow: none !important;
 }
+
+/* added cart notification */
+
+.notification {
+  background-color: #4caf50;
+  color: white;
+  padding: 15px;
+  border-radius: 5px;
+  animation: fadeInOut 3s forwards;
+  max-width: 50%;
+  width: 100%;
+  margin: auto;
+  text-align: center;
+}
+
+.bad-notification {
+  background-color: #ff4039;
+  color: white;
+  padding: 15px;
+  border-radius: 5px;
+  animation: fadeInOut 3s forwards;
+  max-width: 50%;
+  width: 100%;
+  margin: auto;
+  text-align: center;
+}
+/*  */

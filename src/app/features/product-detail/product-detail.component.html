@@ -10,7 +10,12 @@
   </ul>
 </div>
 
-@if(product$ | async; as prod){
+@if(product$ | async; as prod){ @if (isCartAdded$| async) { @if (addedProduct$ |
+async ; as product) { @if (product.stock<=0) {
+<div class="bad-notification">{{ product.title }} is out of stock</div>
+}@else{
+<div class="notification">You Added {{ product.title }} Successfully</div>
+} } }
 <div class="product-container">
   <div class="product-image">
     @if(prod.images.length){
