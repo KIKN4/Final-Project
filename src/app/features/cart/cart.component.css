@@ -5,6 +5,13 @@
   box-sizing: border-box;
 }
 
+#verifyImg {
+  margin: auto;
+  width: 900px;
+  max-width: 100%;
+  display: flex;
+}
+
 .container {
   max-width: 992px;
   width: 100%;

@@ -30,6 +30,8 @@ export class CartService {
   private readonly productsUrl = `${this.env.apiURL}/shop/products`;
   cart$ = new BehaviorSubject<any | null>(null);
 
+  errors$ = new BehaviorSubject<any>({});
+
   isLoading$ = new BehaviorSubject<boolean>(false);
   isCartAdded$ = new BehaviorSubject<boolean>(false);
   addedProduct$ = new BehaviorSubject<AddedProduct | null>(null);
@@ -45,7 +47,7 @@ export class CartService {
     return new HttpHeaders({
       accept: 'application/json',
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${this.authService.accessToken}`, // Include the token in the Authorization header
+      Authorization: `Bearer ${this.authService.accessToken}`,
     });
   }
 
@@ -54,7 +56,13 @@ export class CartService {
     this.httpClient
       .get<Cart>(this.baseUrl, { headers: this.authHeaders })
       .pipe(
-        catchError(() => {
+        catchError((error) => {
+          console.error('Error fetching cart:', error);
+          if (error.status === 409) {
+            this.errors$.next({ error: 'You Must Be Verified on Email' });
+          } else {
+            this.errors$.next({ error: 'Unexpected error occurred' });
+          }
           this.isLoading$.next(false);
           return EMPTY;
         }),
@@ -79,14 +87,33 @@ export class CartService {
           return forkJoin(itemRequests);
         })
       )
-      .subscribe((cart) => {
-        this.isLoading$.next(false);
-        if (cart) {
-          this.cart$.next(cart);
-        } else {
-          this.cart$.next([]);
+      .subscribe(
+        (cart) => {
+          this.isLoading$.next(false);
+          if (cart) {
+            this.cart$.next(cart);
+          } else {
+            this.cart$.next([]);
+          }
+        },
+        (error) => {
+          console.error('Error fetching cart:', error);
+          if (error.status === 409) {
+            this.errors$.next({ error: 'You Must Be Verified on Email' });
+          } else {
+            this.errors$.next({ error: 'Unexpected error occurred' });
+          }
+          this.isLoading$.next(false);
         }
-      });
+      );
+  }
+
+  updateVerificationStatus(isVerified: boolean) {
+    if (isVerified) {
+      this.errors$.next({});
+    } else {
+      this.errors$.next({ error: 'You Must Be Verified on Email' });
+    }
   }
 
   addToCart(id: string, quantity: number) {

@@ -9,7 +9,16 @@
     </div>
   </ul>
 </div>
-@if(cart$ | async ; as cart) {
+@if (errorMessage$ | async; as errorunka) {
+<img
+  *ngIf="errorunka.error === 'You Must Be Verified on Email'"
+  id="verifyImg"
+  src="https://support.brazenconnect.com/hc/article_attachments/1500002586961"
+  alt=""
+/>
+}@else {
+<h1>sxva error</h1>
+} @if(cart$ | async ; as cart) {
 <div class="cart-container">
   <div class="cart">
     @if (isLoading$|async) {

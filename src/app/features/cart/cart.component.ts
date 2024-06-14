@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink, RouterLinkActive } from '@angular/router';
 import { CartService } from '../../shared/services/cart.service';
 import { ProductsService } from '../../shared/services/products.service';
@@ -25,12 +25,13 @@ import { SpinnerComponent } from '../../shared/components/spinner/spinner.compon
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.css',
 })
-export class CartComponent {
+export class CartComponent implements OnInit {
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly productsService = inject(ProductsService);
   private readonly cartService = inject(CartService);
   readonly isLoading$ = this.cartService.isLoading$;
 
+  errorMessage$ = this.cartService.errors$;
   cart$ = this.cartService.cart$;
   product$ = this.productsService.productById$;
   totalCost$ = new BehaviorSubject<number | null>(null);
