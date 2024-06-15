@@ -4,11 +4,16 @@
   box-sizing: border-box;
 }
 
+.active {
+  text-decoration: none;
+  color: #1792ff !important;
+}
+
 .main-container {
   display: flex;
   align-items: center;
   flex-direction: column;
-  margin-top: 100px;
+  margin-top: 180px;
   height: 100vh;
 }
 
@@ -334,7 +339,9 @@ button[disabled] {
 /* Responsive design */
 @media (max-width: 768px) {
   .main-container {
-    margin: 50px;
+    justify-content: center;
+    height: 80vh;
+    margin: 100px 35px 50px 30px;
   }
   .container {
     margin: 0 auto;

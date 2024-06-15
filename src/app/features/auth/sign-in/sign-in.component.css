@@ -4,6 +4,11 @@
   box-sizing: border-box;
 }
 
+.active {
+  text-decoration: none;
+  color: #1792ff !important;
+}
+
 .location {
   max-width: 992px;
   width: 100%;
@@ -39,8 +44,7 @@ ul li a {
   display: flex;
   align-items: center;
   flex-direction: column;
-  margin-top: 100px;
-
+  margin-top: 180px;
   height: 100vh;
 }
 
@@ -282,22 +286,6 @@ button[disabled] {
   text-shadow: #99ff00 0px 1px 3px;
 }
 
-#p {
-  color: #404f5e;
-  font-family: "Nunito Sans", "Helvetica Neue", sans-serif;
-  font-size: 20px;
-  margin: 0;
-}
-
-#i {
-  position: absolute;
-  color: #9abc66;
-  text-shadow: #99ff00 0px 1px 3px;
-  font-size: 44px;
-  top: 17px;
-  left: 25px;
-}
-
 .card {
   max-width: 300px;
   width: 100%;
@@ -305,15 +293,6 @@ button[disabled] {
   border-radius: 4px;
   display: flex;
   flex-direction: column;
-}
-
-#success {
-  position: relative;
-  border-radius: 200px;
-  height: 88px;
-  width: 88px;
-  background: #f8faf5;
-  margin: 0 auto;
 }
 
 /* spinner */
@@ -411,8 +390,9 @@ button[disabled] {
 /* Responsive design */
 @media (max-width: 768px) {
   .main-container {
+    justify-content: center;
     height: 80vh;
-    margin: 100px 35px 0 30px;
+    margin: 100px 35px 50px 30px;
   }
   .container {
     margin: 0 auto;

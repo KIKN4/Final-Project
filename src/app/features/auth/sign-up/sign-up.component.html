@@ -78,6 +78,9 @@
           {{controls.confirmPassword.errors?.['confirmPass']}}
         </div>
         }
+        <a routerLink="/signin"
+          >Already have an account? <span class="active">Signin</span></a
+        >
         <button class="BUTTON" [disabled]="signupForm.invalid">Sign Up</button>
         @if (errorMessage$ | async ;as errorMessage) {
         <div role="danger" class="alert">

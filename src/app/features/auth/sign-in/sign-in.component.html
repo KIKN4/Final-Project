@@ -5,9 +5,6 @@
 <div class="main-container">
   @if(isSignUpSucces){
   <div class="card">
-    <div id="success">
-      <i id="i" class="checkmark">✓</i>
-    </div>
     <h1 id="h1">Account Created succesfully. You can now sign in!</h1>
   </div>
 
@@ -50,7 +47,9 @@
         @if (passwordCtrl.invalid && passwordCtrl.dirty) {
         <div class="text-danger">Password is required!</div>
         }
-        <a href="#">Forget Your Password?</a>
+        <a routerLink="/signup"
+          >Don't have an account? <span class="active">Signup</span></a
+        >
         <button
           class="BUTTON"
           [disabled]="
