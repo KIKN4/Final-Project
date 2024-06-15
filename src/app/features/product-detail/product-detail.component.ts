@@ -68,8 +68,10 @@ export class ProductDetailComponent implements OnInit {
   }
 
   onAddtoCart(id: string) {
+    this.isLoading$.next(true);
     this.cartService.addToCart(id, 1);
-    if (this.isCartAdded$) {
+    this.isLoading$.next(false);
+    if (this.isCartAdded$.value == true && this.isLoading$.value == false) {
       this.activatedRoute.queryParams.subscribe(() => {
         window.scrollTo(0, 0);
       });

@@ -70,14 +70,17 @@ ul li a {
 .product-image img {
   object-fit: cover;
   max-height: 280px;
+  max-width: 300px;
+  height: auto;
   margin: 0 auto;
+  padding: 44px;
 }
 
 .product-image {
   position: relative;
   margin-bottom: 30px;
   padding: 0;
-  max-width: 500px;
+  max-width: 300px;
 }
 
 swiper-container {
@@ -274,7 +277,7 @@ button[disabled] {
   color: white;
   padding: 15px;
   border-radius: 5px;
-  animation: fadeInOut 3s forwards;
+  animation: fadeInOut 1s forwards;
   max-width: 50%;
   width: 100%;
   margin: auto;
@@ -286,10 +289,12 @@ button[disabled] {
   color: white;
   padding: 15px;
   border-radius: 5px;
-  animation: fadeInOut 3s forwards;
+  animation: fadeInOut 1s forwards;
   max-width: 50%;
   width: 100%;
   margin: auto;
   text-align: center;
 }
-/*  */
+
+@media only screen and (max-width: 660px) {
+}

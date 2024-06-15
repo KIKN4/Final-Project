@@ -4,37 +4,6 @@
   box-sizing: border-box;
 }
 
-.location {
-  max-width: 992px;
-  width: 100%;
-  margin: 130px auto 0 auto;
-}
-
-ul {
-  margin: 0;
-  padding: 0 20px;
-}
-
-ul div {
-  display: flex;
-  gap: 10px;
-}
-
-ul div li {
-  cursor: pointer;
-  list-style: none;
-  font-family: "Montserrat";
-  font-weight: 400;
-  font-size: 15px;
-  letter-spacing: normal;
-  text-decoration: none;
-}
-
-ul li a {
-  all: unset;
-  text-decoration: none;
-}
-
 .main-container {
   display: flex;
   align-items: center;

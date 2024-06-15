@@ -38,7 +38,7 @@ export class SignUpComponent {
   private readonly maxNameLength = 16;
   private readonly authService = inject(AuthService);
   readonly user$ = this.authService.user$;
-  readonly genderOptions = [Gender.Female, Gender.Male, Gender.Other];
+  readonly genderOptions = [Gender.Female, Gender.Male];
   readonly isLoading$ = this.authService.isloading$;
 
   errorMessage$ = this.authService.errors$.pipe(
@@ -48,16 +48,9 @@ export class SignUpComponent {
   signupForm = this.fb.group({
     firstName: [
       '',
-      [
-        Validators.required,
-        Validators.maxLength(this.maxNameLength),
-        this.badNameValidator('bidzina'),
-      ],
-    ],
-    lastName: [
-      '',
       [Validators.required, Validators.maxLength(this.maxNameLength)],
     ],
+    lastName: ['', [Validators.required]],
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required]],
     confirmPassword: ['', [Validators.required]],
@@ -69,7 +62,7 @@ export class SignUpComponent {
       'https://api.dicebear.com/8.x/lorelei/svg?seed=Felix',
       [Validators.required],
     ],
-    gender: [Gender.Other, [Validators.required]],
+    gender: [Gender.Female, [Validators.required]],
   });
 
   get controls() {
@@ -88,14 +81,6 @@ export class SignUpComponent {
   onSubmit() {
     const sigUpData = this.signupForm.getRawValue();
     this.authService.signUp(sigUpData);
-  }
-
-  badNameValidator(pattern: string): ValidatorFn {
-    return (control: AbstractControl<string>): ValidationErrors | null => {
-      return control.value.includes(pattern)
-        ? { badName: `${pattern} is prohibited!` }
-        : null;
-    };
   }
 
   confirmPassValidator(compareTo: FormControl<string | null>): ValidatorFn {

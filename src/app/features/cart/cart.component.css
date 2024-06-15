@@ -145,9 +145,16 @@ ul li a {
   padding-bottom: 10px;
 }
 
-.cart-item img {
-  width: 150px;
+.cart-item-img {
+  width: 80px;
   height: 100px;
+  display: flex;
+  align-items: center;
+}
+
+.cart-item-img img {
+  width: 100%;
+  height: auto;
 }
 
 .product-title {
@@ -227,7 +234,7 @@ ul li a {
 
 .cart-checkout {
   max-width: 250px;
-  max-height: 250px;
+  max-height: 280px;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -344,6 +351,10 @@ ul li a {
   );
   color: #fff;
   font-family: Arial, Helvetica, sans-serif;
+}
+
+.cartEmpty a {
+  all: unset;
 }
 
 .cartEmpty button {

@@ -25,5 +25,4 @@ export interface SignInResponse {
 export interface AuthErrors {
   signUp: string;
   signIn: string;
-  noError: string;
 }

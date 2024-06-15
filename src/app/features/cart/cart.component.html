@@ -20,7 +20,9 @@
     }@else { @if(cart.length > 0) { @for (product of cart; track product._id) {
     <div class="cart-item">
       <div class="product-title">
-        <img [src]="product.thumbnail" [alt]="product.title" />
+        <div class="cart-item-img">
+          <img [src]="product.thumbnail" [alt]="product.title" />
+        </div>
         <div class="product-title-detail">
           <h3>{{ product.title | truncateString : 3 }}</h3>
           <p>{{ product.issueDate | date }}</p>
@@ -73,7 +75,22 @@
 
 <div
   class="cart-container"
-  *ngIf="error.error === 'You Must Be Verified on Email'"
+  *ngIf="error.error === 'User needs to verify email'"
+>
+  <div class="cart">
+    <div class="cartEmpty">
+      <p>
+        {{ error.error }}
+      </p>
+      <a href="https://gmail.com/">
+        <button id="return">Verify your email</button>
+      </a>
+    </div>
+  </div>
+</div>
+<div
+  class="cart-container"
+  *ngIf="error.error === 'User has to create cart first'"
 >
   <div class="cart">
     <div class="cartEmpty">

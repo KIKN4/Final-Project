@@ -34,7 +34,7 @@ export class CartService {
   private readonly productsUrl = `${this.env.apiURL}/shop/products`;
   cart$ = new BehaviorSubject<any | null>(null);
 
-  errors$ = new BehaviorSubject<any>({});
+  errors$ = new BehaviorSubject<HttpErrorResponse | null>(null);
 
   isLoading$ = new BehaviorSubject<boolean>(false);
   isCartAdded$ = new BehaviorSubject<boolean>(false);
@@ -61,10 +61,14 @@ export class CartService {
       .get<Cart>(this.baseUrl, { headers: this.authHeaders })
       .pipe(
         catchError((error: HttpErrorResponse) => {
+          // email error
           if (error.error.error === 'User needs to verify email') {
-            this.errors$.next({ error: 'You Must Be Verified on Email' });
+            console.log('Email error?', error.error.error);
+            this.errors$.next(error.error);
           } else {
-            this.errors$.next(error.error.error);
+            // cart error
+            console.log('Cart error?', error.error.error);
+            this.errors$.next(error.error);
           }
           this.isLoading$.next(false);
           return EMPTY;
@@ -101,9 +105,12 @@ export class CartService {
         },
         (error: HttpErrorResponse) => {
           if (error.error.error === 'User needs to verify email') {
-            this.errors$.next({ error: 'You Must Be Verified on Email' });
+            // email error
+            console.log('Email error', error.error);
+            this.errors$.next(error.error);
           } else {
-            this.errors$.next(error.error.error);
+            console.log('Cart error?', error.error.error);
+            this.errors$.next(error.error);
           }
           this.isLoading$.next(false);
         }
@@ -119,6 +126,7 @@ export class CartService {
       })
       .pipe(
         switchMap((productDetails) => {
+          this.isLoading$.next(false);
           this.isCartAdded$.next(true);
           this.addedProduct$.next({
             title: productDetails.title,
@@ -139,10 +147,10 @@ export class CartService {
           }
         })
       )
-      .subscribe((cart) => {
-        this.getCart();
+      .subscribe(() => {
         this.isLoading$.next(false);
         this.isCartAdded$.next(true);
+        this.getCart();
       });
   }
 

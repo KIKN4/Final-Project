@@ -1,15 +1,6 @@
 @if (user$| async ) {
 <app-sign-out [user]="user$ | async"></app-sign-out>
 } @else {
-<div class="location">
-  <ul>
-    <div>
-      <li><a routerLink="/home">Home</a></li>
-      <li><i class="fa-solid fa-chevron-right"></i></li>
-      <li><a routerLink="/signup" routerLinkActive="isActive">Sign Up</a></li>
-    </div>
-  </ul>
-</div>
 
 <div class="main-container">
   @if (isLoading$|async) {

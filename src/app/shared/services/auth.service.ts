@@ -19,7 +19,6 @@ export class AuthService {
   errors$ = new BehaviorSubject<AuthErrors>({
     signUp: '',
     signIn: '',
-    noError: '',
   });
 
   user$ = new BehaviorSubject<User | null>(null);
@@ -57,6 +56,7 @@ export class AuthService {
 
   signUp(data: SingUpRequest) {
     this.isloading$.next(true);
+    this.errors$.next({ ...this.errors$.value, signIn: '' });
     this.httpClient
       .post(`${this.baseUrl}/sign_up`, data)
       .pipe(
@@ -85,7 +85,6 @@ export class AuthService {
           this.errors$.next({
             ...this.errors$.value,
             signIn: error.error,
-            noError: error.error,
           });
           this.isloading$.next(false);
           return EMPTY;

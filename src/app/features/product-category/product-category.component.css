@@ -148,15 +148,11 @@ ul li a {
   width: 55%;
   height: auto;
   max-height: 135px;
-  min-height: 130px;
   width: 100%;
-  object-fit: cover;
   transition: padding 0.2s ease-out;
 }
 
 .card-img img:hover {
-  padding-bottom: 5px;
-
   transform: scale(0.9);
 }
 
@@ -285,7 +281,6 @@ ul li a {
   border-radius: 15px;
   border: 1px solid #f5f5f6;
   background-color: #f5f5f6;
-  -moz-appearance: textfield;
 }
 
 input[type="number"]::-webkit-outer-spin-button,
@@ -328,7 +323,6 @@ input[type="number"]::-webkit-inner-spin-button {
   width: 100%;
   background: none;
   pointer-events: none;
-  -webkit-appearance: none;
 }
 
 input[type="range"]::-webkit-slider-thumb {

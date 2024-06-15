@@ -39,6 +39,8 @@ ul li a {
   display: flex;
   align-items: center;
   flex-direction: column;
+  margin-top: 100px;
+
   height: 100vh;
 }
 
@@ -301,7 +303,8 @@ button[disabled] {
   width: 100%;
   background: white;
   border-radius: 4px;
-  display: inline-block;
+  display: flex;
+  flex-direction: column;
 }
 
 #success {

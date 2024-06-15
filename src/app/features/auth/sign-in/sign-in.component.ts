@@ -1,4 +1,4 @@
-import { AsyncPipe, JsonPipe } from '@angular/common';
+import { AsyncPipe, CommonModule, JsonPipe } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
@@ -23,6 +23,7 @@ import { SignOutComponent } from '../sign-out/sign-out.component';
     JsonPipe,
     AsyncPipe,
     SignOutComponent,
+    CommonModule,
   ],
   templateUrl: './sign-in.component.html',
   styleUrl: './sign-in.component.css',
