@@ -42,7 +42,7 @@ export class CartService {
 
   get authHeaders() {
     return new HttpHeaders({
-      accept: 'aplication/json',
+      accept: 'application/json',
       Authorization: `Bearer ${this.authService.accessToken}`,
     });
   }
@@ -55,21 +55,22 @@ export class CartService {
     });
   }
 
+  private handleError(error: HttpErrorResponse) {
+    if (error.error.error === 'User needs to verify email') {
+      console.log('Email error:', error.error);
+    } else {
+      console.log('Cart error:', error.error.error);
+    }
+    this.errors$.next(error.error);
+  }
+
   getCart() {
     this.isLoading$.next(true);
     this.httpClient
       .get<Cart>(this.baseUrl, { headers: this.authHeaders })
       .pipe(
         catchError((error: HttpErrorResponse) => {
-          // email error
-          if (error.error.error === 'User needs to verify email') {
-            console.log('Email error?', error.error.error);
-            this.errors$.next(error.error);
-          } else {
-            // cart error
-            console.log('Cart error?', error.error.error);
-            this.errors$.next(error.error);
-          }
+          this.handleError(error);
           this.isLoading$.next(false);
           return EMPTY;
         }),
@@ -94,27 +95,14 @@ export class CartService {
           return forkJoin(itemRequests);
         })
       )
-      .subscribe(
-        (cart) => {
-          this.isLoading$.next(false);
-          if (cart) {
-            this.cart$.next(cart);
-          } else {
-            this.cart$.next([]);
-          }
-        },
-        (error: HttpErrorResponse) => {
-          if (error.error.error === 'User needs to verify email') {
-            // email error
-            console.log('Email error', error.error);
-            this.errors$.next(error.error);
-          } else {
-            console.log('Cart error?', error.error.error);
-            this.errors$.next(error.error);
-          }
-          this.isLoading$.next(false);
+      .subscribe((cart) => {
+        this.isLoading$.next(false);
+        if (cart) {
+          this.cart$.next(cart);
+        } else {
+          this.cart$.next([]);
         }
-      );
+      });
   }
 
   addToCart(id: string, quantity: number) {
@@ -132,19 +120,19 @@ export class CartService {
             title: productDetails.title,
             stock: productDetails.stock,
           });
-          if (this.cart$.value) {
-            return this.httpClient.patch<Cart>(
-              `${this.baseUrl}/product`,
-              { id, quantity },
-              { headers: this.authHeaders }
-            );
-          } else {
-            return this.httpClient.post<Cart>(
-              `${this.baseUrl}/product`,
-              { id, quantity },
-              { headers: this.authHeaders }
-            );
-          }
+          const cartAction$ = this.cart$.value
+            ? this.httpClient.patch<Cart>(
+                `${this.baseUrl}/product`,
+                { id, quantity },
+                { headers: this.authHeaders }
+              )
+            : this.httpClient.post<Cart>(
+                `${this.baseUrl}/product`,
+                { id, quantity },
+                { headers: this.authHeaders }
+              );
+
+          return cartAction$;
         })
       )
       .subscribe(() => {
