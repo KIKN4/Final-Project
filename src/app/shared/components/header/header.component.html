@@ -1,101 +1,78 @@
-<header [style.overflow]="overflow">
-  <div class="header">
-    <div class="headerbar" [style.right]="right">
-      <div class="account">
-        <ul>
-          <li>
-            <a (click)="closeBar()" routerLink="/home">
-              <i class="fa-solid fa-house-chimney"></i>
-            </a>
-          </li>
-
-          <li>
-            @if (user$ | async; as user) {
-            <a
-              (click)="closeBar()"
-              routerLink="/signout"
-              routerLinkActive="active"
-            >
-              <i class="fa-solid fa-user-secret"></i>
-              <span class="username">{{
-                capitalizeFirstLetter(user.firstName)
-              }}</span>
-            </a>
-            } @else {
-            <a
-              (click)="closeBar()"
-              routerLink="/signin"
-              routerLinkActive="active"
-            >
-              <i routerLinkActive="active" class="fa-solid fa-user-xmark"></i>
-            </a>
-            }
-          </li>
-        </ul>
-      </div>
-      <div class="nav">
-        <ul>
-          <li (click)="closeBar()"><a routerLink="/home">Home</a></li>
-          <li (click)="closeBar()"><a routerLink="/about-us">About</a></li>
-          <li (click)="closeBar()"><a routerLink="/services">Services</a></li>
-          <li (click)="closeBar()"><a routerLink="/delivery">Delivery</a></li>
-          <li (click)="closeBar()"><a routerLink="/products">Products</a></li>
-          <li (click)="closeBar()"><a routerLink="/cart">Cart</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="logo">
-      <a routerLink="/home"
-        ><img src="assets/images/logo_ispace.webp" alt="logo"
-      /></a>
-    </div>
-    <div class="bar">
-      <i class="fa solid fa-bars" (click)="burgerBar()"></i>
-      <i
-        class="fa solid fa-xmark"
-        id="hdcross"
-        (click)="closeBar()"
-        [style.display]="display"
-      ></i>
-    </div>
-    <div class="nav">
-      <ul>
-        <li><a routerLink="/home" routerLinkActive="active">Home</a></li>
-        <li><a routerLink="/about-us" routerLinkActive="active">About</a></li>
-        <li>
-          <a routerLink="/services" routerLinkActive="active">Services</a>
-        </li>
-        <li>
-          <a routerLink="/delivery" routerLinkActive="active">Delivery</a>
-        </li>
-        <li>
-          <a routerLink="/products" routerLinkActive="active">Products</a>
-        </li>
-        <li><a routerLink="/cart" routerLinkActive="active">Cart</a></li>
-      </ul>
-    </div>
-    <div class="account">
-      <ul>
-        <li>
-          <a routerLink="">
-            <i class="fa-solid fa-house"></i>
-          </a>
-        </li>
-        <li>
-          @if (user$ |async; as user) {
-          <a (click)="closeBar()" routerLink="/signout">
-            <i class="fa-solid fa-user-secret"></i>
-            <span class="username">{{
-              capitalizeFirstLetter(user.firstName)
-            }}</span>
-          </a>
-          } @else {
-          <a (click)="closeBar()" routerLink="/signin">
-            <i routerLinkActive="active" class="fa-solid fa-user-xmark"></i>
-          </a>
-          }
-        </li>
-      </ul>
+<div class="headerbar" [style.top]="top">
+  <div class="account">
+    <ul>
+      <li>
+        @if (user$ | async; as user) {
+        <a (click)="closeBar()" routerLink="/signout" routerLinkActive="active">
+          <i class="fa-solid fa-user-secret"></i>
+          <span class="username">{{
+            capitalizeFirstLetter(user.firstName)
+          }}</span>
+        </a>
+        } @else {
+        <a (click)="closeBar()" routerLink="/signin" routerLinkActive="active">
+          <i routerLinkActive="active" class="fa-solid fa-user-xmark"></i>
+        </a>
+        }
+      </li>
+    </ul>
+  </div>
+  <div class="nav">
+    <ul>
+      <li (click)="closeBar()"><a routerLink="/home">Home</a></li>
+      <li (click)="closeBar()"><a routerLink="/about-us">About</a></li>
+      <li (click)="closeBar()"><a routerLink="/services">Services</a></li>
+      <li (click)="closeBar()"><a routerLink="/delivery">Delivery</a></li>
+      <li (click)="closeBar()"><a routerLink="/products">Products</a></li>
+      <li (click)="closeBar()"><a routerLink="/cart">Cart</a></li>
+    </ul>
+  </div>
+</div>
+<div class="header">
+  <div class="logo">
+    <a (click)="closeBar()" routerLink="/home"
+      ><img src="assets/images/logo_ispace.webp" alt="logo"
+    /></a>
+  </div>
+  <div class="bar">
+    <div [classList]="hamburger" (click)="burgerBar()">
+      <span class="burger-bar"></span>
+      <span class="burger-bar"></span>
+      <span class="burger-bar"></span>
     </div>
   </div>
-</header>
+  <div class="nav">
+    <ul>
+      <li><a routerLink="/home" routerLinkActive="active">Home</a></li>
+      <li><a routerLink="/about-us" routerLinkActive="active">About</a></li>
+      <li>
+        <a routerLink="/services" routerLinkActive="active">Services</a>
+      </li>
+      <li>
+        <a routerLink="/delivery" routerLinkActive="active">Delivery</a>
+      </li>
+      <li>
+        <a routerLink="/products" routerLinkActive="active">Products</a>
+      </li>
+      <li><a routerLink="/cart" routerLinkActive="active">Cart</a></li>
+    </ul>
+  </div>
+  <div class="account">
+    <ul>
+      <li>
+        @if (user$ |async; as user) {
+        <a (click)="closeBar()" routerLink="/signout">
+          <i class="fa-solid fa-user-secret"></i>
+          <span class="username">{{
+            capitalizeFirstLetter(user.firstName)
+          }}</span>
+        </a>
+        } @else {
+        <a (click)="closeBar()" routerLink="/signin">
+          <i routerLinkActive="active" class="fa-solid fa-user-xmark"></i>
+        </a>
+        }
+      </li>
+    </ul>
+  </div>
+</div>

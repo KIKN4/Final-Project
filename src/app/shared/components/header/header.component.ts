@@ -14,8 +14,9 @@ export class HeaderComponent {
   private readonly authService = inject(AuthService);
   user$ = this.authService.user$;
 
+  hamburger = 'hamburger';
   display = '';
-  right = '';
+  top = '';
   overflow = '';
 
   capitalizeFirstLetter(value: string): string {
@@ -24,12 +25,18 @@ export class HeaderComponent {
   }
 
   burgerBar() {
-    this.display = 'block';
-    this.right = '0%';
-    this.overflow = 'hidden';
+    this.hamburger === 'hamburger'
+      ? (this.hamburger = 'hamburger-active')
+      : (this.hamburger = 'hamburger');
+    this.display === '' ? (this.display = 'block') : (this.display = 'none');
+    this.top !== '0%' ? (this.top = '0%') : (this.top = '-100%');
+    // this.display = 'block';
+    // this.right = '0%';
+    // this.overflow = 'hidden';
   }
   closeBar() {
+    this.hamburger = 'hamburger';
     this.display = 'none';
-    this.right = '-100%';
+    this.top = '-100%';
   }
 }

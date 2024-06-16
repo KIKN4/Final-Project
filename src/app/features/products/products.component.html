@@ -187,6 +187,7 @@
           <span class="current">{{ item.price.current }}</span>
           <span class="currency">{{ item.price.currency }}</span>
         </p>
+        @if(user$| async; as user){
         <button (click)="onAddtoCart(item._id)" class="button">
           <a>
             <span class="cart-icon"
@@ -194,6 +195,16 @@
             ></span>
           </a>
         </button>
+        }@else {
+        <button class="button">
+          <a routerLink="/signin">
+            <span class="cart-icon"
+              >Add to cart <i class="fa-solid fa-right-long"></i
+            ></span>
+          </a>
+        </button>
+
+        }
       </div>
     </div>
     }

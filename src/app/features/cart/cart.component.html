@@ -18,7 +18,14 @@
       <app-spinner></app-spinner>
     </div>
     }@else { @if(cart.length > 0) { @for (product of cart; track product._id) {
-    <div class="cart-item">
+    <div
+      class="cart-item"
+      [style]="
+        cart.length == 1 || product === cart[cart.length - 1]
+          ? 'border-bottom:none; '
+          : ''
+      "
+    >
       <div class="product-title">
         <div class="cart-item-img">
           <img [src]="product.thumbnail" [alt]="product.title" />

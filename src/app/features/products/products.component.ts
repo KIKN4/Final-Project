@@ -1,12 +1,4 @@
-import {
-  AfterViewInit,
-  Component,
-  OnInit,
-  TemplateRef,
-  ViewChild,
-  ViewContainerRef,
-  inject,
-} from '@angular/core';
+import { AfterViewInit, Component, OnInit, inject } from '@angular/core';
 import {
   ActivatedRoute,
   NavigationEnd,
@@ -15,7 +7,6 @@ import {
   RouterLinkActive,
 } from '@angular/router';
 import { ProductsService } from '../../shared/services/products.service';
-import { ApiProduct } from '../../shared/types/apiProduct';
 import { SortDirection, SortProductBy } from '../../shared/types/productQuery';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrandsService } from '../../shared/services/brands.service';
@@ -25,6 +16,7 @@ import { TruncateStringPipe } from '../../shared/pipes/truncate-string.pipe';
 import { DropdownFilterComponent } from '../../shared/components/dropdown-filter/dropdown-filter.component';
 import { debounceTime, distinctUntilChanged, filter } from 'rxjs';
 import { CartService } from '../../shared/services/cart.service';
+import { AuthService } from '../../shared/services/auth.service';
 
 @Component({
   selector: 'app-products',
@@ -51,10 +43,13 @@ export class ProductsComponent implements OnInit, AfterViewInit {
   private readonly productsService = inject(ProductsService);
   private readonly brandsService = inject(BrandsService);
   private readonly cartService = inject(CartService);
+  private readonly authService = inject(AuthService);
+
   private priceGap = 1000;
   private minPriceValue!: number;
   private maxPriceValue!: number;
 
+  user$ = this.authService.user$;
   allProduct$ = this.productsService.products$;
   brands$ = this.brandsService.brands$;
 
@@ -232,6 +227,7 @@ export class ProductsComponent implements OnInit, AfterViewInit {
     this.isLoading$.next(true);
     this.cartService.addToCart(id, 1);
     this.isLoading$.next(false);
+    this.isCartAdded$.next(true);
     if (this.isCartAdded$.value == true && this.isLoading$.value == false) {
       this.activatedRoute.queryParams.subscribe(() => {
         window.scrollTo(0, 0);

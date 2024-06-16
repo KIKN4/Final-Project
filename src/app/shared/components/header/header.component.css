@@ -78,6 +78,28 @@
   color: rgb(245, 237, 237);
 }
 
+.burger-bar {
+  display: block;
+  width: 25px;
+  height: 3px;
+  margin: 5px auto;
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+  background-color: white;
+}
+
+.hamburger-active .burger-bar:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger-active .burger-bar:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+
+.hamburger-active .burger-bar:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
 /* for userName */
 
 .username {
@@ -90,11 +112,6 @@
 
 .username:hover {
   text-shadow: 1px 1px 3px #0075de;
-}
-
-.account ul li {
-  display: flex;
-  align-items: center;
 }
 
 @media only screen and (max-width: 780px) {
@@ -123,11 +140,11 @@
     flex-direction: column;
     justify-content: center;
     position: fixed;
-    top: 0;
+    top: -100%;
     bottom: 0;
     width: 100%;
-    right: -100%;
     transition: all 0.5s;
+    height: 100%;
     background-color: #1d1d1f;
   }
 
