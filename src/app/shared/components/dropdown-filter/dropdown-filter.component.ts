@@ -1,5 +1,7 @@
 import { Component, Input } from '@angular/core';
 
+// კარგი კომპონენტია! უბრალოდ მსგავს რამეს აკეთებს HTML-ში <details> ელემენტი.
+// accessibility-სთვის ყოველთვის ჯობია ნეითივ ელემენტების გამოყენება.
 @Component({
   selector: 'app-dropdown-filter',
   standalone: true,

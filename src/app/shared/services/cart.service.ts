@@ -13,6 +13,7 @@ import {
   Observable,
   of,
   switchMap,
+  tap,
 } from 'rxjs';
 
 import { ENVIRONMENT } from '../environments/environment';
@@ -32,6 +33,8 @@ export class CartService {
   private readonly env = inject(ENVIRONMENT);
   private readonly baseUrl = `${this.env.apiURL}/shop/cart`;
   private readonly productsUrl = `${this.env.apiURL}/shop/products`;
+  // any არ დამანახო!
+  // რაღაცაა მიჰქარე getCart მეთოდში და აშკარად მაგიტომ მოგიწია ამის დაწერა
   cart$ = new BehaviorSubject<any | null>(null);
 
   errors$ = new BehaviorSubject<HttpErrorResponse | null>(null);
@@ -75,6 +78,7 @@ export class CartService {
           return EMPTY;
         }),
         switchMap((cart) => {
+          // აქ საერთოდ რას აკეთებ ვერ გავიგე
           const itemRequests = cart.products.map((cartProduct) =>
             this.httpClient
               .get<ProductDetails>(
@@ -113,13 +117,17 @@ export class CartService {
         headers: this.authHeaders,
       })
       .pipe(
-        switchMap((productDetails) => {
-          this.isLoading$.next(false);
-          this.isCartAdded$.next(true);
+        // tap გინდა side effect-ებისთვის, მაგალითად როცა სთეითს ცვლი
+        // ასე უფრო გასაგებია რომ ჯერ გვერდითი მოვლენა ხდება
+
+        // შევცვალეთ სთეითი
+        tap((productDetails) => {
           this.addedProduct$.next({
             title: productDetails.title,
             stock: productDetails.stock,
           });
+        }),
+        switchMap(() => {
           const cartAction$ = this.cart$.value
             ? this.httpClient.patch<Cart>(
                 `${this.baseUrl}/product`,
@@ -133,13 +141,17 @@ export class CartService {
               );
 
           return cartAction$;
+        }),
+        // მოთხოვნებზე პასუხები დაბრუნდა, ისევ შევცვალეთ სთეითი
+        tap((cart) => {
+          this.isLoading$.next(false);
+          this.isCartAdded$.next(true);
+          // აქ გიბრუნდება განახლებული კალათა (დამატების მოთხოვნა მაგას გიბრუნებს)
+          // ცალკე აღების მოთხოვნა რად გინდა?
+          this.cart$.next(cart);
         })
       )
-      .subscribe(() => {
-        this.isLoading$.next(false);
-        this.isCartAdded$.next(true);
-        this.getCart();
-      });
+      .subscribe();
   }
 
   deleteProduct(id: string): Observable<any> {

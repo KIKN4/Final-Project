@@ -13,6 +13,7 @@ import { FormsModule } from '@angular/forms';
 export class SliderComponent implements OnInit {
   private readonly productsService = inject(ProductsService);
   products$ = this.productsService.products$;
+  // პროდუქტები @Input-ით რომ ჩააწოდო მშობელი კომპონენტიდან უფრო ჯობია
 
   ngOnInit(): void {
     let baseParams = {

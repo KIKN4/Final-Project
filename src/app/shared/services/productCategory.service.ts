@@ -4,6 +4,9 @@ import { TypeofCategory } from '../types/categoryType';
 import { ENVIRONMENT } from '../environments/environment';
 import { BehaviorSubject } from 'rxjs';
 
+// ამ ფაილს დაარქვი product-category.service.ts *snake-case-ით!*
+// და საერთოდ ესეც პროდუქტების სერვისში შეიძლება იყოს. მარტო ერთი მეთოდია (და პროდუქტებს ეხება).
+
 @Injectable({ providedIn: 'root' })
 export class CategoryService {
   private httpClient = inject(HttpClient);
