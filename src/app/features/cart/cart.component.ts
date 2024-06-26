@@ -34,28 +34,41 @@ export class CartComponent implements OnInit {
   errorMessage$ = this.cartService.errors$;
   cart$ = this.cartService.cart$;
   product$ = this.productsService.productById$;
-  totalCost$ = new BehaviorSubject<number | null>(null);
+
+  // ყველაფერი რაც უნდა იცოდე სტრიმზე (რაზეა დამოკიდებული და როგორ იცვლება) დეკლარაციაშივეა.
+  // უბრალოდ სერვისში getCart გაასწორე და გაამარტივე! რაღაც კოშმარი გიწერია იქ.
+  totalCost$ = this.cart$.pipe(
+    map((products: ProductDetails[]) => {
+      if (products && products.length) {
+        return products
+          .map((product: ProductDetails) => product.price.current)
+          .reduce((acc: number, price: number) => acc + price, 0);
+      }
+      return 0;
+    }),
+  );
 
   ngOnInit(): void {
     this.cartService.getCart();
-    this.cart$
-      .pipe(
-        filter(
-          (products: ProductDetails[] | null): products is ProductDetails[] => {
-            const hasProducts = products !== null && products.length > 0;
-            if (!hasProducts) this.totalCost$.next(0);
-            return hasProducts;
-          }
-        ),
-        map((products: ProductDetails[]) =>
-          products.map((product: ProductDetails) => product.price.current)
-        ),
-        map((prices: number[]) =>
-          prices.reduce((acc: number, price: number) => acc + price, 0)
-        ),
-        tap((total: number) => this.totalCost$.next(total))
-      )
-      .subscribe();
+    // ამაზე უკეთესი გზაც არსებობს, *დეკლარაციულად დაწერე!*
+    // this.cart$
+    //   .pipe(
+    //     filter(
+    //       (products: ProductDetails[] | null): products is ProductDetails[] => {
+    //         const hasProducts = products !== null && products.length > 0;
+    //         if (!hasProducts) this.totalCost$.next(0);
+    //         return hasProducts;
+    //       }
+    //     ),
+    //     map((products: ProductDetails[]) =>
+    //       products.map((product: ProductDetails) => product.price.current)
+    //     ),
+    //     map((prices: number[]) =>
+    //       prices.reduce((acc: number, price: number) => acc + price, 0)
+    //     ),
+    //     tap((total: number) => this.totalCost$.next(total))
+    //   )
+    //   .subscribe();
   }
 
   onDeleteProduct(id: string) {
@@ -65,7 +78,7 @@ export class CartComponent implements OnInit {
       },
       (error) => {
         console.error('error', console.error());
-      }
+      },
     );
     this.activatedRoute.queryParams.subscribe(() => {
       window.scrollTo(0, 0);

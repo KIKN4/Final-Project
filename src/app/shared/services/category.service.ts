@@ -13,6 +13,10 @@ export class PhoAndLapService {
   phones$ = new BehaviorSubject<ApiProduct[]>([]);
   laptops$ = new BehaviorSubject<ApiProduct[]>([]);
 
+  // კატეგორია დინამიკური ერთეულია და შეგეძლო პარამეტრი დინამიკურად ჩაგესვა, ცალკე მეთოდების შექმნის მაგივრად
+  // getByCategory(page_index, page_size, categoryId)
+  // ამასაც პროდუქტების სერვისში დავწერდი.
+
   getPhones(page_index = 1, page_size = 50) {
     return this.httpClient
       .get<GetApiResponse>(`${this.baseUrl}/2`, {
