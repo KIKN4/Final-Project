@@ -3,11 +3,12 @@ import { ActivatedRoute, RouterLink, RouterLinkActive } from '@angular/router';
 import { CartService } from '../../shared/services/cart.service';
 import { ProductsService } from '../../shared/services/products.service';
 import { AsyncPipe, CommonModule } from '@angular/common';
-import { BehaviorSubject, filter, map, tap } from 'rxjs';
+import { filter, map } from 'rxjs';
 import { ProductDetails } from '../../shared/types/apiProduct';
 import { TruncateStringPipe } from '../../shared/pipes/truncate-string.pipe';
 import { ContactUsComponent } from '../../shared/components/contact-us/contact-us.component';
 import { SpinnerComponent } from '../../shared/components/spinner/spinner.component';
+import { CartProductDetails } from '../../shared/types/cart';
 
 @Component({
   selector: 'app-cart',
@@ -34,28 +35,24 @@ export class CartComponent implements OnInit {
   errorMessage$ = this.cartService.errors$;
   cart$ = this.cartService.cart$;
   product$ = this.productsService.productById$;
-  totalCost$ = new BehaviorSubject<number | null>(null);
 
+  totalcost$ = this.cart$.pipe(
+    filter((products): products is CartProductDetails[] => products !== null),
+    map((products: CartProductDetails[]) => {
+      if (products.length) {
+        return products
+          .map((product: CartProductDetails) => product.price.current)
+          .reduce((acc: number, price: number) => acc + price, 0);
+      }
+      return 0;
+    }),
+  );
   ngOnInit(): void {
     this.cartService.getCart();
-    this.cart$
-      .pipe(
-        filter(
-          (products: ProductDetails[] | null): products is ProductDetails[] => {
-            const hasProducts = products !== null && products.length > 0;
-            if (!hasProducts) this.totalCost$.next(0);
-            return hasProducts;
-          }
-        ),
-        map((products: ProductDetails[]) =>
-          products.map((product: ProductDetails) => product.price.current)
-        ),
-        map((prices: number[]) =>
-          prices.reduce((acc: number, price: number) => acc + price, 0)
-        ),
-        tap((total: number) => this.totalCost$.next(total))
-      )
-      .subscribe();
+  }
+
+  floorPrice(price: number): number {
+    return Math.floor(price * 2.7);
   }
 
   onDeleteProduct(id: string) {
@@ -65,7 +62,7 @@ export class CartComponent implements OnInit {
       },
       (error) => {
         console.error('error', console.error());
-      }
+      },
     );
     this.activatedRoute.queryParams.subscribe(() => {
       window.scrollTo(0, 0);

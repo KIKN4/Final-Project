@@ -10,104 +10,130 @@
   </ul>
 </div>
 
-@if(cart$ | async ; as cart) {
-<div class="cart-container">
-  <div class="cart">
-    @if (isLoading$|async) {
-    <div class="spinner-container">
-      <app-spinner></app-spinner>
-    </div>
-    }@else { @if(cart.length > 0) { @for (product of cart; track product._id) {
-    <div
-      class="cart-item"
-      [style]="
-        cart.length == 1 || product === cart[cart.length - 1]
-          ? 'border-bottom:none; '
-          : ''
-      "
-    >
-      <div class="product-title">
-        <div class="cart-item-img">
-          <img [src]="product.thumbnail" [alt]="product.title" />
+@if (cart$ | async; as cart) {
+  <div class="cart-container">
+    <div class="cart">
+      @if (isLoading$ | async) {
+        <div class="spinner-container">
+          <app-spinner></app-spinner>
         </div>
-        <div class="product-title-detail">
-          <h3>{{ product.title | truncateString : 3 }}</h3>
-          <p>{{ product.issueDate | date }}</p>
-        </div>
-      </div>
-      <div class="product-details">
-        <div class="price-quantity">
-          <p>
-            <span class="price-current">
-              {{ product.price.current }}
-            </span>
-            <span class="price-currency">{{ product.price.currency }} </span>
-          </p>
-        </div>
-        <button class="delete-button" (click)="onDeleteProduct(product._id)">
-          <i class="fa-solid fa-trash"></i>
-        </button>
-      </div>
-    </div>
-    } }@else {
-    <div class="cartEmpty">
-      <p>Your Cart is currently empty</p>
-      <button id="return" routerLink="/products">Return to Shop</button>
-    </div>
-    } }
-  </div>
-  @if (cart.length) {
-  <div class="cart-checkout">
-    <div class="items-quantity">
-      <span>Cart</span>
-      <div>{{ cart$.value.length }} items</div>
-    </div>
-    <div class="products-quantity">Products {{ cart$.value.length }}</div>
-    <div class="total-cost">
-      <span class="cost-title">Total Cost</span>
-      <span class="cost">
-        @if( totalCost$ | async ; as total){
-        <span class="current">{{ total }}</span>
+      } @else {
+        @if (cart.length > 0) {
+          @for (product of cart; track product._id) {
+            <div
+              class="cart-item"
+              [style]="
+                cart.length == 1 || product === cart[cart.length - 1]
+                  ? 'border-bottom:none; '
+                  : ''
+              "
+            >
+              <div class="product-title">
+                <div class="cart-item-img">
+                  <img [src]="product.thumbnail" [alt]="product.title" />
+                </div>
+                <div class="product-title-detail">
+                  <h3>{{ product.title | truncateString: 3 }}</h3>
+                  <p>{{ product.issueDate | date }}</p>
+                </div>
+              </div>
+              <div class="product-details">
+                <div class="price-quantity">
+                  <p>
+                    <span class="price-current">
+                      @if (product.price.currency === "USD") {
+                        {{ floorPrice(product.price.current) }}
+                      } @else {
+                        {{ product.price.current }}
+                      }
+                    </span>
+                    <span class="price-currency">
+                      @if (product.price.currency === "USD") {
+                        {{ "GEL" }}
+                      } @else {
+                        {{ product.price.currency }}
+                      }
+                    </span>
+                  </p>
+                </div>
+                <button
+                  class="delete-button"
+                  (click)="onDeleteProduct(product._id)"
+                >
+                  <i class="fa-solid fa-trash"></i>
+                </button>
+              </div>
+            </div>
+          }
+        } @else {
+          <div class="cartEmpty">
+            <p>Your Cart is currently empty</p>
+            <button id="return" routerLink="/products">Return to Shop</button>
+          </div>
         }
-        <span class="currency">GEL</span></span
-      >
+      }
     </div>
-    <div class="checkout-button">
-      <button>Checkout</button>
-    </div>
+    @if (cart.length) {
+      <div class="cart-checkout">
+        <div class="items-quantity">
+          <span>Cart</span>
+          <div>{{ cart.length }} items</div>
+        </div>
+        <div class="products-quantity">Products {{ cart.length }}</div>
+        <div class="total-cost">
+          <span class="cost-title">Total Cost</span>
+          <span class="cost">
+            @if (totalcost$ | async; as total) {
+              <span class="current">{{ total }}</span>
+            }
+            <span class="currency">GEL</span></span
+          >
+        </div>
+        <div class="checkout-button">
+          <button>Checkout</button>
+        </div>
+      </div>
+    }
   </div>
+} @else {
+  @if (errorMessage$ | async; as error) {
+    @if (error.error === "User needs to verify email") {
+      <div class="cart-container">
+        <div class="cart">
+          <div class="cartEmpty">
+            <p>
+              {{ error.error }}
+            </p>
+            <a href="https://gmail.com/">
+              <button id="return">Verify your email</button>
+            </a>
+          </div>
+        </div>
+      </div>
+    } @else if (error.error === "User has to create cart first") {
+      <div class="cart-container">
+        <div class="cart">
+          <div class="cartEmpty">
+            <p>
+              {{ error.error }}
+            </p>
+            <button id="return" routerLink="/products">Return to Shop</button>
+          </div>
+        </div>
+      </div>
+    } @else {
+      <div class="cart-container">
+        <div class="cart">
+          <div class="cartEmpty">
+            <p>
+              {{ error.error }}
+            </p>
+            <button id="return" routerLink="/signout">Sign out</button>
+          </div>
+        </div>
+      </div>
+    }
   }
-</div>
-} @else { @if (errorMessage$|async ; as error) {
-
-<div
-  class="cart-container"
-  *ngIf="error.error === 'User needs to verify email'"
->
-  <div class="cart">
-    <div class="cartEmpty">
-      <p>
-        {{ error.error }}
-      </p>
-      <a href="https://gmail.com/">
-        <button id="return">Verify your email</button>
-      </a>
-    </div>
-  </div>
-</div>
-<div
-  class="cart-container"
-  *ngIf="error.error === 'User has to create cart first'"
->
-  <div class="cart">
-    <div class="cartEmpty">
-      <p>
-        {{ error.error }}
-      </p>
-      <button id="return" routerLink="/products">Return to Shop</button>
-    </div>
-  </div>
-</div>
-} }
+}
 
 <app-contact-us></app-contact-us>

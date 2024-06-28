@@ -13,12 +13,14 @@ import {
   Observable,
   of,
   switchMap,
+  tap,
 } from 'rxjs';
 
 import { ENVIRONMENT } from '../environments/environment';
-import { ProductDetails } from '../types/apiProduct';
+import { CartProductDetails, ProductDetails } from '../types/apiProduct';
 import { Cart } from '../types/cart';
 import { AuthService } from './auth.service';
+import { ActivatedRoute } from '@angular/router';
 
 export interface AddedProduct {
   title: string;
@@ -32,10 +34,10 @@ export class CartService {
   private readonly env = inject(ENVIRONMENT);
   private readonly baseUrl = `${this.env.apiURL}/shop/cart`;
   private readonly productsUrl = `${this.env.apiURL}/shop/products`;
-  cart$ = new BehaviorSubject<any | null>(null);
+  private readonly activatedRoute = inject(ActivatedRoute);
 
+  cart$ = new BehaviorSubject<CartProductDetails[] | null>(null);
   errors$ = new BehaviorSubject<HttpErrorResponse | null>(null);
-
   isLoading$ = new BehaviorSubject<boolean>(false);
   isCartAdded$ = new BehaviorSubject<boolean>(false);
   addedProduct$ = new BehaviorSubject<AddedProduct | null>(null);
@@ -56,11 +58,6 @@ export class CartService {
   }
 
   private handleError(error: HttpErrorResponse) {
-    if (error.error.error === 'User needs to verify email') {
-      console.log('Email error:', error.error);
-    } else {
-      console.log('Cart error:', error.error.error);
-    }
     this.errors$.next(error.error);
   }
 
@@ -78,7 +75,7 @@ export class CartService {
           const itemRequests = cart.products.map((cartProduct) =>
             this.httpClient
               .get<ProductDetails>(
-                `${this.productsUrl}/id/${cartProduct.productId}`
+                `${this.productsUrl}/id/${cartProduct.productId}`,
               )
               .pipe(
                 map((individualProduct) => ({
@@ -86,14 +83,14 @@ export class CartService {
                   quantity: cartProduct.quantity,
                   pricePerQuantity: cartProduct.pricePerQuantity,
                   beforeDiscountPrice: cartProduct.beforeDiscountPrice,
-                }))
-              )
+                })),
+              ),
           );
           if (cart._id && cart.products.length === 0) {
-            return of(EMPTY);
+            return of([]);
           }
           return forkJoin(itemRequests);
-        })
+        }),
       )
       .subscribe((cart) => {
         this.isLoading$.next(false);
@@ -113,31 +110,49 @@ export class CartService {
         headers: this.authHeaders,
       })
       .pipe(
-        switchMap((productDetails) => {
-          this.isLoading$.next(false);
-          this.isCartAdded$.next(true);
+        tap((productDetails) => {
           this.addedProduct$.next({
             title: productDetails.title,
             stock: productDetails.stock,
           });
+        }),
+        switchMap(() => {
           const cartAction$ = this.cart$.value
             ? this.httpClient.patch<Cart>(
                 `${this.baseUrl}/product`,
                 { id, quantity },
-                { headers: this.authHeaders }
+                { headers: this.authHeaders },
               )
             : this.httpClient.post<Cart>(
                 `${this.baseUrl}/product`,
                 { id, quantity },
-                { headers: this.authHeaders }
+                { headers: this.authHeaders },
               );
 
           return cartAction$;
-        })
+        }),
+        tap((cart) => {
+          this.isLoading$.next(false);
+          this.isCartAdded$.next(true);
+          this.getCart();
+        }),
       )
       .subscribe(() => {
         this.isLoading$.next(false);
         this.isCartAdded$.next(true);
+        this.activatedRoute.queryParams.subscribe(() => {
+          window.scrollTo(0, 0);
+        });
+        this.activatedRoute.params.subscribe(() => {
+          window.scrollTo(0, 0);
+        });
+        this.activatedRoute.data.subscribe(() => {
+          window.scrollTo(0, 0);
+        });
+        this.activatedRoute.paramMap.subscribe(() => {
+          window.scrollTo(0, 0);
+        });
+        this.isCartAdded$.next(false);
         this.getCart();
       });
   }
@@ -149,14 +164,14 @@ export class CartService {
     const body = { id: id };
 
     return this.httpClient.delete(url, { headers, body: { id } }).pipe(
-      catchError((error) => {
+      catchError(() => {
         this.isLoading$.next(false);
         return EMPTY;
       }),
       map((response) => {
         this.isLoading$.next(false);
         return response;
-      })
+      }),
     );
   }
 }

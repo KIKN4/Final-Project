@@ -1,7 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { WelcomeComponent } from '../../shared/components/welcome/welcome.component';
 import { SliderComponent } from '../../shared/components/slider/slider.component';
-import { CategoryService } from '../../shared/services/productCategory.service';
 import { ProductCategoryComponent } from '../../shared/components/product-category/product-category.component';
 import { FormsModule } from '@angular/forms';
 import { ApiProduct } from '../../shared/types/apiProduct';
@@ -10,6 +9,7 @@ import { ServicesComponent } from '../../shared/components/offer/services.compon
 import { ContactUsComponent } from '../../shared/components/contact-us/contact-us.component';
 import { AsyncPipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { ProductsService } from '../../shared/services/products.service';
 
 @Component({
   selector: 'app-home',
@@ -29,12 +29,11 @@ import { RouterLink } from '@angular/router';
   styleUrl: './home.component.css',
 })
 export class HomeComponent implements OnInit {
-  private readonly productsService = inject(CategoryService);
-  id!: string;
+  private readonly productsService = inject(ProductsService);
   productsByCategory$ = this.productsService.categories$;
   phonesCategory: ApiProduct[] = [];
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.productsService.getCategorys();
   }
 }

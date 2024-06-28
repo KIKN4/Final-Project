@@ -10,25 +10,7 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './slider.component.html',
   styleUrl: './slider.component.css',
 })
-export class SliderComponent implements OnInit {
+export class SliderComponent {
   private readonly productsService = inject(ProductsService);
   products$ = this.productsService.products$;
-
-  ngOnInit(): void {
-    let baseParams = {
-      page_size: 40,
-      page_index: 1,
-    };
-    const querys = Object.fromEntries(
-      Object.entries(baseParams).filter(
-        ([_, value]: any) => value !== '' && value !== 0 && value !== null
-      )
-    );
-
-    this.productsService.getAllProduct(querys);
-  }
-
-  checkId(id: string) {
-    console.log(id);
-  }
 }

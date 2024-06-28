@@ -30,9 +30,6 @@ export class HeaderComponent {
       : (this.hamburger = 'hamburger');
     this.display === '' ? (this.display = 'block') : (this.display = 'none');
     this.top !== '0%' ? (this.top = '0%') : (this.top = '-100%');
-    // this.display = 'block';
-    // this.right = '0%';
-    // this.overflow = 'hidden';
   }
   closeBar() {
     this.hamburger = 'hamburger';

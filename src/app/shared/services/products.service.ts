@@ -8,6 +8,7 @@ import {
 } from '../types/apiProduct';
 import { ProductQuery } from '../types/productQuery';
 import { BehaviorSubject } from 'rxjs';
+import { TypeofCategory } from '../types/categoryType';
 
 export interface ProductState {
   loading: boolean;
@@ -20,8 +21,14 @@ export class ProductsService {
   private httpClient = inject(HttpClient);
   private env = inject(ENVIRONMENT);
   private baseUrl = `${this.env.apiURL}/shop/products`;
+  private allCategoryUrl = `${this.env.apiURL}/shop/products/categories`;
+  private categoryByUrl = `${this.env.apiURL}/shop/products/category`;
+
   products$ = new BehaviorSubject<ApiProduct[]>([]);
   productById$ = new BehaviorSubject<ProductDetails | null>(null);
+  categories$ = new BehaviorSubject<TypeofCategory[]>([]);
+  phones$ = new BehaviorSubject<ApiProduct[]>([]);
+  laptops$ = new BehaviorSubject<ApiProduct[]>([]);
 
   getProductById(id: string | null) {
     return this.httpClient
@@ -39,7 +46,7 @@ export class ProductsService {
           params: {
             ...query,
           },
-        }
+        },
       );
     } else {
       return this.httpClient.get<GetApiResponse>(`${this.baseUrl}/search`, {
@@ -48,6 +55,26 @@ export class ProductsService {
         },
       });
     }
+  }
+
+  getCategorys() {
+    return this.httpClient
+      .get<TypeofCategory[]>(`${this.allCategoryUrl}`)
+      .subscribe((response) => {
+        this.categories$.next(response);
+      });
+  }
+
+  getByCategory(page_index: number, page_size: number, categoryId: number) {
+    return this.httpClient
+      .get<GetApiResponse>(`${this.categoryByUrl}/${categoryId}`, {
+        params: { page_index, page_size },
+      })
+      .subscribe((response) => {
+        categoryId === 1
+          ? this.laptops$.next(response.products)
+          : this.phones$.next(response.products);
+      });
   }
 
   getAllProduct(query: ProductQuery) {

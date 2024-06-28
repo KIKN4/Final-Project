@@ -85,7 +85,6 @@ export class ProductDetailComponent implements OnInit {
         window.scrollTo(0, 0);
       });
       this.isCartAdded$.next(false);
-    } else {
     }
   }
 }

@@ -1,11 +1,10 @@
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
-import { PhoAndLapService } from '../../services/category.service';
-import { CategoryService } from '../../services/productCategory.service';
 import { BrandsService } from '../../services/brands.service';
 import { DropdownItemComponent } from '../dropdown-item/dropdown-item.component';
 import { TruncateStringPipe } from '../../pipes/truncate-string.pipe';
 import { RouterLink } from '@angular/router';
+import { ProductsService } from '../../services/products.service';
 
 @Component({
   selector: 'app-footer',
@@ -21,20 +20,18 @@ import { RouterLink } from '@angular/router';
   styleUrl: './footer.component.css',
 })
 export class FooterComponent implements OnInit {
-  private categoryService = inject(CategoryService);
-  private brandsService = inject(BrandsService);
-  private phoneService = inject(PhoAndLapService);
-  private laptopService = inject(PhoAndLapService);
+  private readonly productsService = inject(ProductsService);
+  private readonly brandsService = inject(BrandsService);
 
-  categories$ = this.categoryService.categories$;
+  categories$ = this.productsService.categories$;
   brands$ = this.brandsService.brands$;
-  phones$ = this.phoneService.phones$;
-  laptops$ = this.laptopService.laptops$;
+  phones$ = this.productsService.phones$;
+  laptops$ = this.productsService.laptops$;
 
   ngOnInit() {
-    this.categoryService.getCategorys();
-    this.phoneService.getPhones();
-    this.laptopService.getLaptops();
+    this.productsService.getCategorys();
+    this.productsService.getByCategory(1, 10, 1);
+    this.productsService.getByCategory(1, 10, 2);
     this.brandsService.getBrands();
   }
 

@@ -17,6 +17,12 @@ export interface ProductDetails extends ApiProduct {
   ratings: Rating[];
 }
 
+export interface CartProductDetails extends ApiProduct {
+  quantity: number;
+  pricePerQuantity: number;
+  beforeDiscountPrice: number;
+}
+
 export interface Price {
   current: number;
   currency: string;

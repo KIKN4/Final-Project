@@ -15,14 +15,15 @@
     <img src="assets/prodCategories/allproduct.png" alt="laptopCategory" />
   </div>
 </div>
-
-@if (isCartAdded$| async) { @if (addedProduct$ | async ; as product) { @if
-(product.stock<=0) {
-<div class="bad-notification">{{ product.title }} is out of stock</div>
-}@else{
-<div class="notification">You Added {{ product.title }} Successfully</div>
-} } }
-
+@if (cartActivityData$ | async; as cartActivityData) {
+  @if (cartActivityData.addedProduct$; as product) {
+    @if (product.stock <= 0) {
+      <div class="bad-notification">{{ product.title }} is out of stock</div>
+    } @else {
+      <div class="notification">You Added {{ product.title }} Successfully</div>
+    }
+  }
+}
 <div class="filter-container">
   <div class="filter">
     <form [formGroup]="filterForm">
@@ -59,14 +60,13 @@
           >
             Default
           </li>
-          @for (sort of sortByArr ; track sort) {
-
-          <li
-            (click)="selectSortBy(sort)"
-            [class.selected]="filterForm.value.sort_by === sort"
-          >
-            {{ capitalizeFirstLetter(sort) }}
-          </li>
+          @for (sort of sortByArr; track sort) {
+            <li
+              (click)="selectSortBy(sort)"
+              [class.selected]="filterForm.value.sort_by === sort"
+            >
+              {{ capitalizeFirstLetter(sort) }}
+            </li>
           }
         </div>
       </app-dropdown-filter>
@@ -80,14 +80,13 @@
           >
             Default
           </li>
-          @for (sort of sortByDir ; track sort) {
-
-          <li
-            (click)="selectSortDir(sort)"
-            [class.selected]="filterForm.value.sort_direction === sort"
-          >
-            {{ sort }}
-          </li>
+          @for (sort of sortByDir; track sort) {
+            <li
+              (click)="selectSortDir(sort)"
+              [class.selected]="filterForm.value.sort_direction === sort"
+            >
+              {{ sort }}
+            </li>
           }
         </div>
       </app-dropdown-filter>
@@ -103,12 +102,12 @@
             All
           </li>
           @for (brand of brands$ | async; track brand) {
-          <li
-            (click)="selectBrand(brand)"
-            [class.selected]="filterForm.value.brand === brand"
-          >
-            {{ capitalizeFirstLetter(brand) }}
-          </li>
+            <li
+              (click)="selectBrand(brand)"
+              [class.selected]="filterForm.value.brand === brand"
+            >
+              {{ capitalizeFirstLetter(brand) }}
+            </li>
           }
         </div>
       </app-dropdown-filter>
@@ -169,44 +168,43 @@
   </div>
   <div class="cards-container">
     @for (item of allProduct$ | async; track item._id) {
-    <div class="card">
-      <a [routerLink]="['/', 'product', item._id]">
-        <div class="card-img">
-          <img [src]="item.thumbnail" alt="product-img" />
-        </div>
-      </a>
-      <div class="card-details">
+      <div class="card">
         <a [routerLink]="['/', 'product', item._id]">
-          <h2 class="card-title">{{ item.title | truncateString : 3 }}</h2>
+          <div class="card-img">
+            <img [src]="item.thumbnail" alt="product-img" />
+          </div>
         </a>
-        <p class="card-brand">{{ capitalizeFirstLetter(item.brand) }}</p>
-        <p class="card-date">{{ item.issueDate | date }}</p>
-      </div>
-      <div class="card-price">
-        <p class="price">
-          <span class="current">{{ item.price.current }}</span>
-          <span class="currency">{{ item.price.currency }}</span>
-        </p>
-        @if(user$| async; as user){
-        <button (click)="onAddtoCart(item._id)" class="button">
-          <a>
-            <span class="cart-icon"
-              >Add to cart <i class="fa-solid fa-right-long"></i
-            ></span>
+        <div class="card-details">
+          <a [routerLink]="['/', 'product', item._id]">
+            <h2 class="card-title">{{ item.title | truncateString: 3 }}</h2>
           </a>
-        </button>
-        }@else {
-        <button class="button">
-          <a routerLink="/signin">
-            <span class="cart-icon"
-              >Add to cart <i class="fa-solid fa-right-long"></i
-            ></span>
-          </a>
-        </button>
-
-        }
+          <p class="card-brand">{{ capitalizeFirstLetter(item.brand) }}</p>
+          <p class="card-date">{{ item.issueDate | date }}</p>
+        </div>
+        <div class="card-price">
+          <p class="price">
+            <span class="current">{{ item.price.current }}</span>
+            <span class="currency">{{ item.price.currency }}</span>
+          </p>
+          @if (user$ | async; as user) {
+            <button (click)="onAddtoCart(item._id)" class="button">
+              <a>
+                <span class="cart-icon"
+                  >Add to cart <i class="fa-solid fa-right-long"></i
+                ></span>
+              </a>
+            </button>
+          } @else {
+            <button class="button">
+              <a routerLink="/signin">
+                <span class="cart-icon"
+                  >Add to cart <i class="fa-solid fa-right-long"></i
+                ></span>
+              </a>
+            </button>
+          }
+        </div>
       </div>
-    </div>
     }
   </div>
 </div>

@@ -1,4 +1,10 @@
-import { AfterViewInit, Component, OnInit, inject } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  OnInit,
+  inject,
+  DestroyRef,
+} from '@angular/core';
 import {
   ActivatedRoute,
   NavigationEnd,
@@ -14,9 +20,17 @@ import { AsyncPipe, CommonModule } from '@angular/common';
 import { ContactUsComponent } from '../../shared/components/contact-us/contact-us.component';
 import { TruncateStringPipe } from '../../shared/pipes/truncate-string.pipe';
 import { DropdownFilterComponent } from '../../shared/components/dropdown-filter/dropdown-filter.component';
-import { debounceTime, distinctUntilChanged, filter } from 'rxjs';
+import {
+  combineLatest,
+  debounceTime,
+  distinctUntilChanged,
+  filter,
+  map,
+  take,
+} from 'rxjs';
 import { CartService } from '../../shared/services/cart.service';
 import { AuthService } from '../../shared/services/auth.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-products',
@@ -44,6 +58,7 @@ export class ProductsComponent implements OnInit, AfterViewInit {
   private readonly brandsService = inject(BrandsService);
   private readonly cartService = inject(CartService);
   private readonly authService = inject(AuthService);
+  private readonly destroyRef = inject(DestroyRef);
 
   private priceGap = 1000;
   private minPriceValue!: number;
@@ -55,6 +70,20 @@ export class ProductsComponent implements OnInit, AfterViewInit {
 
   isCartAdded$ = this.cartService.isCartAdded$;
   addedProduct$ = this.cartService.addedProduct$;
+
+  cartActivityData$ = combineLatest([
+    this.isCartAdded$,
+    this.addedProduct$,
+  ]).pipe(
+    map((data) => {
+      const [isCartAdded$, addedProduct$] = data;
+      return {
+        isCartAdded$,
+        addedProduct$,
+      };
+    }),
+  );
+
   isLoading$ = this.cartService.isLoading$;
   checkCategory!: boolean;
   allCategory = false;
@@ -101,16 +130,19 @@ export class ProductsComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.router.events
       .pipe(
+        takeUntilDestroyed(this.destroyRef),
         filter(
-          (event): event is NavigationEnd => event instanceof NavigationEnd
-        )
+          (event): event is NavigationEnd => event instanceof NavigationEnd,
+        ),
       )
-      .subscribe(() => {
-        this.isCartAdded$.next(false);
-      });
+      .subscribe();
 
     this.filterForm.valueChanges
-      .pipe(debounceTime(300), distinctUntilChanged())
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        debounceTime(300),
+        distinctUntilChanged(),
+      )
       .subscribe(() => {
         this.router.navigate([], {
           queryParams: {
@@ -152,8 +184,8 @@ export class ProductsComponent implements OnInit, AfterViewInit {
 
       const querys = Object.fromEntries(
         Object.entries(baseParams).filter(
-          ([_, value]: any) => value !== '' && value !== 0 && value !== null
-        )
+          ([_, value]: any) => value !== '' && value !== 0 && value !== null,
+        ),
       );
 
       this.productsService.getAllProduct(querys);
@@ -162,10 +194,10 @@ export class ProductsComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     const rangeInputs = document.querySelectorAll(
-      '.range-input input'
+      '.range-input input',
     ) as NodeListOf<HTMLInputElement>;
     const priceInputs = document.querySelectorAll(
-      '.price-input input'
+      '.price-input input',
     ) as NodeListOf<HTMLInputElement>;
     const progress = document.querySelector('.slider .progress') as HTMLElement;
 
@@ -224,25 +256,6 @@ export class ProductsComponent implements OnInit, AfterViewInit {
   }
 
   onAddtoCart(id: string) {
-    this.isLoading$.next(true);
     this.cartService.addToCart(id, 1);
-    this.isLoading$.next(false);
-    this.isCartAdded$.next(true);
-    if (this.isCartAdded$.value == true && this.isLoading$.value == false) {
-      this.activatedRoute.queryParams.subscribe(() => {
-        window.scrollTo(0, 0);
-      });
-      this.activatedRoute.params.subscribe(() => {
-        window.scrollTo(0, 0);
-      });
-      this.activatedRoute.data.subscribe(() => {
-        window.scrollTo(0, 0);
-      });
-      this.activatedRoute.paramMap.subscribe(() => {
-        window.scrollTo(0, 0);
-      });
-      this.isCartAdded$.next(false);
-    } else {
-    }
   }
 }
